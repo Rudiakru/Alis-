@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kommentar Section</title>
+
+<style>
+    body {
+        font-family: sans-serif;
+        background: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .comments-container {
+        max-width: 550px;
+        margin: auto;
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
+
+    .comment {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .comment:nth-child(1) { animation-delay: 0.0s; }
+    .comment:nth-child(2) { animation-delay: 0.07s; }
+    .comment:nth-child(3) { animation-delay: 0.14s; }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(25px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #ddd;
+        flex-shrink: 0;
+    }
+
+    .content {
+        background: #f1f1f1;
+        padding: 12px 15px;
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .content strong {
+        font-size: 14.5px;
+    }
+
+    .content p {
+        margin: 6px 0 0;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+
+    /* Input */
+    .new-comment {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .new-comment input {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .new-comment button {
+        padding: 12px 18px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .like {
+        font-size: 18px;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.2s ease;
+    }
+
+    .like.liked {
+        color: #ff2d55;
+        transform: scale(1.2);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="comments-container">
+
+    <h3>Kommentare</h3>
+
+    <div id="comments">
+        <!-- JS fügt Kommentare ein -->
+    </div>
+
+    <div class="new-comment">
+        <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" />
+        <button onclick="addComment()">Posten</button>
+    </div>
+</div>
+
+<script>
+    const commentsEl = document.getElementById("comments");
+    let comments = [
+        { name: "Anna", text: "Das sieht richtig gut aus!" },
+        { name: "Markus", text: "Mega Animation, fühlt sich modern an." },
+        { name: "Lena", text: "Perfekt für mobile Websites 👌" }
+    ];
+
+    function renderComments() {
+        commentsEl.innerHTML = "";
+        comments.forEach((c, i) => {
+            commentsEl.innerHTML += `
+                <div class="comment">
+                    <div class="avatar"></div>
+                    <div class="content">
+                        <strong>${c.name}</strong>
+                        <p>${c.text}</p>
+                    </div>
+                    <div class="like" onclick="toggleLike(this)">❤</div>
+                </div>
+            `;
+        });
+    }
+
+    function addComment() {
+        const input = document.getElementById("commentInput");
+        if (input.value.trim() === "") return;
+
+        comments.unshift({ name: "Du", text: input.value });
+        input.value = "";
+
+        renderComments();
+    }
+
+    function toggleLike(el) {
+        el.classList.toggle("liked");
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            addComment();
+        }
+    }
+
+    renderComments();
+</script>
+
+</body>
+</html>

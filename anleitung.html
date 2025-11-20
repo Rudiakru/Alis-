@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genau Anleitung - GitHub Pages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f6f8fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #24292e;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #586069;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        .step {
+            background: #f6f8fa;
+            border-left: 4px solid #0366d6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .step-number {
+            display: inline-block;
+            background: #0366d6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step h2 {
+            color: #24292e;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .step-content {
+            margin-left: 40px;
+        }
+        .click-target {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #856404;
+        }
+        .click-target::before {
+            content: "👉 ";
+        }
+        .link-button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: background 0.2s;
+        }
+        .link-button:hover {
+            background: #22863a;
+        }
+        .code {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📍 Genau Anleitung: GitHub Pages aktivieren</h1>
+        <p class="subtitle">Folge diesen Schritten genau - Schritt für Schritt</p>
+
+        <div class="step">
+            <h2><span class="step-number">1</span> Öffne dein Repository</h2>
+            <div class="step-content">
+                <p><strong>Klicke auf diesen Link:</strong></p>
+                <a href="https://github.com/Rudiakru/Alis-" target="_blank" class="link-button">
+                    Repository öffnen
+                </a>
+                <p style="margin-top: 15px;">Du siehst jetzt die Hauptseite deines Repositories.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">2</span> Gehe zu den Einstellungen</h2>
+            <div class="step-content">
+                <p><strong>Oben rechts auf der Seite:</strong></p>
+                <div class="click-target">
+                    Suche nach dem <strong>Zahnrad-Symbol</strong> ⚙️ (ganz rechts oben)
+                </div>
+                <p><strong>ODER</strong> klicke direkt hier:</p>
+                <a href="https://github.com/Rudiakru/Alis-/settings" target="_blank" class="link-button">
+                    Zu den Einstellungen gehen
+                </a>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">3</span> Öffne Pages-Einstellungen</h2>
+            <div class="step-content">
+                <p><strong>In der linken Seitenleiste:</strong></p>
+                <ul>
+                    <li>Scrolle nach unten durch die Menüpunkte</li>
+                    <li>Du siehst: General, Access, Secrets, Environments, etc.</li>
+                    <li>Weiter unten findest du: <strong>"Pages"</strong></li>
+                </ul>
+                <div class="click-target">
+                    <strong>KLICK auf "Pages"</strong> (steht meist unter "Security" oder "Environments")
+                </div>
+                <p><strong>ODER</strong> klicke direkt hier:</p>
+                <a href="https://github.com/Rudiakru/Alis-/settings/pages" target="_blank" class="link-button">
+                    Zu Pages-Einstellungen gehen
+                </a>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">4</span> Aktiviere GitHub Pages</h2>
+            <div class="step-content">
+                <p><strong>Du siehst jetzt einen Abschnitt "Build and deployment":</strong></p>
+                <ul>
+                    <li>Oben steht: <span class="code">Source</span></li>
+                    <li>Darunter ist ein Dropdown-Menü</li>
+                </ul>
+                <div class="click-target">
+                    <strong>KLICK auf das Dropdown-Menü</strong> (zeigt wahrscheinlich "None" oder "Deploy from a branch")
+                </div>
+                <p style="margin-top: 15px;"><strong>Wähle aus der Liste:</strong></p>
+                <div class="click-target">
+                    <strong>KLICK auf "GitHub Actions"</strong>
+                </div>
+                <div class="warning" style="margin-top: 15px;">
+                    <strong>⚠️ Wichtig:</strong> Wähle NICHT "Deploy from a branch", sondern <strong>"GitHub Actions"</strong>!
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">5</span> Speichere die Einstellungen</h2>
+            <div class="step-content">
+                <p><strong>Unten rechts siehst du einen grünen Button:</strong></p>
+                <div class="click-target">
+                    <strong>KLICK auf "Save"</strong> (grüner Button)
+                </div>
+                <p style="margin-top: 15px;">Nach dem Klick siehst du eine Meldung, dass die Einstellungen gespeichert wurden.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">6</span> Warte auf das Deployment</h2>
+            <div class="step-content">
+                <p><strong>Nach dem Speichern:</strong></p>
+                <ul>
+                    <li>Die Seite zeigt: <span class="code">"Your site is ready to be published"</span></li>
+                    <li>Warte <strong>1-2 Minuten</strong></li>
+                    <li>Die Seite aktualisiert sich automatisch</li>
+                    <li>Du siehst dann: <span class="code">"Your site is live at https://rudiakru.github.io/Alis-/"</span></li>
+                </ul>
+                <div class="success" style="margin-top: 15px;">
+                    <strong>✅ Fertig!</strong> Deine Website ist jetzt online!
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">7</span> Öffne deine Website</h2>
+            <div class="step-content">
+                <p><strong>Klicke auf diesen Link, um deine Website zu öffnen:</strong></p>
+                <a href="https://rudiakru.github.io/Alis-/" target="_blank" class="link-button" style="font-size: 18px;">
+                    🌐 Website öffnen
+                </a>
+                <p style="margin-top: 15px;">Oder kopiere diesen Link in deinen Browser:</p>
+                <div class="code" style="padding: 10px; margin-top: 10px; display: inline-block;">
+                    https://rudiakru.github.io/Alis-/
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #e7f3ff; border-radius: 4px;">
+            <h3 style="color: #0366d6; margin-bottom: 10px;">💡 Tipp</h3>
+            <p>Wenn du Probleme hast, kannst du auch direkt zu den Pages-Einstellungen gehen:</p>
+            <a href="https://github.com/Rudiakru/Alis-/settings/pages" target="_blank" class="link-button">
+                Direkt zu Pages-Einstellungen
+            </a>
+        </div>
+    </div>
+</body>
+</html>

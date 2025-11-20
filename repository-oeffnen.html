@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repository öffentlich machen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f6f8fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #24292e;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .danger {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .step {
+            background: #f6f8fa;
+            border-left: 4px solid #0366d6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .step-number {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .click-target {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #856404;
+        }
+        .click-target::before {
+            content: "👉 ";
+        }
+        .link-button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px 5px 10px 0;
+            transition: background 0.2s;
+        }
+        .link-button:hover {
+            background: #22863a;
+        }
+        .danger-button {
+            background: #dc3545;
+        }
+        .danger-button:hover {
+            background: #c82333;
+        }
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .code {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔓 Repository öffentlich machen</h1>
+        
+        <div class="warning">
+            <h3>⚠️ Warum muss das Repository öffentlich sein?</h3>
+            <p>GitHub Pages funktioniert bei <strong>privaten Repositories</strong> nur mit einem <strong>kostenpflichtigen GitHub Plan</strong> (ab $4/Monat).</p>
+            <p>Mit einem <strong>kostenlosen Account</strong> musst du das Repository <strong>öffentlich</strong> machen.</p>
+        </div>
+
+        <div class="danger">
+            <h3>⚠️ Wichtig zu wissen:</h3>
+            <ul>
+                <li>Wenn das Repository öffentlich ist, kann <strong>jeder</strong> den Code sehen</li>
+                <li>Die Website ist dann auch öffentlich verfügbar</li>
+                <li>Wenn du sensible Daten (Passwörter, API-Keys) hast, entferne diese vorher!</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">1</span> Gehe zu den Repository-Einstellungen</h2>
+            <p><strong>Klicke auf diesen Link:</strong></p>
+            <a href="https://github.com/Rudiakru/Alis-/settings" target="_blank" class="link-button">
+                Zu den Einstellungen gehen
+            </a>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">2</span> Scrolle zur "Danger Zone"</h2>
+            <p><strong>Ganz unten auf der Seite:</strong></p>
+            <ul>
+                <li>Scrolle bis ganz nach unten</li>
+                <li>Du siehst einen <strong>roten Bereich</strong> mit der Überschrift: <strong>"Danger Zone"</strong></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">3</span> Ändere die Sichtbarkeit</h2>
+            <p><strong>Im Bereich "Danger Zone":</strong></p>
+            <ul>
+                <li>Finde: <strong>"Change repository visibility"</strong></li>
+                <li>Daneben siehst du einen Button: <strong>"Change visibility"</strong></li>
+            </ul>
+            <div class="click-target">
+                <strong>KLICK auf "Change visibility"</strong> (roter Button)
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">4</span> Bestätige die Änderung</h2>
+            <p><strong>Ein Popup öffnet sich:</strong></p>
+            <ul>
+                <li>Wähle: <strong>"Make public"</strong></li>
+                <li>Gib zur Bestätigung ein: <span class="code">Rudiakru/Alis-</span></li>
+                <li>Lies die Warnung durch</li>
+            </ul>
+            <div class="click-target">
+                <strong>KLICK auf "I understand, change repository visibility"</strong>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">5</span> Aktiviere GitHub Pages</h2>
+            <p><strong>Nachdem das Repository öffentlich ist:</strong></p>
+            <ol>
+                <li>Gehe zu: <a href="https://github.com/Rudiakru/Alis-/settings/pages" target="_blank">Pages-Einstellungen</a></li>
+                <li>Unter "Source": Wähle <strong>"GitHub Actions"</strong></li>
+                <li><strong>KLICK auf "Save"</strong></li>
+                <li>Warte 1-2 Minuten</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">6</span> Öffne deine Website</h2>
+            <p><strong>Deine Website ist dann verfügbar unter:</strong></p>
+            <a href="https://rudiakru.github.io/Alis-/" target="_blank" class="link-button" style="font-size: 18px;">
+                🌐 Website öffnen
+            </a>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #e7f3ff; border-radius: 4px;">
+            <h3 style="color: #0366d6; margin-bottom: 10px;">💡 Alternative: Repository privat lassen</h3>
+            <p>Wenn du das Repository <strong>privat</strong> lassen möchtest, benötigst du einen <strong>kostenpflichtigen GitHub Plan</strong>:</p>
+            <ul>
+                <li><strong>GitHub Pro</strong>: $4/Monat (für Einzelpersonen)</li>
+                <li><strong>GitHub Team</strong>: $4/Person/Monat (für Teams)</li>
+            </ul>
+            <p>Mit einem kostenpflichtigen Plan kannst du GitHub Pages auch bei privaten Repositories nutzen.</p>
+        </div>
+    </div>
+</body>
+</html>

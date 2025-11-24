@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Über Otis - Die Geschichte unserer süßen Capybara" />
+    <title>🦫 Über Otis - Capybara Galerie</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Varela+Round&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🦫 Otis</a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="ueber.html">Über Otis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero" style="min-height: auto; padding: 40px 20px;">
+            <div class="glass-card">
+                <h1>🦫 Über Otis</h1>
+                <p class="subtitle">Die Geschichte unserer süßen Capybara</p>
+            </div>
+        </header>
+
+        <section class="content-section">
+            <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <h2 class="section-title">Willkommen bei Otis! 🎉</h2>
+                
+                <div style="margin-bottom: 30px;">
+                    <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 20px;">
+                        Otis ist unsere wundervolle Capybara, die uns jeden Tag mit ihrer Niedlichkeit erfreut! 
+                        Diese Website ist eine Hommage an alle süßen Momente, die wir mit Otis teilen.
+                    </p>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.8); padding: 30px; border-radius: 20px; margin-bottom: 30px;">
+                    <h3 style="color: var(--primary-pink); margin-bottom: 15px; font-size: 1.5em;">✨ Was macht Otis besonders?</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">🦫 Die süßeste Capybara der Welt</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">💕 Liebt es, in Yuzu-Bädern zu entspannen</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">🎨 Inspiriert von Taiwan's kawaii Kultur</li>
+                        <li style="padding: 10px 0;">🌟 Bringt Freude in jeden Tag</li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.8); padding: 30px; border-radius: 20px; margin-bottom: 30px;">
+                    <h3 style="color: var(--primary-pink); margin-bottom: 15px; font-size: 1.5em;">📸 Über diese Website</h3>
+                    <p style="line-height: 1.8;">
+                        Diese Website wurde im Taiwan Capybara Stil gestaltet - mit pastellfarben, 
+                        weichen Animationen und viel Liebe zum Detail. Hier kannst du:
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                        <li style="padding: 8px 0;">📤 Bilder von Otis hochladen</li>
+                        <li style="padding: 8px 0;">🖼️ Durch die Galerie stöbern</li>
+                        <li style="padding: 8px 0;">🗺️ Unsere besonderen Orte auf der Karte sehen</li>
+                        <li style="padding: 8px 0;">💬 Kommentare hinterlassen</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow)); padding: 30px; border-radius: 20px; color: white; text-align: center;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.5em;">💝 Danke für deinen Besuch!</h3>
+                    <p style="font-size: 1.1em; margin: 0;">
+                        Wir hoffen, dass dir diese Website genauso viel Freude bereitet wie uns! 
+                        Teile deine Liebe für Capybaras mit der Welt! 🦫✨
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google Maps Section -->
+        <section id="map-section" class="content-section">
+            <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
+            <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
+            <div id="map"></div>
+            <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
+                💡 Um die Karte zu aktivieren, füge deinen Google Maps API Key in index.html ein
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Made with ❤️ in Taiwan | 🦫 Otis Galerie
+    </footer>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=DEIN_API_KEY_HIER&callback=initMap" async defer></script>
+    
+    <!-- Scripts -->
+    <script src="js/navigation.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

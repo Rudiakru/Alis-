@@ -3,21 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Otis - Die süßeste Capybara Galerie im Taiwan Stil. Teile und genieße niedliche Capybara Bilder!" />
-    <meta name="keywords" content="Capybara, Otis, Galerie, Taiwan, kawaii, cute, Bilder, Geburtstag" />
-    <meta name="author" content="Otis Galerie" />
-    <meta property="og:title" content="🦫 Otis - Capybara Galerie | Taiwan Style" />
-    <meta property="og:description" content="Die süßeste Capybara Galerie im Taiwan Stil" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" />
-    
-    <title>🦫 Otis - Capybara Galerie | Taiwan Style</title>
+    <meta name="description" content="Otis Galerie - Alle Bilder von Otis im Überblick" />
+    <title>🖼️ Galerie - Otis Capybara</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Varela+Round&display=swap" rel="stylesheet">
-    
-    <!-- Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
@@ -38,21 +28,17 @@
         </div>
     </nav>
 
-    <header class="hero" style="min-height: 60vh; padding-top: 20px;">
-        <div class="glass-card floating">
-            <h1>🦫 Otis</h1>
-            <p class="subtitle">Meine süße Capybara Galerie im Taiwan Stil</p>
-            <div class="capybara-sticker">
-                <img src="https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" alt="Capybara in Yuzu Bath" />
-            </div>
-            <p style="margin-top: 20px; color: #666;">Willkommen! Scroll runter für alle Features ⬇️</p>
-        </div>
-    </header>
-
     <div class="container">
+        <header class="hero" style="min-height: auto; padding: 40px 20px;">
+            <div class="glass-card">
+                <h1>🖼️ Galerie</h1>
+                <p class="subtitle">Alle Bilder von Otis im Überblick</p>
+            </div>
+        </header>
+
         <!-- Upload Section -->
         <div class="upload-section">
-            <h2>📤 Neues Bild von Otis hochladen</h2>
+            <h2>📤 Neues Bild hochladen</h2>
             <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('fileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('fileInput').click()">
                 <div class="upload-icon" aria-hidden="true">📸</div>
                 <div class="upload-text">Klicke hier oder ziehe ein Bild hierher</div>
@@ -66,7 +52,7 @@
 
         <!-- Slideshow Section -->
         <section id="slideshow-section" class="content-section">
-            <h2 class="section-title">📸 Unsere Momente</h2>
+            <h2 class="section-title">📸 Slideshow</h2>
             <div class="slideshow-container" id="slideshow-wrapper">
                 <!-- Slides werden automatisch von script.js eingefügt -->
             </div>
@@ -78,35 +64,13 @@
             <p style="margin-top: 15px; color: #999; font-size: 0.9em;">💡 Tipp: Nutze die Pfeiltasten für Navigation</p>
         </section>
 
-        <!-- Uploaded Images Gallery -->
+        <!-- Gallery Grid -->
         <section class="content-section">
-            <h2 class="section-title">🖼️ Hochgeladene Bilder</h2>
+            <h2 class="section-title">🖼️ Alle Bilder</h2>
             <div class="gallery" id="uploaded-gallery" role="region" aria-label="Bildergalerie">
                 <!-- Bilder werden automatisch von script.js eingefügt -->
             </div>
         </section>
-
-        <!-- Google Maps Section -->
-        <section id="map-section" class="content-section">
-            <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
-            <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
-            <div id="map"></div>
-            <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
-                💡 Um die Karte zu aktivieren, füge deinen Google Maps API Key in dieser Datei ein (Zeile mit DEIN_API_KEY_HIER)
-            </p>
-        </section>
-
-        <!-- Comments Section -->
-        <div class="comments-container">
-            <h3>💬 Kommentare</h3>
-            <div id="comments" role="region" aria-label="Kommentare">
-                <!-- Kommentare werden automatisch von script.js eingefügt -->
-            </div>
-            <div class="new-comment">
-                <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" aria-label="Kommentar eingeben" />
-                <button onclick="addComment()" aria-label="Kommentar posten">Posten</button>
-            </div>
-        </div>
     </div>
 
     <!-- Lightbox -->
@@ -122,16 +86,8 @@
         Made with ❤️ in Taiwan | 🦫 Otis Galerie
     </footer>
 
-    <!-- Google Maps API -->
-    <!-- 
-    WICHTIG: Ersetze DEIN_API_KEY_HIER mit deinem Google Maps API Key
-    Hol dir einen kostenlosen Key hier: https://console.cloud.google.com/google/maps-apis
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=DEIN_API_KEY_HIER&callback=initMap" async defer></script>
-    
-    <!-- Navigation Script -->
+    <!-- Scripts -->
     <script src="js/navigation.js"></script>
-    <!-- Main Script -->
     <script src="js/script.js"></script>
 </body>
 </html>

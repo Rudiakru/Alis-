@@ -3,28 +3,242 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kommentar Section</title>
+<title>Otis - Capybara Galerie</title>
 
 <style>
-    body {
-        font-family: sans-serif;
-        background: #f7f7f7;
+    * {
         margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 50%, #fff3e0 100%);
+        min-height: 100vh;
         padding: 20px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        font-size: 3em;
+        background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        font-weight: 800;
+    }
+
+    .subtitle {
+        font-size: 1.2em;
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .upload-section {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .upload-area {
+        border: 3px dashed #ff6b9d;
+        border-radius: 15px;
+        padding: 40px;
+        margin: 20px 0;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-area:hover {
+        border-color: #c44569;
+        background: #fff5f8;
+        transform: scale(1.02);
+    }
+
+    .upload-area.dragover {
+        border-color: #f8b500;
+        background: #fffbf0;
+    }
+
+    .upload-icon {
+        font-size: 4em;
+        margin-bottom: 15px;
+    }
+
+    .upload-text {
+        font-size: 1.1em;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .upload-hint {
+        font-size: 0.9em;
+        color: #999;
+    }
+
+    #fileInput {
+        display: none;
+    }
+
+    .upload-btn {
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-size: 1.1em;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    }
+
+    .upload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+    }
+
+    .gallery-section {
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .gallery-item {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .gallery-item-info {
+        padding: 15px;
+    }
+
+    .gallery-item-date {
+        font-size: 0.85em;
+        color: #999;
+        margin-top: 8px;
+    }
+
+    .delete-btn {
+        background: #ff4757;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 0.9em;
+        margin-top: 10px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background: #ff3838;
+        transform: scale(1.05);
+    }
+
+    .empty-gallery {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+        font-size: 1.2em;
+    }
+
+    .empty-gallery-icon {
+        font-size: 5em;
+        margin-bottom: 20px;
     }
 
     .comments-container {
-        max-width: 550px;
-        margin: auto;
-        background: #ffffff;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+    }
+
+    .comments-container h3 {
+        font-size: 2em;
+        margin-bottom: 25px;
+        color: #333;
+        text-align: center;
     }
 
     .comment {
         display: flex;
-        gap: 12px;
+        gap: 15px;
         margin-bottom: 20px;
         opacity: 0;
         transform: translateY(20px);
@@ -35,105 +249,267 @@
     .comment:nth-child(2) { animation-delay: 0.07s; }
     .comment:nth-child(3) { animation-delay: 0.14s; }
 
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(25px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
     .avatar {
-        width: 42px;
-        height: 42px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        background: #ddd;
+        background: linear-gradient(135deg, #ff6b9d, #f8b500);
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
     }
 
     .content {
-        background: #f1f1f1;
-        padding: 12px 15px;
-        border-radius: 12px;
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-radius: 15px;
         width: 100%;
+        border-left: 4px solid #ff6b9d;
     }
 
     .content strong {
-        font-size: 14.5px;
+        font-size: 15px;
+        color: #333;
+        display: block;
+        margin-bottom: 5px;
     }
 
     .content p {
-        margin: 6px 0 0;
+        margin: 0;
         font-size: 14px;
-        line-height: 1.45;
+        line-height: 1.5;
+        color: #666;
     }
 
-    /* Input */
     .new-comment {
         display: flex;
         gap: 10px;
-        margin-top: 15px;
+        margin-top: 20px;
     }
 
     .new-comment input {
         flex: 1;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 15px;
+        border: 2px solid #e0e0e0;
         font-size: 14px;
         outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .new-comment input:focus {
+        border-color: #ff6b9d;
+        box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
     }
 
     .new-comment button {
-        padding: 12px 18px;
+        padding: 15px 25px;
         border: none;
-        background: #007bff;
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
         color: white;
-        border-radius: 10px;
+        border-radius: 15px;
         cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    }
+
+    .new-comment button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
     }
 
     .like {
-        font-size: 18px;
+        font-size: 20px;
         cursor: pointer;
         user-select: none;
         transition: transform 0.2s ease;
+        align-self: flex-start;
+        margin-top: 5px;
     }
 
     .like.liked {
         color: #ff2d55;
+        transform: scale(1.3);
+    }
+
+    .like:hover {
         transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2em;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .upload-area {
+            padding: 30px 20px;
+        }
     }
 </style>
 </head>
 
 <body>
 
-<div class="comments-container">
+<div class="container">
+    <header>
+        <h1>🦫 Otis</h1>
+        <p class="subtitle">Meine süße Capybara Galerie</p>
+    </header>
 
-    <h3>Kommentare</h3>
-
-    <div id="comments">
-        <!-- JS fügt Kommentare ein -->
+    <div class="upload-section">
+        <h2 style="margin-bottom: 20px; color: #333;">Neues Bild von Otis hochladen</h2>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Klicke hier oder ziehe ein Bild hierher</div>
+            <div class="upload-hint">PNG, JPG oder GIF bis 10MB</div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" />
+        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+            Bild auswählen
+        </button>
     </div>
 
-    <div class="new-comment">
-        <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" />
-        <button onclick="addComment()">Posten</button>
+    <div class="gallery-section">
+        <h2 class="section-title">🖼️ Galerie</h2>
+        <div class="gallery" id="gallery">
+            <div class="empty-gallery">
+                <div class="empty-gallery-icon">🦫</div>
+                <p>Noch keine Bilder hochgeladen</p>
+                <p style="font-size: 0.9em; margin-top: 10px;">Lade das erste Bild von Otis hoch!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="comments-container">
+        <h3>💬 Kommentare</h3>
+        <div id="comments">
+            <!-- Kommentare werden hier eingefügt -->
+        </div>
+        <div class="new-comment">
+            <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" />
+            <button onclick="addComment()">Posten</button>
+        </div>
     </div>
 </div>
 
 <script>
+    // Bildergalerie Funktionen
+    let images = JSON.parse(localStorage.getItem('otisImages')) || [];
+
+    function initGallery() {
+        const gallery = document.getElementById('gallery');
+        
+        if (images.length === 0) {
+            gallery.innerHTML = `
+                <div class="empty-gallery">
+                    <div class="empty-gallery-icon">🦫</div>
+                    <p>Noch keine Bilder hochgeladen</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Lade das erste Bild von Otis hoch!</p>
+                </div>
+            `;
+            return;
+        }
+
+        gallery.innerHTML = images.map((img, index) => `
+            <div class="gallery-item" style="animation-delay: ${index * 0.1}s">
+                <img src="${img.data}" alt="Otis Bild ${index + 1}" />
+                <div class="gallery-item-info">
+                    <div class="gallery-item-date">${new Date(img.date).toLocaleDateString('de-DE', { 
+                        day: '2-digit', 
+                        month: '2-digit', 
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}</div>
+                    <button class="delete-btn" onclick="deleteImage(${index})">🗑️ Löschen</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            alert('Bitte wähle ein Bild aus!');
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            alert('Das Bild ist zu groß! Maximal 10MB erlaubt.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imageData = {
+                data: e.target.result,
+                date: new Date().toISOString()
+            };
+            images.unshift(imageData);
+            localStorage.setItem('otisImages', JSON.stringify(images));
+            initGallery();
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function deleteImage(index) {
+        if (confirm('Möchtest du dieses Bild wirklich löschen?')) {
+            images.splice(index, 1);
+            localStorage.setItem('otisImages', JSON.stringify(images));
+            initGallery();
+        }
+    }
+
+    // Drag & Drop
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect({ target: { files: files } });
+        }
+    });
+
+    fileInput.addEventListener('change', handleFileSelect);
+
+    // Kommentar Funktionen
     const commentsEl = document.getElementById("comments");
-    let comments = [
-        { name: "Anna", text: "Das sieht richtig gut aus!" },
-        { name: "Markus", text: "Mega Animation, fühlt sich modern an." },
-        { name: "Lena", text: "Perfekt für mobile Websites 👌" }
+    let comments = JSON.parse(localStorage.getItem('otisComments')) || [
+        { name: "Anna", text: "Otis ist so süß! 🦫" },
+        { name: "Markus", text: "Die beste Capybara-Galerie!" },
+        { name: "Lena", text: "Ich liebe diese niedlichen Bilder 💕" }
     ];
 
     function renderComments() {
         commentsEl.innerHTML = "";
         comments.forEach((c, i) => {
             commentsEl.innerHTML += `
-                <div class="comment">
-                    <div class="avatar"></div>
+                <div class="comment" style="animation-delay: ${i * 0.07}s">
+                    <div class="avatar">🦫</div>
                     <div class="content">
                         <strong>${c.name}</strong>
                         <p>${c.text}</p>
@@ -149,8 +525,8 @@
         if (input.value.trim() === "") return;
 
         comments.unshift({ name: "Du", text: input.value });
+        localStorage.setItem('otisComments', JSON.stringify(comments));
         input.value = "";
-
         renderComments();
     }
 
@@ -164,6 +540,8 @@
         }
     }
 
+    // Initialisierung
+    initGallery();
     renderComments();
 </script>
 

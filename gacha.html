@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gacha Machine - Ziehe eine Kugel und entdecke was drin ist!" />
+    <title>🎰 Gacha Machine - Otis Capybara</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Varela+Round&display=swap" rel="stylesheet">
+    
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/gacha.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🦫 Otis</a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li><a href="gacha.html">Gacha</a></li>
+                <li><a href="ueber.html">Über Otis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero" style="min-height: auto; padding: 40px 20px;">
+            <div class="glass-card">
+                <h1>🎰 Gacha Machine</h1>
+                <p class="subtitle">Ziehe eine Kugel und entdecke was drin ist!</p>
+            </div>
+        </header>
+
+        <!-- Gacha Machine Section -->
+        <section class="content-section" style="max-width: 600px;">
+            <div class="gacha-machine-container">
+                <!-- Gacha Machine -->
+                <div class="gacha-machine">
+                    <div class="gacha-top">
+                        <div class="gacha-window">
+                            <div class="gacha-kugeln" id="gacha-kugeln">
+                                <!-- Kugeln werden hier animiert -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gacha-body">
+                        <div class="gacha-door" id="gacha-door">
+                            <div class="gacha-handle">🔘</div>
+                        </div>
+                        <div class="gacha-button-container">
+                            <button class="gacha-button" id="gacha-button" onclick="pullGacha()">
+                                <span class="button-text">Ziehen!</span>
+                                <span class="button-icon">🎰</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="gacha-chute" id="gacha-chute">
+                        <!-- Kugel fällt hier raus -->
+                    </div>
+                </div>
+
+                <!-- Result Display -->
+                <div class="gacha-result" id="gacha-result">
+                    <div class="result-kugel" id="result-kugel">
+                        <div class="kugel-shell" id="kugel-shell">
+                            <div class="kugel-top"></div>
+                            <div class="kugel-bottom"></div>
+                        </div>
+                        <div class="kugel-content" id="kugel-content">
+                            <!-- Inhalt wird hier angezeigt -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="gacha-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Gezogen:</span>
+                        <span class="stat-value" id="total-pulls">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Seltene Items:</span>
+                        <span class="stat-value" id="rare-items">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Made with ❤️ in Taiwan | 🦫 Otis Galerie
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/navigation.js"></script>
+    <script src="js/gacha.js"></script>
+</body>
+</html>

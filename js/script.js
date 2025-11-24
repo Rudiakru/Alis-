@@ -142,6 +142,12 @@ function updateSlideCounter() {
 
 // Keyboard Navigation für Slideshow
 document.addEventListener('keydown', function(e) {
+    // Nur wenn Lightbox nicht offen ist
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox && lightbox.classList.contains('active')) {
+        return; // Lightbox hat Priorität
+    }
+    
     if (e.key === 'ArrowLeft') {
         plusSlides(-1);
     } else if (e.key === 'ArrowRight') {
@@ -153,7 +159,7 @@ document.addEventListener('keydown', function(e) {
 // BILDER-UPLOAD FUNKTIONEN
 // ============================================
 function initGallery() {
-    const gallery = document.getElementById('gallery');
+    const gallery = document.getElementById('uploaded-gallery');
     if (!gallery) return;
     
     if (images.length === 0) {

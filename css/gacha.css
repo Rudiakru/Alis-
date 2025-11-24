@@ -525,30 +525,187 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .gacha-machine-container {
+        padding: 20px 10px;
+    }
+
     .gacha-machine {
-        width: 250px;
+        width: 280px;
     }
     
-    .result-kugel {
-        width: 150px;
+    .gacha-top {
+        padding: 20px 15px;
+    }
+
+    .gacha-window {
         height: 150px;
+        padding: 15px;
+    }
+
+    .gacha-kugel-preview {
+        width: 35px;
+        height: 35px;
+    }
+
+    .gacha-body {
+        padding: 20px 15px;
+    }
+
+    .gacha-button {
+        padding: 15px 30px;
+        font-size: 1.1em;
+    }
+
+    .button-text {
+        font-size: 1em;
+    }
+
+    .result-kugel {
+        width: 180px;
+        height: 180px;
+        margin-top: 30px;
     }
     
     .kugel-content-icon {
         font-size: 3em;
     }
+
+    .kugel-content-name {
+        font-size: 1.2em;
+    }
+
+    .kugel-content-description {
+        font-size: 0.85em;
+    }
     
     .gacha-stats {
-        gap: 20px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        padding: 15px 20px;
+        min-width: 140px;
+    }
+
+    .stat-value {
+        font-size: 1.5em;
     }
     
     .collection-content {
-        padding: 20px;
-        margin: 20px;
+        padding: 25px 15px;
+        margin: 15px;
+        max-height: 85vh;
+    }
+
+    .collection-header h2 {
+        font-size: 1.5em;
+    }
+
+    .close-btn {
+        font-size: 2em;
+        width: 40px;
+        height: 40px;
     }
     
     .collection-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         gap: 15px;
+    }
+
+    .collection-item {
+        padding: 15px;
+    }
+
+    .collection-item-icon {
+        font-size: 2.5em;
+    }
+
+    .collection-item-name {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .gacha-machine-container {
+        padding: 15px 5px;
+    }
+
+    .gacha-machine {
+        width: 240px;
+    }
+
+    .gacha-window {
+        height: 120px;
+    }
+
+    .gacha-kugel-preview {
+        width: 30px;
+        height: 30px;
+    }
+
+    .gacha-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    .result-kugel {
+        width: 150px;
+        height: 150px;
+    }
+
+    .kugel-content {
+        padding: 15px;
+    }
+
+    .kugel-content-icon {
+        font-size: 2.5em;
+    }
+
+    .kugel-content-name {
+        font-size: 1em;
+    }
+
+    .gacha-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat-item {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .collection-content {
+        padding: 20px 10px;
+        margin: 10px;
+    }
+
+    .collection-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+    }
+
+    .collection-item {
+        padding: 12px;
+    }
+
+    .collection-item-icon {
+        font-size: 2em;
+    }
+
+    .collection-item-name {
+        font-size: 0.75em;
+    }
+}
+
+/* Touch-friendly */
+@media (hover: none) and (pointer: coarse) {
+    .gacha-button, .collection-item {
+        -webkit-tap-highlight-color: rgba(255, 107, 157, 0.3);
+    }
+
+    .gacha-button:active {
+        transform: scale(0.95);
     }
 }

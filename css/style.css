@@ -643,59 +643,262 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
     body {
-        padding: 15px;
+        padding: 10px;
+        padding-top: 80px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    header.hero {
+        min-height: auto;
+        padding: 20px 10px;
+        margin-bottom: 20px;
     }
 
     .glass-card {
         padding: 30px 20px;
     }
 
+    h1 {
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    .capybara-sticker img {
+        width: 150px;
+    }
+
     .upload-section {
-        padding: 25px 20px;
+        padding: 20px 15px;
+        margin-bottom: 30px;
+    }
+
+    .upload-section h2 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
     }
 
     .upload-area {
-        padding: 40px 20px;
+        padding: 30px 15px;
+        margin: 15px 0;
     }
 
     .upload-icon {
-        font-size: 4em;
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+
+    .upload-text {
+        font-size: 1em;
+    }
+
+    .upload-hint {
+        font-size: 0.85em;
+    }
+
+    .upload-btn {
+        padding: 15px 30px;
+        font-size: 1em;
+    }
+
+    .content-section {
+        padding: 30px 15px;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
     }
 
     .gallery {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .gallery-item img {
+        height: 200px;
+    }
+
+    .gallery-item-info {
+        padding: 12px;
     }
 
     .comments-container {
-        padding: 25px 20px;
+        padding: 20px 15px;
+        margin-bottom: 30px;
+    }
+
+    .comments-container h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+
+    .content {
+        padding: 12px 15px;
+    }
+
+    .content strong {
+        font-size: 14px;
+    }
+
+    .content p {
+        font-size: 13px;
     }
 
     .new-comment {
         flex-direction: column;
+        gap: 10px;
+    }
+
+    .new-comment input {
+        padding: 15px;
+        font-size: 14px;
     }
 
     .new-comment button {
         width: 100%;
+        padding: 15px;
+    }
+
+    .like {
+        font-size: 22px;
     }
 
     .lightbox-close {
-        top: 20px;
-        right: 20px;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 2em;
     }
 
     #map {
-        height: 400px;
+        height: 350px;
+        border-radius: 20px;
+    }
+
+    .slideshow-container {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .gallery-controls {
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .gallery-controls button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    footer {
+        padding: 30px 15px;
+        font-size: 0.9em;
     }
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 5px;
+        padding-top: 70px;
+    }
+
+    header.hero {
+        padding: 15px 5px;
+    }
+
+    .glass-card {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .capybara-sticker img {
+        width: 120px;
+    }
+
     .gallery {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .gallery-item img {
+        height: 250px;
+    }
+
+    .upload-area {
+        padding: 25px 15px;
+    }
+
+    .upload-icon {
+        font-size: 2.5em;
+    }
+
+    .content-section {
+        padding: 20px 10px;
+    }
+
+    .section-title {
+        font-size: 1.3em;
     }
 
     .slideshow-container {
-        padding: 10px;
+        padding: 5px;
+    }
+
+    .mySlides img {
+        max-height: 300px;
+    }
+
+    #map {
+        height: 300px;
+    }
+
+    .comments-container {
+        padding: 15px 10px;
+    }
+
+    .comment {
+        flex-wrap: wrap;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+}
+
+/* Touch-friendly buttons */
+@media (hover: none) and (pointer: coarse) {
+    button, .upload-area, .gallery-item {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(255, 107, 157, 0.3);
+    }
+    
+    button:active {
+        transform: scale(0.95);
     }
 }
 

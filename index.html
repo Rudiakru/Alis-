@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Otis - Capybara Galerie</title>
+<meta name="description" content="Otis - Die süßeste Capybara Galerie im Taiwan Stil. Teile und genieße niedliche Capybara Bilder!" />
+<meta name="keywords" content="Capybara, Otis, Galerie, Taiwan, kawaii, cute, Bilder" />
+<meta name="author" content="Otis Galerie" />
+<meta property="og:title" content="Otis - Capybara Galerie" />
+<meta property="og:description" content="Die süßeste Capybara Galerie im Taiwan Stil" />
+<meta property="og:type" content="website" />
+<title>🦫 Otis - Capybara Galerie | Taiwan Style</title>
 
 <style>
     * {
@@ -12,12 +18,23 @@
         box-sizing: border-box;
     }
 
+    :root {
+        --primary-pink: #ff6b9d;
+        --primary-pink-dark: #c44569;
+        --primary-yellow: #f8b500;
+        --primary-green: #a8e6cf;
+        --bg-gradient-start: #ffeef8;
+        --bg-gradient-mid: #e8f5e9;
+        --bg-gradient-end: #fff3e0;
+    }
+
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-        background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 50%, #fff3e0 100%);
+        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
         min-height: 100vh;
         padding: 20px;
         color: #333;
+        line-height: 1.6;
     }
 
     .container {
@@ -28,74 +45,133 @@
     header {
         text-align: center;
         margin-bottom: 40px;
-        padding: 30px 20px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-    }
-
-    h1 {
-        font-size: 3em;
-        background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 10px;
-        font-weight: 800;
-    }
-
-    .subtitle {
-        font-size: 1.2em;
-        color: #666;
-        margin-top: 10px;
-    }
-
-    .upload-section {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 30px;
-        border-radius: 20px;
-        margin-bottom: 40px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .upload-area {
-        border: 3px dashed #ff6b9d;
-        border-radius: 15px;
-        padding: 40px;
-        margin: 20px 0;
-        background: #fff;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 25px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px);
         position: relative;
         overflow: hidden;
     }
 
+    header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(30px, 30px) rotate(180deg); }
+    }
+
+    h1 {
+        font-size: clamp(2em, 5vw, 3.5em);
+        background: linear-gradient(135deg, var(--primary-pink), var(--primary-pink-dark), var(--primary-yellow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        font-weight: 900;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 10px rgba(255, 107, 157, 0.2);
+    }
+
+    .subtitle {
+        font-size: clamp(1em, 2vw, 1.3em);
+        color: #666;
+        margin-top: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .upload-section {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 35px;
+        border-radius: 25px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .upload-section:hover {
+        transform: translateY(-5px);
+    }
+
+    .upload-section h2 {
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 1.8em;
+    }
+
+    .upload-area {
+        border: 4px dashed var(--primary-pink);
+        border-radius: 20px;
+        padding: 50px 30px;
+        margin: 25px 0;
+        background: linear-gradient(135deg, #fff 0%, #fff5f8 100%);
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-area::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        transition: left 0.5s;
+    }
+
+    .upload-area:hover::before {
+        left: 100%;
+    }
+
     .upload-area:hover {
-        border-color: #c44569;
-        background: #fff5f8;
-        transform: scale(1.02);
+        border-color: var(--primary-pink-dark);
+        background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
+        transform: scale(1.03);
+        box-shadow: 0 15px 50px rgba(255, 107, 157, 0.2);
     }
 
     .upload-area.dragover {
-        border-color: #f8b500;
-        background: #fffbf0;
+        border-color: var(--primary-yellow);
+        background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
+        transform: scale(1.05);
     }
 
     .upload-icon {
-        font-size: 4em;
-        margin-bottom: 15px;
+        font-size: 5em;
+        margin-bottom: 20px;
+        display: block;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
     }
 
     .upload-text {
-        font-size: 1.1em;
-        color: #666;
-        margin-bottom: 10px;
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 12px;
+        font-weight: 600;
     }
 
     .upload-hint {
-        font-size: 0.9em;
+        font-size: 0.95em;
         color: #999;
     }
 
@@ -104,21 +180,46 @@
     }
 
     .upload-btn {
-        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        background: linear-gradient(135deg, var(--primary-pink), var(--primary-pink-dark));
         color: white;
         border: none;
-        padding: 15px 40px;
-        border-radius: 25px;
+        padding: 18px 45px;
+        border-radius: 30px;
         font-size: 1.1em;
+        font-weight: 700;
         cursor: pointer;
-        margin-top: 20px;
+        margin-top: 25px;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .upload-btn:hover::before {
+        width: 300px;
+        height: 300px;
     }
 
     .upload-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 157, 0.5);
+    }
+
+    .upload-btn:active {
+        transform: translateY(-1px);
     }
 
     .gallery-section {
@@ -126,29 +227,45 @@
     }
 
     .section-title {
-        font-size: 2em;
+        font-size: clamp(1.8em, 4vw, 2.5em);
         color: #333;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         text-align: center;
-        font-weight: 700;
+        font-weight: 800;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-pink), var(--primary-yellow));
+        border-radius: 2px;
     }
 
     .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
         margin-bottom: 40px;
     }
 
     .gallery-item {
         background: white;
-        border-radius: 20px;
+        border-radius: 25px;
         overflow: hidden;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.5s ease forwards;
+        transform: translateY(30px) scale(0.95);
+        animation: fadeInUp 0.6s ease forwards;
+        cursor: pointer;
     }
 
     .gallery-item:nth-child(1) { animation-delay: 0.1s; }
@@ -157,202 +274,369 @@
     .gallery-item:nth-child(4) { animation-delay: 0.4s; }
     .gallery-item:nth-child(5) { animation-delay: 0.5s; }
     .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(n+7) { animation-delay: 0.7s; }
 
     @keyframes fadeInUp {
         from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px) scale(0.9);
         }
         to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
     }
 
     .gallery-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
     }
 
     .gallery-item img {
         width: 100%;
-        height: 280px;
+        height: 300px;
         object-fit: cover;
         display: block;
+        transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
     }
 
     .gallery-item-info {
-        padding: 15px;
+        padding: 20px;
     }
 
     .gallery-item-date {
-        font-size: 0.85em;
+        font-size: 0.9em;
         color: #999;
-        margin-top: 8px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .delete-btn {
-        background: #ff4757;
+        background: linear-gradient(135deg, #ff4757, #ff3838);
         color: white;
         border: none;
-        padding: 8px 15px;
-        border-radius: 15px;
+        padding: 12px 20px;
+        border-radius: 20px;
         cursor: pointer;
-        font-size: 0.9em;
-        margin-top: 10px;
+        font-size: 0.95em;
+        font-weight: 600;
         width: 100%;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
     }
 
     .delete-btn:hover {
-        background: #ff3838;
+        background: linear-gradient(135deg, #ff3838, #ff2f2f);
         transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
     }
 
     .empty-gallery {
         text-align: center;
-        padding: 60px 20px;
+        padding: 80px 20px;
         color: #999;
-        font-size: 1.2em;
+        font-size: 1.3em;
+        grid-column: 1 / -1;
     }
 
     .empty-gallery-icon {
-        font-size: 5em;
-        margin-bottom: 20px;
+        font-size: 6em;
+        margin-bottom: 25px;
+        animation: float 3s ease-in-out infinite;
     }
 
     .comments-container {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         margin-bottom: 40px;
     }
 
     .comments-container h3 {
-        font-size: 2em;
-        margin-bottom: 25px;
+        font-size: clamp(1.8em, 4vw, 2.2em);
+        margin-bottom: 30px;
         color: #333;
         text-align: center;
+        font-weight: 800;
     }
 
     .comment {
         display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
+        gap: 18px;
+        margin-bottom: 25px;
         opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.4s ease forwards;
+        transform: translateY(25px);
+        animation: fadeInUp 0.5s ease forwards;
     }
 
     .comment:nth-child(1) { animation-delay: 0.0s; }
-    .comment:nth-child(2) { animation-delay: 0.07s; }
-    .comment:nth-child(3) { animation-delay: 0.14s; }
+    .comment:nth-child(2) { animation-delay: 0.08s; }
+    .comment:nth-child(3) { animation-delay: 0.16s; }
+    .comment:nth-child(n+4) { animation-delay: 0.24s; }
 
     .avatar {
-        width: 50px;
-        height: 50px;
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #ff6b9d, #f8b500);
+        background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow));
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5em;
-        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        font-size: 1.8em;
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .avatar:hover {
+        transform: rotate(15deg) scale(1.1);
     }
 
     .content {
-        background: #f8f9fa;
-        padding: 15px 20px;
-        border-radius: 15px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        padding: 18px 25px;
+        border-radius: 20px;
         width: 100%;
-        border-left: 4px solid #ff6b9d;
+        border-left: 5px solid var(--primary-pink);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .content:hover {
+        border-left-width: 8px;
+        transform: translateX(5px);
     }
 
     .content strong {
-        font-size: 15px;
+        font-size: 16px;
         color: #333;
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        font-weight: 700;
     }
 
     .content p {
         margin: 0;
-        font-size: 14px;
-        line-height: 1.5;
+        font-size: 15px;
+        line-height: 1.6;
         color: #666;
     }
 
     .new-comment {
         display: flex;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 12px;
+        margin-top: 25px;
     }
 
     .new-comment input {
         flex: 1;
-        padding: 15px;
-        border-radius: 15px;
-        border: 2px solid #e0e0e0;
-        font-size: 14px;
+        padding: 18px 20px;
+        border-radius: 20px;
+        border: 3px solid #e0e0e0;
+        font-size: 15px;
         outline: none;
         transition: all 0.3s ease;
+        font-family: inherit;
     }
 
     .new-comment input:focus {
-        border-color: #ff6b9d;
-        box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        border-color: var(--primary-pink);
+        box-shadow: 0 0 0 5px rgba(255, 107, 157, 0.15);
+        transform: translateY(-2px);
     }
 
     .new-comment button {
-        padding: 15px 25px;
+        padding: 18px 30px;
         border: none;
-        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        background: linear-gradient(135deg, var(--primary-pink), var(--primary-pink-dark));
         color: white;
-        border-radius: 15px;
+        border-radius: 20px;
         cursor: pointer;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 15px;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+        white-space: nowrap;
     }
 
     .new-comment button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+    }
+
+    .new-comment button:active {
+        transform: translateY(-1px);
     }
 
     .like {
-        font-size: 20px;
+        font-size: 24px;
         cursor: pointer;
         user-select: none;
-        transition: transform 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         align-self: flex-start;
-        margin-top: 5px;
+        margin-top: 8px;
     }
 
     .like.liked {
         color: #ff2d55;
-        transform: scale(1.3);
+        transform: scale(1.4) rotate(15deg);
     }
 
     .like:hover {
-        transform: scale(1.2);
+        transform: scale(1.3);
+    }
+
+    /* Lightbox */
+    .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox.active {
+        display: flex;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .lightbox-content img {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 15px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        color: white;
+        font-size: 3em;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+
+    .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 
     @media (max-width: 768px) {
-        h1 {
-            font-size: 2em;
+        body {
+            padding: 15px;
         }
 
-        .gallery {
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+        header {
+            padding: 30px 15px;
+        }
+
+        .upload-section {
+            padding: 25px 20px;
         }
 
         .upload-area {
-            padding: 30px 20px;
+            padding: 40px 20px;
         }
+
+        .upload-icon {
+            font-size: 4em;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .comments-container {
+            padding: 25px 20px;
+        }
+
+        .new-comment {
+            flex-direction: column;
+        }
+
+        .new-comment button {
+            width: 100%;
+        }
+
+        .lightbox-close {
+            top: 20px;
+            right: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .gallery {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* Focus styles for accessibility */
+    button:focus-visible,
+    input:focus-visible,
+    .upload-area:focus-visible {
+        outline: 3px solid var(--primary-pink);
+        outline-offset: 3px;
     }
 </style>
 </head>
@@ -362,27 +646,27 @@
 <div class="container">
     <header>
         <h1>🦫 Otis</h1>
-        <p class="subtitle">Meine süße Capybara Galerie</p>
+        <p class="subtitle">Meine süße Capybara Galerie im Taiwan Stil</p>
     </header>
 
     <div class="upload-section">
-        <h2 style="margin-bottom: 20px; color: #333;">Neues Bild von Otis hochladen</h2>
-        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
-            <div class="upload-icon">📸</div>
+        <h2>Neues Bild von Otis hochladen</h2>
+        <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('fileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('fileInput').click()">
+            <div class="upload-icon" aria-hidden="true">📸</div>
             <div class="upload-text">Klicke hier oder ziehe ein Bild hierher</div>
             <div class="upload-hint">PNG, JPG oder GIF bis 10MB</div>
         </div>
-        <input type="file" id="fileInput" accept="image/*" />
-        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
-            Bild auswählen
+        <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" />
+        <button class="upload-btn" onclick="document.getElementById('fileInput').click()" aria-label="Bild hochladen">
+            📤 Bild auswählen
         </button>
     </div>
 
     <div class="gallery-section">
         <h2 class="section-title">🖼️ Galerie</h2>
-        <div class="gallery" id="gallery">
+        <div class="gallery" id="gallery" role="region" aria-label="Bildergalerie">
             <div class="empty-gallery">
-                <div class="empty-gallery-icon">🦫</div>
+                <div class="empty-gallery-icon" aria-hidden="true">🦫</div>
                 <p>Noch keine Bilder hochgeladen</p>
                 <p style="font-size: 0.9em; margin-top: 10px;">Lade das erste Bild von Otis hoch!</p>
             </div>
@@ -391,13 +675,21 @@
 
     <div class="comments-container">
         <h3>💬 Kommentare</h3>
-        <div id="comments">
+        <div id="comments" role="region" aria-label="Kommentare">
             <!-- Kommentare werden hier eingefügt -->
         </div>
         <div class="new-comment">
-            <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" />
-            <button onclick="addComment()">Posten</button>
+            <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" aria-label="Kommentar eingeben" />
+            <button onclick="addComment()" aria-label="Kommentar posten">Posten</button>
         </div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Bild vergrößert" aria-modal="true">
+    <div class="lightbox-content">
+        <div class="lightbox-close" onclick="closeLightbox()" aria-label="Lightbox schließen">&times;</div>
+        <img id="lightboxImage" src="" alt="Vergrößertes Bild" />
     </div>
 </div>
 
@@ -411,7 +703,7 @@
         if (images.length === 0) {
             gallery.innerHTML = `
                 <div class="empty-gallery">
-                    <div class="empty-gallery-icon">🦫</div>
+                    <div class="empty-gallery-icon" aria-hidden="true">🦫</div>
                     <p>Noch keine Bilder hochgeladen</p>
                     <p style="font-size: 0.9em; margin-top: 10px;">Lade das erste Bild von Otis hoch!</p>
                 </div>
@@ -420,17 +712,17 @@
         }
 
         gallery.innerHTML = images.map((img, index) => `
-            <div class="gallery-item" style="animation-delay: ${index * 0.1}s">
-                <img src="${img.data}" alt="Otis Bild ${index + 1}" />
+            <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${img.data}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${img.data}')">
+                <img src="${img.data}" alt="Otis Bild ${index + 1}" loading="lazy" />
                 <div class="gallery-item-info">
-                    <div class="gallery-item-date">${new Date(img.date).toLocaleDateString('de-DE', { 
+                    <div class="gallery-item-date">📅 ${new Date(img.date).toLocaleDateString('de-DE', { 
                         day: '2-digit', 
                         month: '2-digit', 
                         year: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
                     })}</div>
-                    <button class="delete-btn" onclick="deleteImage(${index})">🗑️ Löschen</button>
+                    <button class="delete-btn" onclick="event.stopPropagation(); deleteImage(${index})" aria-label="Bild ${index + 1} löschen">🗑️ Löschen</button>
                 </div>
             </div>
         `).join('');
@@ -459,6 +751,13 @@
             images.unshift(imageData);
             localStorage.setItem('otisImages', JSON.stringify(images));
             initGallery();
+            
+            // Erfolgs-Feedback
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.style.borderColor = '#4caf50';
+            setTimeout(() => {
+                uploadArea.style.borderColor = '';
+            }, 2000);
         };
         reader.readAsDataURL(file);
     }
@@ -470,6 +769,34 @@
             initGallery();
         }
     }
+
+    function openLightbox(imageSrc) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        lightboxImage.src = imageSrc;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Lightbox mit ESC schließen
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+
+    // Lightbox außerhalb des Bildes schließen
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
 
     // Drag & Drop
     const uploadArea = document.getElementById('uploadArea');
@@ -506,15 +833,19 @@
 
     function renderComments() {
         commentsEl.innerHTML = "";
+        if (comments.length === 0) {
+            commentsEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Noch keine Kommentare. Sei der Erste!</p>';
+            return;
+        }
         comments.forEach((c, i) => {
             commentsEl.innerHTML += `
-                <div class="comment" style="animation-delay: ${i * 0.07}s">
-                    <div class="avatar">🦫</div>
+                <div class="comment" style="animation-delay: ${i * 0.08}s">
+                    <div class="avatar" aria-hidden="true">🦫</div>
                     <div class="content">
                         <strong>${c.name}</strong>
                         <p>${c.text}</p>
                     </div>
-                    <div class="like" onclick="toggleLike(this)">❤</div>
+                    <div class="like" onclick="toggleLike(this)" role="button" tabindex="0" aria-label="Gefällt mir" onkeypress="if(event.key==='Enter') toggleLike(this)">❤</div>
                 </div>
             `;
         });
@@ -528,10 +859,18 @@
         localStorage.setItem('otisComments', JSON.stringify(comments));
         input.value = "";
         renderComments();
+        
+        // Fokus zurück auf Input
+        input.focus();
     }
 
     function toggleLike(el) {
         el.classList.toggle("liked");
+        if (el.classList.contains('liked')) {
+            el.setAttribute('aria-label', 'Gefällt mir aktiviert');
+        } else {
+            el.setAttribute('aria-label', 'Gefällt mir');
+        }
     }
 
     function handleKeyPress(event) {
@@ -543,6 +882,13 @@
     // Initialisierung
     initGallery();
     renderComments();
+
+    // Service Worker für Offline-Funktionalität (optional)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            // Kann später für PWA-Funktionalität verwendet werden
+        });
+    }
 </script>
 
 </body>

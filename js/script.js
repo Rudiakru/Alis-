@@ -323,9 +323,12 @@ function initMap() {
         mapElement.innerHTML = `
             <div class="map-placeholder">
                 <div>
-                    <p style="font-size: 2em; margin-bottom: 15px;">🗺️</p>
-                    <p>Google Maps API Key benötigt</p>
-                    <p style="font-size: 0.9em; margin-top: 10px;">Füge deinen API Key in index.html ein</p>
+                    <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
+                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">Google Maps API Key benötigt</p>
+                    <p style="font-size: 1em; margin-bottom: 10px;">Um die Karte zu aktivieren:</p>
+                    <p style="font-size: 0.9em; opacity: 0.9;">1. Gehe zu <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" style="color: white; text-decoration: underline;">Google Cloud Console</a></p>
+                    <p style="font-size: 0.9em; opacity: 0.9;">2. Erstelle einen API Key</p>
+                    <p style="font-size: 0.9em; opacity: 0.9;">3. Füge ihn in index.html ein (Zeile 116)</p>
                 </div>
             </div>
         `;

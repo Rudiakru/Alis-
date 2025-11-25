@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="css/navigation.css">
 </head>
 <body>
+    <!-- Birthday Banner -->
+    <div class="birthday-banner">
+        <img src="https://media.giphy.com/media/k3c92Q7XmGj1xG7P5q/giphy.gif" alt="Dancing Capybara GIF" class="birthday-gif">
+        <p class="birthday-text">Alles Gute zum Geburtstag Alina!</p>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -85,7 +90,7 @@
             <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
             <div id="map" style="min-height: 400px;"></div>
             <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
-                💡 Um die Karte zu aktivieren, füge deinen Google Maps API Key in index.html ein (Zeile 116)
+                💡 Die Karte verwendet OpenStreetMap - keine API Key erforderlich!
             </p>
         </section>
 
@@ -138,12 +143,9 @@
         Made with ❤️ in Taiwan | 🦫 Otis Galerie
     </footer>
 
-    <!-- Google Maps API -->
-    <!-- 
-    WICHTIG: Ersetze DEIN_API_KEY_HIER mit deinem Google Maps API Key
-    Hol dir einen kostenlosen Key hier: https://console.cloud.google.com/google/maps-apis
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=DEIN_API_KEY_HIER&callback=initMap" async defer></script>
+    <!-- Leaflet (OpenStreetMap) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- Navigation Script -->
     <script src="js/navigation.js"></script>

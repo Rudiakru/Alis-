@@ -80,19 +80,18 @@ async function initSlideshow() {
     // Kombiniere Ordner-Bilder und hochgeladene Bilder
     slideshowImages = [...folderImages, ...uploadedImages];
     
+    // Falls keine Bilder vorhanden, verwende Platzhalter-Bilder
+    if (slideshowImages.length === 0) {
+        slideshowImages = [
+            'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop'
+        ];
+    }
+    
     const slideshowWrapper = document.getElementById('slideshow-wrapper');
     if (!slideshowWrapper) return;
-    
-    if (slideshowImages.length === 0) {
-        slideshowWrapper.innerHTML = `
-            <div style="padding: 60px 20px; text-align: center; color: #999;">
-                <div style="font-size: 4em; margin-bottom: 20px;">🦫</div>
-                <p>Noch keine Bilder in der Slideshow</p>
-                <p style="font-size: 0.9em; margin-top: 10px;">Lade Bilder hoch oder füge sie in den img/ Ordner ein!</p>
-            </div>
-        `;
-        return;
-    }
     
     // Erstelle Slides
     slideshowWrapper.innerHTML = '';
@@ -358,92 +357,49 @@ if (lightbox) {
 }
 
 // ============================================
-// GOOGLE MAPS
+// OPENSTREETMAP / LEAFLET
 // ============================================
 function initMap() {
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
     
-    // Prüfe ob Google Maps API verfügbar ist
-    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+    // Prüfe ob Leaflet verfügbar ist
+    if (typeof L === 'undefined') {
         mapElement.innerHTML = `
             <div class="map-placeholder">
                 <div>
                     <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
-                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">Google Maps API Key benötigt</p>
-                    <p style="font-size: 1em; margin-bottom: 10px;">Um die Karte zu aktivieren:</p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">1. Gehe zu <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" style="color: white; text-decoration: underline;">Google Cloud Console</a></p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">2. Erstelle einen API Key</p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">3. Füge ihn in index.html ein (Zeile 116)</p>
+                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">Karte wird geladen...</p>
                 </div>
             </div>
         `;
+        // Versuche es später nochmal
+        setTimeout(initMap, 500);
         return;
     }
     
-    // Custom Map Style - Taiwan Capybara Stil
-    const mapStyles = [
-        {
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#C5E1A5" }] // Pastellgrünes Wasser
-        },
-        {
-            "featureType": "landscape",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#FFF8E1" }] // Yuzu Creme
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#ffffff" }, { "visibility": "simplified" }]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry",
-            "stylers": [{ "visibility": "off" }] // Autobahnen verstecken
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels",
-            "stylers": [{ "visibility": "off" }]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#AED581" }] // Matcha Grün für Parks
-        },
-        {
-            "featureType": "administrative",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#8D6E63" }]
-        }
-    ];
-
     // Startpunkt (Kaohsiung, Taiwan)
-    const center = { lat: 22.6273, lng: 120.3014 };
+    const center = [22.6273, 120.3014];
 
-    const map = new google.maps.Map(mapElement, {
-        zoom: 13,
-        center: center,
-        styles: mapStyles,
-        disableDefaultUI: true,
-        zoomControl: true,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true
-    });
+    // Erstelle Karte mit OpenStreetMap
+    const map = L.map(mapElement).setView(center, 13);
+
+    // Füge OpenStreetMap Tile Layer hinzu
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+    }).addTo(map);
 
     // Deine Orte - Hier kannst du deine persönlichen Orte eintragen
     const spots = [
         {
-            coords: { lat: 22.6273, lng: 120.3014 },
+            coords: [22.6273, 120.3014],
             title: "Kaohsiung",
             text: "Wo alles begann! ❤️",
             icon: '🦫'
         },
         {
-            coords: { lat: 22.6200, lng: 120.3100 },
+            coords: [22.6200, 120.3100],
             title: "Lieblingsplatz",
             text: "Unser besonderer Ort 💕",
             icon: '💖'
@@ -451,31 +407,30 @@ function initMap() {
         // Füge hier mehr Orte hinzu!
     ];
 
-    spots.forEach(spot => {
-        const marker = new google.maps.Marker({
-            position: spot.coords,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            title: spot.title
+    spots.forEach((spot, index) => {
+        // Erstelle Custom Icon
+        const customIcon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="font-size: 2em; text-align: center;">${spot.icon}</div>`,
+            iconSize: [40, 40],
+            iconAnchor: [20, 40]
         });
 
-        const infoWindow = new google.maps.InfoWindow({
-            content: `
-                <div style="padding:15px; text-align:center; font-family: 'Varela Round', sans-serif;">
-                    <h3 style="color:#8D6E63; margin:0 0 10px 0; font-size:1.3em;">${spot.icon} ${spot.title}</h3>
-                    <p style="color:#666; margin:0;">${spot.text}</p>
-                </div>
-            `
-        });
+        const marker = L.marker(spot.coords, { icon: customIcon }).addTo(map);
 
-        marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-        });
+        const popupContent = `
+            <div style="padding:15px; text-align:center; font-family: 'Varela Round', sans-serif;">
+                <h3 style="color:#8D6E63; margin:0 0 10px 0; font-size:1.3em;">${spot.icon} ${spot.title}</h3>
+                <p style="color:#666; margin:0;">${spot.text}</p>
+            </div>
+        `;
+
+        marker.bindPopup(popupContent);
         
         // Auto-open first marker
-        if (spots.indexOf(spot) === 0) {
+        if (index === 0) {
             setTimeout(() => {
-                infoWindow.open(map, marker);
+                marker.openPopup();
             }, 1000);
         }
     });
@@ -557,11 +512,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initSlideshow();
     renderComments();
     
-    // Google Maps wird asynchron geladen
-    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+    // Leaflet wird asynchron geladen, initMap wird aufgerufen sobald Leaflet verfügbar ist
+    if (typeof L !== 'undefined') {
         initMap();
     } else {
-        // Warte auf Google Maps API
-        window.initMap = initMap;
+        // Warte auf Leaflet Library
+        const checkLeaflet = setInterval(() => {
+            if (typeof L !== 'undefined') {
+                clearInterval(checkLeaflet);
+                initMap();
+            }
+        }, 100);
     }
 });

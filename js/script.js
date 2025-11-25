@@ -212,17 +212,33 @@ function handleFileSelect(event) {
         };
         images.unshift(imageData);
         localStorage.setItem('otisImages', JSON.stringify(images));
-        initGallery();
-        initSlideshow(); // Aktualisiere auch Slideshow
+        
+        // Aktualisiere beide Bereiche
+        initGallery(); // Aktualisiert "Alle Bilder" Section
+        initSlideshow(); // Aktualisiert Slideshow (enthält hochgeladene Bilder)
         
         // Erfolgs-Feedback
-        const uploadArea = document.getElementById('uploadArea');
-        if (uploadArea) {
-            uploadArea.style.borderColor = '#4caf50';
-            setTimeout(() => {
-                uploadArea.style.borderColor = '';
-            }, 2000);
-        }
+        const successMsg = document.createElement('div');
+        successMsg.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            z-index: 10000;
+            font-weight: 700;
+            animation: slideInRight 0.5s ease;
+        `;
+        successMsg.innerHTML = '✨ Bild erfolgreich hochgeladen!';
+        document.body.appendChild(successMsg);
+        
+        setTimeout(() => {
+            successMsg.style.animation = 'slideOutRight 0.5s ease';
+            setTimeout(() => successMsg.remove(), 500);
+        }, 3000);
         
         // Konfetti für neuen Upload
         if (typeof confetti !== 'undefined') {
@@ -246,31 +262,35 @@ function deleteImage(index) {
     }
 }
 
-// Drag & Drop
-const uploadArea = document.getElementById('uploadArea');
+// File Input Handler (für Navigation Upload)
 const fileInput = document.getElementById('fileInput');
 
-if (uploadArea && fileInput) {
-    uploadArea.addEventListener('dragover', (e) => {
+if (fileInput) {
+    fileInput.addEventListener('change', handleFileSelect);
+    
+    // Drag & Drop auf Body (optional - für Drag & Drop von überall)
+    document.body.addEventListener('dragover', (e) => {
         e.preventDefault();
-        uploadArea.classList.add('dragover');
+        if (e.dataTransfer.types.includes('Files')) {
+            document.body.classList.add('drag-over');
+        }
     });
 
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('dragover');
+    document.body.addEventListener('dragleave', (e) => {
+        if (!e.relatedTarget || e.relatedTarget === document.body) {
+            document.body.classList.remove('drag-over');
+        }
     });
 
-    uploadArea.addEventListener('drop', (e) => {
+    document.body.addEventListener('drop', (e) => {
         e.preventDefault();
-        uploadArea.classList.remove('dragover');
+        document.body.classList.remove('drag-over');
         const files = e.dataTransfer.files;
-        if (files.length > 0) {
+        if (files.length > 0 && files[0].type.startsWith('image/')) {
             fileInput.files = files;
             handleFileSelect({ target: { files: files } });
         }
     });
-
-    fileInput.addEventListener('change', handleFileSelect);
 }
 
 // ============================================

@@ -35,7 +35,13 @@
                 <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="gacha.html">Gacha</a></li>
                 <li><a href="ueber.html">Über Otis</a></li>
+                <li class="nav-upload-item">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('fileInput').click(); return false;" class="nav-upload-link">
+                        📤 Bild hochladen
+                    </a>
+                </li>
             </ul>
+            <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" style="display: none;" />
         </div>
     </nav>
 
@@ -51,20 +57,6 @@
     </header>
 
     <div class="container">
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <h2>📤 Neues Bild von Otis hochladen</h2>
-            <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('fileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('fileInput').click()">
-                <div class="upload-icon" aria-hidden="true">📸</div>
-                <div class="upload-text">Klicke hier oder ziehe ein Bild hierher</div>
-                <div class="upload-hint">PNG, JPG oder GIF bis 10MB</div>
-            </div>
-            <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" />
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()" aria-label="Bild hochladen">
-                📤 Bild auswählen
-            </button>
-        </div>
-
         <!-- Slideshow Section -->
         <section id="slideshow-section" class="content-section">
             <h2 class="section-title">📸 Unsere Momente</h2>

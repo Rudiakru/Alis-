@@ -66,6 +66,47 @@
     color: white;
 }
 
+.nav-upload-item {
+    border-top: 2px solid rgba(255, 107, 157, 0.2);
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.nav-upload-link {
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-pink-dark)) !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+.nav-upload-link:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4) !important;
+}
+
+/* Drag Over Indicator */
+body.drag-over::after {
+    content: '📤 Bild hier ablegen';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-pink-dark));
+    color: white;
+    padding: 30px 60px;
+    border-radius: 30px;
+    font-size: 1.5em;
+    font-weight: 900;
+    z-index: 10000;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    animation: pulse-drag 1s ease-in-out infinite;
+}
+
+@keyframes pulse-drag {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
 .mobile-menu-toggle {
     display: none;
     background: none;

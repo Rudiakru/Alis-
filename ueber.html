@@ -12,6 +12,40 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navigation.css">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, rgba(255, 179, 217, 0.2), rgba(217, 179, 255, 0.2));
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 3px solid rgba(255, 107, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero::before {
+            content: '🦫💕';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 3em;
+            opacity: 0.3;
+            animation: float-kawaii 4s ease-in-out infinite;
+        }
+        .info-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 179, 217, 0.1));
+            border-left: 5px solid var(--primary-pink);
+            position: relative;
+        }
+        .info-box::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            opacity: 0.5;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
 
@@ -31,9 +65,9 @@
 
     <div class="container">
         <header class="hero" style="min-height: auto; padding: 40px 20px;">
-            <div class="glass-card">
+            <div class="glass-card about-hero">
                 <h1>🦫 Über Otis</h1>
-                <p class="subtitle">Die Geschichte unserer süßen Capybara</p>
+                <p class="subtitle">Die Geschichte unserer süßen Capybara ✨💕</p>
             </div>
         </header>
 
@@ -48,7 +82,7 @@
                     </p>
                 </div>
 
-                <div style="background: rgba(255, 255, 255, 0.8); padding: 30px; border-radius: 20px; margin-bottom: 30px;">
+                <div class="info-box" style="padding: 30px; border-radius: 20px; margin-bottom: 30px;">
                     <h3 style="color: var(--primary-pink); margin-bottom: 15px; font-size: 1.5em;">✨ Was macht Otis besonders?</h3>
                     <ul style="list-style: none; padding: 0;">
                         <li style="padding: 10px 0; border-bottom: 1px solid #eee;">🦫 Die süßeste Capybara der Welt</li>
@@ -58,7 +92,7 @@
                     </ul>
                 </div>
 
-                <div style="background: rgba(255, 255, 255, 0.8); padding: 30px; border-radius: 20px; margin-bottom: 30px;">
+                <div class="info-box" style="padding: 30px; border-radius: 20px; margin-bottom: 30px;">
                     <h3 style="color: var(--primary-pink); margin-bottom: 15px; font-size: 1.5em;">📸 Über diese Website</h3>
                     <p style="line-height: 1.8;">
                         Diese Website wurde im Taiwan Capybara Stil gestaltet - mit pastellfarben, 

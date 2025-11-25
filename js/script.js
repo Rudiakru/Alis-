@@ -158,36 +158,62 @@ document.addEventListener('keydown', function(e) {
 // ============================================
 // BILDER-UPLOAD FUNKTIONEN
 // ============================================
-function initGallery() {
-    const gallery = document.getElementById('uploaded-gallery');
+async function initGallery() {
+    const gallery = document.getElementById('all-images-gallery');
     if (!gallery) return;
     
-    if (images.length === 0) {
+    // Hole alle Bilder: aus img/ Ordner + hochgeladene
+    const folderImages = await scanImageFolder();
+    const uploadedImages = images.map(img => ({
+        src: img.data,
+        date: img.date,
+        isUploaded: true,
+        index: images.indexOf(img)
+    }));
+    
+    const folderImageObjects = folderImages.map((src, idx) => ({
+        src: src,
+        date: null,
+        isUploaded: false,
+        index: idx
+    }));
+    
+    const allImages = [...uploadedImages, ...folderImageObjects];
+    
+    if (allImages.length === 0) {
         gallery.innerHTML = `
             <div class="empty-gallery">
                 <div class="empty-gallery-icon">🦫</div>
-                <p>Noch keine Bilder hochgeladen</p>
-                <p style="font-size: 0.9em; margin-top: 10px;">Lade das erste Bild von Otis hoch!</p>
+                <p>Noch keine Bilder vorhanden</p>
+                <p style="font-size: 0.9em; margin-top: 10px;">Lade Bilder hoch oder füge sie in den img/ Ordner ein!</p>
             </div>
         `;
         return;
     }
 
-    gallery.innerHTML = images.map((img, index) => `
-        <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${img.data}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${img.data}')">
-            <img src="${img.data}" alt="Otis Bild ${index + 1}" loading="lazy" />
-            <div class="gallery-item-info">
-                <div class="gallery-item-date">📅 ${new Date(img.date).toLocaleDateString('de-DE', { 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })}</div>
-                <button class="delete-btn" onclick="event.stopPropagation(); deleteImage(${index})" aria-label="Bild ${index + 1} löschen">🗑️ Löschen</button>
+    gallery.innerHTML = allImages.map((imgObj, index) => {
+        const dateStr = imgObj.date ? new Date(imgObj.date).toLocaleDateString('de-DE', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }) : 'Aus img/ Ordner';
+        
+        const deleteBtn = imgObj.isUploaded ? 
+            `<button class="delete-btn" onclick="event.stopPropagation(); deleteImage(${imgObj.index})" aria-label="Bild löschen">🗑️ Löschen</button>` :
+            '';
+        
+        return `
+            <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${imgObj.src}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${imgObj.src}')">
+                <img src="${imgObj.src}" alt="Otis Bild ${index + 1}" loading="lazy" />
+                <div class="gallery-item-info">
+                    <div class="gallery-item-date">📅 ${dateStr}</div>
+                    ${deleteBtn}
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function handleFileSelect(event) {
@@ -257,8 +283,8 @@ function deleteImage(index) {
     if (confirm('Möchtest du dieses Bild wirklich löschen?')) {
         images.splice(index, 1);
         localStorage.setItem('otisImages', JSON.stringify(images));
-        initGallery();
-        initSlideshow(); // Aktualisiere auch Slideshow
+        initGallery(); // Aktualisiert "Alle Bilder" (zeigt alle: hochgeladen + img/ Ordner)
+        initSlideshow(); // Aktualisiert Slideshow (zeigt alle: hochgeladen + img/ Ordner)
     }
 }
 

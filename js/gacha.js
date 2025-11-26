@@ -2,26 +2,29 @@
 
 // Basis Gacha Items Database - REDUZIERT für schnelles Sammeln
 let baseGachaItems = [
-    // Common Items (4 Items)
+    // Common Items (6 Items - mit süßen Fotos)
     { id: 1, name: "Capybara Foto", icon: "🦫", rarity: "common", description: "Ein süßes Capybara Foto!", probability: 5, color: "#AED581", isCapybaraPhoto: true, imageData: "https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" },
-    { id: 2, name: "Kaffee", icon: "☕", rarity: "common", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
-    { id: 3, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
-    { id: 4, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
+    { id: 2, name: "Hund Foto", icon: "🐶", rarity: "common", description: "Ein süßer Hund!", probability: 5, color: "#FFAB91", isCutePhoto: true, imageData: "https://media.giphy.com/media/3o7aD2sa0qC3XtS0Q0/giphy.gif" },
+    { id: 3, name: "Katze Foto", icon: "🐱", rarity: "common", description: "Eine süße Katze!", probability: 5, color: "#FFB3D9", isCutePhoto: true, imageData: "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif" },
+    { id: 4, name: "Capybara Bad", icon: "🦫", rarity: "common", description: "Capybara im Bad!", probability: 5, color: "#AED581", isCutePhoto: true, imageData: "https://media.giphy.com/media/k3c92Q7XmGj1xG7P5q/giphy.gif" },
+    { id: 5, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
+    { id: 6, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
     
-    // Rare Items (3 Items)
-    { id: 6, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
-    { id: 7, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
-    { id: 8, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
+    // Rare Items (4 Items)
+    { id: 7, name: "Kaffee", icon: "☕", rarity: "rare", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
+    { id: 8, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
+    { id: 9, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
+    { id: 10, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
     
     // Epic Items (2 Items)
-    { id: 9, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
-    { id: 10, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
+    { id: 11, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
+    { id: 12, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
     
     // Legendary Items (4 Items - mit Features)
-    { id: 11, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
-    { id: 12, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
-    { id: 13, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
-    { id: 14, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
+    { id: 13, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
+    { id: 14, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
+    { id: 15, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 16, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
 ];
 
 // Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)
@@ -269,13 +272,19 @@ function showCollection() {
                 displayName = 'Monster-Gacha';
                 onClick = `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')"`;
                 cursorStyle = 'cursor: pointer;';
-            } else if (item.isCapybaraPhoto && item.imageData) {
-                displayIcon = '🦫';
-                displayName = 'Capybara Foto';
-                onClick = `onclick="showCapybaraPhoto('${item.imageData.replace(/'/g, "&#39;")}')"`;
+            } else if ((item.isCapybaraPhoto || item.isCutePhoto) && item.imageData) {
+                // Verwende Item-Daten für Popup - speichere in data attribute
+                const photoItem = itemData || item;
+                const safeImageData = item.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                const safeName = (photoItem.name || item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                const safeIcon = photoItem.icon || item.icon || '🦫';
+                onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
                 cursorStyle = 'cursor: pointer;';
-            } else if (itemData && itemData.isCapybaraPhoto && itemData.imageData) {
-                onClick = `onclick="showCapybaraPhoto('${itemData.imageData.replace(/'/g, "&#39;")}')"`;
+            } else if (itemData && (itemData.isCapybaraPhoto || itemData.isCutePhoto) && itemData.imageData) {
+                const safeImageData = itemData.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                const safeName = (itemData.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                const safeIcon = itemData.icon || '🦫';
+                onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
                 cursorStyle = 'cursor: pointer;';
             }
             
@@ -370,6 +379,7 @@ function pullGacha() {
                         obtainedAt: new Date().toISOString(),
                         isMonsterGacha: item.isMonsterGacha || false,
                         isCapybaraPhoto: item.isCapybaraPhoto || false,
+                        isCutePhoto: item.isCutePhoto || false,
                         imageData: item.imageData || null
                     });
                     
@@ -393,16 +403,16 @@ function pullGacha() {
                 // Confetti based on rarity
                 triggerConfetti(item.rarity);
                 
-                // Prüfe ob es ein Monster-Gacha oder Capybara Foto ist - zeige Popup NACH Button-Reaktivierung
+                // Prüfe ob es ein Monster-Gacha, Capybara Foto oder süßes Foto ist - zeige Popup NACH Button-Reaktivierung
                 if (item.isMonsterGacha && item.imageData) {
                     // Zeige das Bild in einem Popup nach kurzer Verzögerung
                     setTimeout(() => {
                         showMonsterGachaImage(item.imageData);
                     }, 500);
-                } else if (item.isCapybaraPhoto && item.imageData) {
-                    // Zeige Capybara Foto in einem Popup nach kurzer Verzögerung
+                } else if ((item.isCapybaraPhoto || item.isCutePhoto) && item.imageData) {
+                    // Zeige süßes Foto in einem Popup nach kurzer Verzögerung
                     setTimeout(() => {
-                        showCapybaraPhoto(item.imageData);
+                        showCutePhoto(item);
                     }, 500);
                 }
                 
@@ -602,7 +612,129 @@ function showMonsterGachaImage(imageData) {
     document.addEventListener('keydown', escHandler);
 }
 
-// Capybara Foto Popup
+// Süßes Foto Popup (für Capybara, Hund, Katze etc.)
+function showCutePhoto(item) {
+    const imageData = item.imageData;
+    const itemName = item.name;
+    const itemIcon = item.icon;
+    
+    // Bestimme Titel und Farben basierend auf Item
+    let title = "KAWAII!";
+    let borderColor = "#AED581";
+    let buttonColor = "linear-gradient(135deg, #AED581, #8BC34A)";
+    let shadowColor = "rgba(174, 213, 129, 0.5)";
+    
+    if (itemName.includes("Hund") || itemIcon === "🐶") {
+        title = "SÜßER HUND!";
+        borderColor = "#FFAB91";
+        buttonColor = "linear-gradient(135deg, #FFAB91, #FF8A65)";
+        shadowColor = "rgba(255, 171, 145, 0.5)";
+    } else if (itemName.includes("Katze") || itemIcon === "🐱") {
+        title = "SÜßE KATZE!";
+        borderColor = "#FFB3D9";
+        buttonColor = "linear-gradient(135deg, #FFB3D9, #FF91C2)";
+        shadowColor = "rgba(255, 179, 217, 0.5)";
+    } else if (itemName.includes("Capybara") || itemIcon === "🦫") {
+        title = "KAWAII CAPYBARA!";
+        borderColor = "#AED581";
+        buttonColor = "linear-gradient(135deg, #AED581, #8BC34A)";
+        shadowColor = "rgba(174, 213, 129, 0.5)";
+    }
+    
+    // Erstelle großes Popup-Modal
+    const modal = document.createElement('div');
+    modal.id = 'cute-photo-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+        pointer-events: auto;
+    `;
+    
+    const closeModal = () => {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (modal.parentElement) {
+                modal.remove();
+            }
+            // Stelle sicher, dass Button wieder aktiv ist
+            const button = document.getElementById('gacha-button');
+            if (button) {
+                button.disabled = false;
+                button.classList.remove('pulling');
+            }
+        }, 300);
+    };
+    
+    // Mobile-optimiertes Popup
+    const isMobile = window.innerWidth <= 768;
+    const iconSize = isMobile ? '2.5em' : '4em';
+    const titleSize = isMobile ? '1.5em' : '2em';
+    const imgMaxWidth = isMobile ? '95vw' : '80vw';
+    const imgMaxHeight = isMobile ? '60vh' : '70vh';
+    const buttonPadding = isMobile ? '12px 30px' : '15px 40px';
+    const buttonFontSize = isMobile ? '1em' : '1.2em';
+    
+    modal.innerHTML = `
+        <div style="position: relative; max-width: 95%; max-height: 95%; text-align: center; pointer-events: auto; padding: ${isMobile ? '15px' : '20px'};">
+            <div style="font-size: ${iconSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; animation: bounce 1s ease infinite;">${itemIcon}</div>
+            <h2 style="color: white; font-size: ${titleSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; font-family: var(--font-heading); line-height: 1.2;">${title}</h2>
+            <img src="${imageData}" alt="${itemName}" style="max-width: ${imgMaxWidth}; max-height: ${imgMaxHeight}; border-radius: ${isMobile ? '15px' : '20px'}; box-shadow: 0 20px 60px ${shadowColor}; border: ${isMobile ? '3px' : '5px'} solid ${borderColor}; display: block; margin: 0 auto;" />
+            <button id="close-cute-modal" style="margin-top: ${isMobile ? '20px' : '30px'}; padding: ${buttonPadding}; background: ${buttonColor}; color: white; border: none; border-radius: ${isMobile ? '20px' : '25px'}; font-size: ${buttonFontSize}; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px ${shadowColor}; transition: transform 0.2s ease; -webkit-tap-highlight-color: ${shadowColor};">Schließen ✨</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event Listener für Schließen-Button
+    const closeBtn = modal.querySelector('#close-cute-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('touchstart', closeModal);
+    }
+    
+    // Schließe nach 8 Sekunden automatisch
+    setTimeout(() => {
+        if (modal.parentElement) {
+            closeModal();
+        }
+    }, 8000);
+    
+    // Schließe bei Klick außerhalb
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Schließe bei ESC-Taste
+    const escHandler = (e) => {
+        if (e.key === 'Escape' && modal.parentElement) {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
+// Helper-Funktion für Collection-Clicks
+function showCutePhotoFromCollection(imageData, itemName, itemIcon) {
+    showCutePhoto({
+        imageData: imageData,
+        name: itemName,
+        icon: itemIcon
+    });
+}
+
+// Capybara Foto Popup (Legacy - wird jetzt von showCutePhoto verwendet)
 function showCapybaraPhoto(imageData) {
     // Erstelle großes Popup-Modal
     const modal = document.createElement('div');

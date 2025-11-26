@@ -50,8 +50,8 @@ function getGachaItems() {
     return items;
 }
 
-// Verwende dynamische Funktion
-const gachaItems = getGachaItems();
+// Verwende dynamische Funktion - wird bei jedem Pull neu geladen
+// const gachaItems = getGachaItems(); // Entfernt - wird jetzt dynamisch geladen
 
 // Stats & Collection
 let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
@@ -142,15 +142,18 @@ function checkUnlockedFeatures() {
     const stats = JSON.parse(localStorage.getItem('gachaStats')) || { collection: [] };
     const collection = stats.collection || [];
     
+    // Lade aktuelle Items für Prüfung
+    const currentGachaItems = getGachaItems();
+    
     // Prüfe ob Karte freigeschaltet ist
     const hasMap = unlocks.includes('map') || collection.some(item => {
-        const itemData = gachaItems.find(i => i.id === item.id);
+        const itemData = currentGachaItems.find(i => i.id === item.id);
         return itemData && itemData.unlocks === 'map';
     });
     
     // Prüfe ob Musik freigeschaltet ist
     const hasMusic = unlocks.includes('music') || collection.some(item => {
-        const itemData = gachaItems.find(i => i.id === item.id);
+        const itemData = currentGachaItems.find(i => i.id === item.id);
         return itemData && itemData.unlocks === 'music';
     });
     
@@ -401,8 +404,13 @@ function pullGacha() {
                 // Prüfe ob es ein Monster-Gacha, Capybara Foto oder süßes Foto ist - zeige Popup NACH Button-Reaktivierung
                 if (item.isMonsterGacha && item.imageData) {
                     // Zeige das Bild in einem Popup nach kurzer Verzögerung
+                    console.log('Monster-Gacha gefunden, imageData:', item.imageData ? 'vorhanden' : 'fehlt');
                     setTimeout(() => {
-                        showMonsterGachaImage(item.imageData);
+                        if (item.imageData) {
+                            showMonsterGachaImage(item.imageData);
+                        } else {
+                            console.error('Monster-Gacha hat keine imageData!');
+                        }
                     }, 500);
                 } else if ((item.isCapybaraPhoto || item.isCutePhoto) && item.imageData) {
                     // Zeige süßes Foto in einem Popup nach kurzer Verzögerung
@@ -588,11 +596,14 @@ function showMonsterGachaImage(imageData) {
     const buttonPadding = isMobile ? '12px 30px' : '15px 40px';
     const buttonFontSize = isMobile ? '1em' : '1.2em';
     
+    // Escape imageData für HTML
+    const safeImageData = imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+    
     modal.innerHTML = `
         <div style="position: relative; max-width: 95%; max-height: 95%; text-align: center; pointer-events: auto; padding: ${isMobile ? '15px' : '20px'};">
             <div style="font-size: ${monsterSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; animation: bounce 1s ease infinite;">👹</div>
             <h2 style="color: white; font-size: ${titleSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; font-family: var(--font-heading); line-height: 1.2;">MONSTER-GACHA!</h2>
-            <img src="${imageData}" alt="Monster-Gacha Bild" style="max-width: ${imgMaxWidth}; max-height: ${imgMaxHeight}; border-radius: ${isMobile ? '15px' : '20px'}; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: ${isMobile ? '3px' : '5px'} solid #E91E63; display: block; margin: 0 auto;" />
+            <img src="${safeImageData}" alt="Monster-Gacha Bild" onerror="this.onerror=null; this.src='https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif'; console.error('Bild konnte nicht geladen werden');" style="max-width: ${imgMaxWidth}; max-height: ${imgMaxHeight}; border-radius: ${isMobile ? '15px' : '20px'}; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: ${isMobile ? '3px' : '5px'} solid #E91E63; display: block; margin: 0 auto;" />
             <button id="close-monster-modal" style="margin-top: ${isMobile ? '20px' : '30px'}; padding: ${buttonPadding}; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: ${isMobile ? '20px' : '25px'}; font-size: ${buttonFontSize}; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); transition: transform 0.2s ease; -webkit-tap-highlight-color: rgba(233, 30, 99, 0.3);">Schließen ✨</button>
         </div>
     `;

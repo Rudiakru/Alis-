@@ -22,87 +22,65 @@ let baseGachaItems = [
     { id: 13, name: "Geschenk 2", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C", unlocks: "map" },
 ];
 
-// Lade Bilder aus Ordnern
-async function loadImagesFromFolder(folderPath) {
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-    const images = [];
+// Bekannte lokale Bilder
+const localImages = {
+    cat: ['img/cat/IMG_3374.jpeg', 'img/cat/IMG_3375.jpeg', 'img/cat/IMG_3376.jpeg'],
+    dogs: ['img/dogs/IMG_3377.jpeg', 'img/dogs/IMG_3378.jpeg', 'img/dogs/IMG_3379.jpeg', 'img/dogs/IMG_3380.jpeg', 'img/dogs/IMG_3381.jpeg'],
+    monster: ['img/monster/15e245b6-5314-40af-a89e-d3b49783902c.jpeg'],
+    photo: ['img/photo/dfb37733-44e3-4e9f-bd06-1aa5adcf566d_Original.jpeg']
+};
+
+// Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)
+function getGachaItems() {
+    const items = [...baseGachaItems];
     
-    // Versuche verschiedene Dateinamen-Kombinationen
-    for (let i = 1; i <= 50; i++) {
-        for (const ext of imageExtensions) {
-            const imagePath = `${folderPath}${i}${ext}`;
-            try {
-                const img = new Image();
-                await new Promise((resolve, reject) => {
-                    img.onload = () => resolve(imagePath);
-                    img.onerror = () => reject();
-                    img.src = imagePath;
-                    setTimeout(() => reject(), 100);
-                });
-                images.push(imagePath);
-            } catch (e) {
-                // Bild existiert nicht, überspringen
-            }
+    // Aktualisiere Katze Foto mit lokalem Bild
+    if (localImages.cat.length > 0) {
+        const catItem = items.find(item => item.id === 3);
+        if (catItem) {
+            const randomIndex = Math.floor(Math.random() * localImages.cat.length);
+            catItem.imageData = localImages.cat[randomIndex];
         }
     }
     
-    return images;
-}
-
-// Dynamische Gacha Items (inkl. Bilder aus Ordnern)
-async function getGachaItems() {
-    const items = [...baseGachaItems];
+    // Aktualisiere Hund Foto mit lokalem Bild
+    if (localImages.dogs.length > 0) {
+        const dogItem = items.find(item => item.id === 2);
+        if (dogItem) {
+            const randomIndex = Math.floor(Math.random() * localImages.dogs.length);
+            dogItem.imageData = localImages.dogs[randomIndex];
+        }
+    }
     
-    // Lade Bilder aus Ordnern und aktualisiere Items
-    try {
-        // Katze Bilder
-        const catImages = await loadImagesFromFolder('img/cat/');
-        if (catImages.length > 0) {
-            const catItem = items.find(item => item.id === 3); // Katze Foto
-            if (catItem) {
-                catItem.imageData = catImages[0]; // Nimm erstes Bild
-            }
+    // Aktualisiere Fotosession mit lokalem Bild
+    if (localImages.photo.length > 0) {
+        const photoItem = items.find(item => item.id === 12);
+        if (photoItem) {
+            photoItem.imageData = localImages.photo[0];
         }
-        
-        // Hund Bilder
-        const dogImages = await loadImagesFromFolder('img/dogs/');
-        if (dogImages.length > 0) {
-            const dogItem = items.find(item => item.id === 2); // Hund Foto
-            if (dogItem) {
-                dogItem.imageData = dogImages[0]; // Nimm erstes Bild
-            }
-        }
-        
-        // Monster Bilder
-        const monsterImages = await loadImagesFromFolder('img/monster/');
-        monsterImages.forEach((imgPath, index) => {
-            items.push({
-                id: 1000 + index, // Eindeutige IDs ab 1000
-                name: "Monster-Gacha",
-                icon: "👹",
-                rarity: "legendary",
-                description: "Ein mysteriöses Monster-Gacha!",
-                probability: 2,
-                color: "#E91E63",
-                isMonsterGacha: true,
-                imageData: imgPath
-            });
+    }
+    
+    // Füge Monster-Gacha Items für lokale Monster-Bilder hinzu
+    localImages.monster.forEach((imgPath, index) => {
+        items.push({
+            id: 3000 + index, // Eindeutige IDs ab 3000
+            name: "Monster-Gacha",
+            icon: "👹",
+            rarity: "legendary",
+            description: "Ein mysteriöses Monster-Gacha!",
+            probability: 2,
+            color: "#E91E63",
+            isMonsterGacha: true,
+            imageData: imgPath
         });
-        
-        // Photo Bilder (für Fotosession)
-        const photoImages = await loadImagesFromFolder('img/photo/');
-        if (photoImages.length > 0) {
-            const photoItem = items.find(item => item.id === 12); // Fotosession
-            if (photoItem) {
-                photoItem.imageData = photoImages[0]; // Nimm erstes Bild
-            }
-        }
-        
-        // Alte hochgeladene Bilder (Monster-Gacha)
+    });
+    
+    // Füge Monster-Gacha Items für hochgeladene Bilder hinzu
+    try {
         const uploadedImages = JSON.parse(localStorage.getItem('otisImages')) || [];
         uploadedImages.forEach((img, index) => {
             items.push({
-                id: 2000 + index, // Eindeutige IDs ab 2000
+                id: 1000 + index, // Eindeutige IDs ab 1000
                 name: "Monster-Gacha",
                 icon: "👹",
                 rarity: "legendary",
@@ -115,7 +93,7 @@ async function getGachaItems() {
             });
         });
     } catch (e) {
-        console.error('Fehler beim Laden der Bilder:', e);
+        console.error('Fehler beim Laden der Bilder für Monster-Gacha:', e);
     }
     
     return items;
@@ -136,37 +114,9 @@ let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
 // Feature Unlock System
 function unlockFeature(feature) {
     if (feature === 'map') {
-        // Erstelle Map-Section dynamisch wenn sie nicht existiert
-        let mapSection = document.getElementById('map-section');
-        if (!mapSection) {
-            const container = document.querySelector('.container');
-            if (container) {
-                const gachaSection = container.querySelector('.kawaii-section');
-                if (gachaSection) {
-                    mapSection = document.createElement('section');
-                    mapSection.id = 'map-section';
-                    mapSection.className = 'content-section';
-                    mapSection.innerHTML = `
-                        <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
-                        <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
-                        <div id="map" style="min-height: 400px; width: 100%; border-radius: 20px; overflow: hidden;"></div>
-                        <div id="map-placeholder" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #AED581, #8BC34A); border-radius: 20px; color: white; text-align: center; padding: 40px;">
-                            <div>
-                                <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
-                                <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">OpenStreetMap Karte</p>
-                                <p style="font-size: 1em;">Taiwan - Wo alles begann! 💕</p>
-                            </div>
-                        </div>
-                        <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
-                            💡 Die Karte verwendet OpenStreetMap - keine API Key erforderlich!
-                        </p>
-                    `;
-                    container.insertBefore(mapSection, gachaSection);
-                }
-            }
-        }
-        
+        const mapSection = document.getElementById('map-section');
         if (mapSection) {
+            // Entferne alle versteckenden Styles
             mapSection.style.display = 'block';
             mapSection.style.visibility = 'visible';
             mapSection.style.position = 'relative';
@@ -199,29 +149,9 @@ function unlockFeature(feature) {
             }
         }
     } else if (feature === 'music') {
-        // Erstelle Music-Section dynamisch wenn sie nicht existiert
-        let musicSection = document.getElementById('music-section');
-        if (!musicSection) {
-            const container = document.querySelector('.container');
-            if (container) {
-                const gachaSection = container.querySelector('.kawaii-section');
-                if (gachaSection) {
-                    musicSection = document.createElement('section');
-                    musicSection.id = 'music-section';
-                    musicSection.className = 'content-section kawaii-section';
-                    musicSection.innerHTML = `
-                        <h2 class="section-title">🎵 Musik für Alina</h2>
-                        <p style="margin-bottom: 25px; color: #666;">Höre die perfekte Playlist! 💕</p>
-                        <div class="spotify-container">
-                            <iframe id="spotify-iframe" style="border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        </div>
-                    `;
-                    container.insertBefore(musicSection, gachaSection);
-                }
-            }
-        }
-        
+        const musicSection = document.getElementById('music-section');
         if (musicSection) {
+            // Entferne alle versteckenden Styles
             musicSection.style.display = 'block';
             musicSection.style.visibility = 'visible';
             musicSection.style.position = 'relative';
@@ -253,7 +183,7 @@ function unlockFeature(feature) {
 }
 
 // Prüfe freigeschaltete Features beim Laden
-async function checkUnlockedFeatures() {
+function checkUnlockedFeatures() {
     // Prüfe localStorage für freigeschaltete Features
     const unlocks = JSON.parse(localStorage.getItem('unlockedFeatures')) || [];
     
@@ -261,8 +191,8 @@ async function checkUnlockedFeatures() {
     const stats = JSON.parse(localStorage.getItem('gachaStats')) || { collection: [] };
     const collection = stats.collection || [];
     
-    // Lade aktuelle Items für Prüfung (async)
-    const currentGachaItems = await getGachaItems();
+    // Lade aktuelle Items für Prüfung
+    const currentGachaItems = getGachaItems();
     
     // Prüfe ob Karte freigeschaltet ist
     const hasMap = unlocks.includes('map') || collection.some(item => {
@@ -277,22 +207,51 @@ async function checkUnlockedFeatures() {
     });
     
     if (hasMap) {
-        unlockFeature('map');
+        const mapSection = document.getElementById('map-section');
+        if (mapSection) {
+            mapSection.style.display = 'block';
+            mapSection.style.visibility = 'visible';
+            mapSection.style.position = 'relative';
+            mapSection.style.left = 'auto';
+            mapSection.style.opacity = '1';
+            mapSection.style.transform = 'translateY(0)';
+            
+            const mapDiv = document.getElementById('map');
+            const mapPlaceholder = document.getElementById('map-placeholder');
+            if (mapDiv) mapDiv.style.display = 'block';
+            if (mapPlaceholder) mapPlaceholder.style.display = 'flex';
+            
+            if (typeof initMap === 'function') {
+                setTimeout(() => initMap(), 500);
+            }
+        }
     }
     
     if (hasMusic) {
-        unlockFeature('music');
+        const musicSection = document.getElementById('music-section');
+        if (musicSection) {
+            musicSection.style.display = 'block';
+            musicSection.style.visibility = 'visible';
+            musicSection.style.position = 'relative';
+            musicSection.style.left = 'auto';
+            musicSection.style.opacity = '1';
+            musicSection.style.transform = 'translateY(0)';
+            
+            const spotifyIframe = document.getElementById('spotify-iframe');
+            if (spotifyIframe) {
+                spotifyIframe.style.display = 'block';
+                spotifyIframe.src = 'https://open.spotify.com/embed/playlist/2rK6GwLnUr7K3FqDMsxaZz?utm_source=generator&theme=0';
+            }
+        }
     }
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     initGachaMachine();
     updateStats();
     createKugelPreviews();
-    // Lade Items beim Start
-    cachedGachaItems = await getGachaItems();
-    await checkUnlockedFeatures();
+    checkUnlockedFeatures();
 });
 
 function initGachaMachine() {
@@ -347,8 +306,10 @@ function showCollection() {
             return rarityOrder[b.rarity] - rarityOrder[a.rarity];
         });
         
+        // Lade alle Items einmal (nicht in der Schleife)
+        const allItems = getGachaItems();
+        
         grid.innerHTML = sorted.map(item => {
-            const allItems = getGachaItems();
             const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
             let displayIcon = itemData ? itemData.icon : item.icon;
             let displayName = itemData ? itemData.name : item.name;
@@ -402,7 +363,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Main Gacha Pull Function
-async function pullGacha() {
+function pullGacha() {
     const button = document.getElementById('gacha-button');
     const door = document.getElementById('gacha-door');
     const chute = document.getElementById('gacha-chute');
@@ -428,11 +389,8 @@ async function pullGacha() {
     chute.appendChild(fallingKugel);
     chute.classList.add('active');
     
-    // Get random item (async)
-    const item = await getRandomItem();
-    
-    // Cache neu laden beim nächsten Pull
-    cachedGachaItems = null;
+    // Get random item
+    const item = getRandomItem();
     
     // After animation, show result
     setTimeout(() => {
@@ -523,14 +481,9 @@ async function pullGacha() {
     }, 1000);
 }
 
-let cachedGachaItems = null;
-
-async function getRandomItem() {
-    // Lade aktuelle Items (inkl. Monster-Gacha) - mit Caching
-    if (!cachedGachaItems) {
-        cachedGachaItems = await getGachaItems();
-    }
-    const currentItems = cachedGachaItems;
+function getRandomItem() {
+    // Lade aktuelle Items (inkl. Monster-Gacha)
+    const currentItems = getGachaItems();
     
     // Calculate total probability
     const totalProb = currentItems.reduce((sum, item) => sum + item.probability, 0);

@@ -87,10 +87,19 @@ function unlockFeature(feature) {
     if (feature === 'map') {
         const mapSection = document.getElementById('map-section');
         if (mapSection) {
+            // Entferne alle versteckenden Styles
             mapSection.style.display = 'block';
+            mapSection.style.visibility = 'visible';
+            mapSection.style.position = 'relative';
+            mapSection.style.left = 'auto';
             mapSection.style.opacity = '0';
             mapSection.style.transform = 'translateY(30px)';
             mapSection.style.transition = 'all 0.8s ease';
+            
+            const mapDiv = document.getElementById('map');
+            const mapPlaceholder = document.getElementById('map-placeholder');
+            if (mapDiv) mapDiv.style.display = 'block';
+            if (mapPlaceholder) mapPlaceholder.style.display = 'flex';
             
             // Animation starten
             setTimeout(() => {
@@ -113,10 +122,20 @@ function unlockFeature(feature) {
     } else if (feature === 'music') {
         const musicSection = document.getElementById('music-section');
         if (musicSection) {
+            // Entferne alle versteckenden Styles
             musicSection.style.display = 'block';
+            musicSection.style.visibility = 'visible';
+            musicSection.style.position = 'relative';
+            musicSection.style.left = 'auto';
             musicSection.style.opacity = '0';
             musicSection.style.transform = 'translateY(30px)';
             musicSection.style.transition = 'all 0.8s ease';
+            
+            const spotifyIframe = document.getElementById('spotify-iframe');
+            if (spotifyIframe) {
+                spotifyIframe.style.display = 'block';
+                spotifyIframe.src = 'https://open.spotify.com/embed/playlist/2rK6GwLnUr7K3FqDMsxaZz?utm_source=generator&theme=0';
+            }
             
             // Animation starten
             setTimeout(() => {

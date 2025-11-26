@@ -1,45 +1,27 @@
 // Gacha Machine JavaScript
 
-// Basis Gacha Items Database - VIELE ITEMS
+// Basis Gacha Items Database - REDUZIERT für schnelles Sammeln
 let baseGachaItems = [
-    // Common Items (40% chance total) - 12 Items
+    // Common Items (4 Items)
     { id: 1, name: "Capybara Sticker", icon: "🦫", rarity: "common", description: "Ein süßer Capybara Sticker!", probability: 5, color: "#AED581" },
     { id: 2, name: "Yuzu Bad", icon: "🛁", rarity: "common", description: "Entspannendes Yuzu-Bad!", probability: 5, color: "#FFF176" },
     { id: 3, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
-    { id: 4, name: "Taiwan Flagge", icon: "🇹🇼", rarity: "common", description: "Taiwan Pride!", probability: 5, color: "#FFAB91" },
-    { id: 5, name: "Herz", icon: "💕", rarity: "common", description: "Viel Liebe!", probability: 5, color: "#ff6b9d" },
-    { id: 13, name: "Blume", icon: "🌸", rarity: "common", description: "Eine schöne Blume!", probability: 5, color: "#FFB3D9" },
-    { id: 14, name: "Sternchen", icon: "⭐", rarity: "common", description: "Ein kleines Sternchen!", probability: 5, color: "#FFF176" },
-    { id: 15, name: "Kuchen", icon: "🎂", rarity: "common", description: "Leckerer Kuchen!", probability: 5, color: "#FFAB91" },
-    { id: 16, name: "Ball", icon: "⚽", rarity: "common", description: "Ein bunter Ball!", probability: 5, color: "#AED581" },
-    { id: 17, name: "Luftballon", icon: "🎈", rarity: "common", description: "Ein fröhlicher Luftballon!", probability: 5, color: "#FFB3D9" },
-    { id: 18, name: "Geschenk", icon: "🎁", rarity: "common", description: "Ein schönes Geschenk!", probability: 5, color: "#ff6b9d" },
-    { id: 19, name: "Schmetterling", icon: "🦋", rarity: "common", description: "Ein süßer Schmetterling!", probability: 5, color: "#AED581" },
+    { id: 4, name: "Herz", icon: "💕", rarity: "common", description: "Viel Liebe!", probability: 5, color: "#ff6b9d" },
     
-    // Rare Items (30% chance total) - 9 Items
+    // Rare Items (3 Items)
     { id: 6, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
     { id: 7, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
-    { id: 8, name: "Stern", icon: "⭐", rarity: "rare", description: "Ein glänzender Stern!", probability: 5, color: "#FFF176" },
-    { id: 20, name: "Diamant", icon: "💎", rarity: "rare", description: "Ein wertvoller Diamant!", probability: 5, color: "#AED581" },
-    { id: 21, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
-    { id: 22, name: "Kristall", icon: "🔮", rarity: "rare", description: "Ein magischer Kristall!", probability: 5, color: "#c44569" },
-    { id: 23, name: "Feuerwerk", icon: "🎆", rarity: "rare", description: "Ein spektakuläres Feuerwerk!", probability: 5, color: "#f8b500" },
-    { id: 24, name: "Regenbogenwolke", icon: "☁️🌈", rarity: "rare", description: "Eine magische Wolke!", probability: 5, color: "#AED581" },
-    { id: 25, name: "Glücksstern", icon: "⭐✨", rarity: "rare", description: "Ein glückbringender Stern!", probability: 5, color: "#FFF176" },
+    { id: 8, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
     
-    // Epic Items (20% chance total) - 6 Items
+    // Epic Items (2 Items)
     { id: 9, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
-    { id: 26, name: "Magischer Ball", icon: "🔮✨", rarity: "epic", description: "Ein magischer Kristallball!", probability: 5, color: "#c44569" },
-    { id: 27, name: "Goldener Regenbogen", icon: "🌈✨", rarity: "epic", description: "Ein goldener Regenbogen!", probability: 5, color: "#f8b500" },
-    { id: 28, name: "Königliche Krone", icon: "👑✨", rarity: "epic", description: "Die königliche Krone!", probability: 5, color: "#f8b500" },
-    { id: 29, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
-    { id: 30, name: "Feuerwerk-Explosion", icon: "🎆✨", rarity: "epic", description: "Eine spektakuläre Explosion!", probability: 5, color: "#f8b500" },
+    { id: 10, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
     
-    // Legendary Items (10% chance total) - 4 Items
-    { id: 10, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
-    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
-    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
-    { id: 31, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
+    // Legendary Items (4 Items - mit Features)
+    { id: 11, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
+    { id: 12, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
+    { id: 13, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 14, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
 ];
 
 // Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)

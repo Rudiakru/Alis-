@@ -10,11 +10,9 @@ let baseGachaItems = [
     { id: 5, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
     { id: 6, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
     
-    // Rare Items (4 Items)
+    // Rare Items (2 Items)
     { id: 7, name: "Kaffee", icon: "☕", rarity: "rare", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
-    { id: 8, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
-    { id: 9, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
-    { id: 10, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
+    { id: 8, name: "Kuchen", icon: "🎂", rarity: "rare", description: "Leckerer Kuchen!", probability: 5, color: "#FFAB91" },
     
     // Legendary Items (4 Items - mit Features)
     { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },

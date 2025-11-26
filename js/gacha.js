@@ -21,7 +21,7 @@ let baseGachaItems = [
     { id: 12, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
     
     // Legendary Items (4 Items - mit Features)
-    { id: 13, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
+    { id: 13, name: "Legendäre Capybara", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Capybara selbst!", probability: 3, color: "#f8b500" },
     { id: 14, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
     { id: 15, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
     { id: 16, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },

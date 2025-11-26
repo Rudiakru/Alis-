@@ -256,7 +256,7 @@ async function initGallery() {
         
         return `
             <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${safeSrc}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${safeSrc}')">
-                <img src="${safeSrc}" alt="Otis Bild ${index + 1}" loading="lazy" onerror="this.src='https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif'; this.onerror=null;" />
+                <img src="${safeSrc}" alt="Capybara Bild ${index + 1}" loading="lazy" onerror="this.src='https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif'; this.onerror=null;" />
                 <div class="gallery-item-info">
                     <div class="gallery-item-date">📅 ${dateStr}</div>
                     ${deleteBtn}

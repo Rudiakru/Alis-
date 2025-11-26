@@ -1,14 +1,26 @@
-/* Navigation Styles */
+/* Navigation Styles - Ultra Modern */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.98) 0%, 
+        rgba(255, 250, 255, 0.95) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 10px rgba(255, 255, 255, 0.5);
     z-index: 1000;
     padding: 15px 0;
+    border-bottom: 2px solid rgba(255, 107, 157, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar:hover {
+    box-shadow: 
+        0 6px 40px rgba(0, 0, 0, 0.12),
+        inset 0 1px 15px rgba(255, 255, 255, 0.6);
 }
 
 .nav-container {
@@ -49,16 +61,36 @@
     text-decoration: none;
     font-weight: 600;
     font-size: 1.1em;
-    padding: 8px 15px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
+    padding: 10px 18px;
+    border-radius: 25px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: relative;
+    overflow: hidden;
+}
+
+.nav-menu li a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow));
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+    z-index: -1;
+}
+
+.nav-menu li a:hover::before {
+    width: 200px;
+    height: 200px;
 }
 
 .nav-menu li a:hover {
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow));
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
 }
 
 .nav-menu li a.active {

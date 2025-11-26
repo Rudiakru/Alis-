@@ -46,6 +46,17 @@ function getImages() {
 let images = getImages();
 let slideshowImages = [];
 
+// Cute Kawaii Capybara Bilder (Fallback wenn keine lokalen Bilder vorhanden)
+const defaultCapybaraImages = [
+    'https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif',
+    'https://media.giphy.com/media/k3c92Q7XmGj1xG7P5q/giphy.gif',
+    'https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif',
+    'https://media.giphy.com/media/3o7aD2sa0qC3XtS0Q0/giphy.gif',
+    'https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif',
+    'https://images.unsplash.com/photo-1614027164689-a18d3c2c6c4a?w=400&h=400&fit=crop',
+    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop',
+];
+
 // Automatisches Scannen von Bildern im img/ Ordner
 async function scanImageFolder() {
     // Versuche Bilder aus dem img/ Ordner zu laden
@@ -80,6 +91,11 @@ async function scanImageFolder() {
         }
     }
     
+    // Wenn keine lokalen Bilder gefunden, verwende Default Capybara Bilder
+    if (existingImages.length === 0) {
+        return defaultCapybaraImages;
+    }
+    
     return existingImages;
 }
 
@@ -91,17 +107,12 @@ async function initSlideshow() {
     const folderImages = await scanImageFolder();
     const uploadedImages = images.map(img => img.data);
     
-    // Kombiniere Ordner-Bilder und hochgeladene Bilder
-    slideshowImages = [...folderImages, ...uploadedImages];
+    // Kombiniere hochgeladene Bilder zuerst, dann Ordner-Bilder
+    slideshowImages = [...uploadedImages, ...folderImages];
     
-    // Falls keine Bilder vorhanden, verwende Platzhalter-Bilder
+    // Falls keine Bilder vorhanden, verwende Default Capybara Bilder
     if (slideshowImages.length === 0) {
-        slideshowImages = [
-            'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&h=600&fit=crop',
-            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
-            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
-            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop'
-        ];
+        slideshowImages = [...defaultCapybaraImages];
     }
     
     const slideshowWrapper = document.getElementById('slideshow-wrapper');
@@ -173,13 +184,19 @@ document.addEventListener('keydown', function(e) {
 // ============================================
 async function initGallery() {
     const gallery = document.getElementById('all-images-gallery');
-    if (!gallery) return;
+    if (!gallery) {
+        console.log('Galerie-Element nicht gefunden');
+        return;
+    }
     
     // WICHTIG: Lade images frisch aus localStorage
     images = getImages();
+    console.log('Geladene Bilder aus localStorage:', images.length);
     
     // Hole alle Bilder: aus img/ Ordner + hochgeladene
     const folderImages = await scanImageFolder();
+    console.log('Gefundene Ordner-Bilder:', folderImages.length);
+    
     const uploadedImages = images.map((img, idx) => ({
         src: img.data,
         date: img.date,
@@ -194,20 +211,34 @@ async function initGallery() {
         index: idx
     }));
     
+    // Hochgeladene Bilder ZUERST, dann Ordner-Bilder
     const allImages = [...uploadedImages, ...folderImageObjects];
+    console.log('Gesamt Bilder:', allImages.length);
     
     if (allImages.length === 0) {
-        gallery.innerHTML = `
-            <div class="empty-gallery">
-                <div class="empty-gallery-icon">🦫</div>
-                <p>Noch keine Bilder vorhanden</p>
-                <p style="font-size: 0.9em; margin-top: 10px;">Lade Bilder hoch oder füge sie in den img/ Ordner ein!</p>
-            </div>
-        `;
+        // Zeige Default Capybara Bilder wenn keine vorhanden
+        const defaultImages = defaultCapybaraImages.map((src, idx) => ({
+            src: src,
+            date: null,
+            isUploaded: false,
+            index: idx
+        }));
+        
+        gallery.innerHTML = defaultImages.map((imgObj, index) => {
+            return `
+                <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${imgObj.src}')" role="button" tabindex="0" aria-label="Capybara Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${imgObj.src}')">
+                    <img src="${imgObj.src}" alt="Cute Capybara ${index + 1}" loading="lazy" />
+                    <div class="gallery-item-info">
+                        <div class="gallery-item-date">🦫 Kawaii Capybara</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
         return;
     }
 
-    gallery.innerHTML = allImages.map((imgObj, index) => {
+    // Erstelle HTML für alle Bilder
+    const galleryHTML = allImages.map((imgObj, index) => {
         const dateStr = imgObj.date ? new Date(imgObj.date).toLocaleDateString('de-DE', { 
             day: '2-digit', 
             month: '2-digit', 
@@ -220,9 +251,12 @@ async function initGallery() {
             `<button class="delete-btn" onclick="event.stopPropagation(); deleteImage(${imgObj.index})" aria-label="Bild löschen">🗑️ Löschen</button>` :
             '';
         
+        // Escape HTML in src um XSS zu vermeiden
+        const safeSrc = imgObj.src.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+        
         return `
-            <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${imgObj.src}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${imgObj.src}')">
-                <img src="${imgObj.src}" alt="Otis Bild ${index + 1}" loading="lazy" />
+            <div class="gallery-item" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('${safeSrc}')" role="button" tabindex="0" aria-label="Bild ${index + 1} öffnen" onkeypress="if(event.key==='Enter') openLightbox('${safeSrc}')">
+                <img src="${safeSrc}" alt="Otis Bild ${index + 1}" loading="lazy" onerror="this.src='https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif'; this.onerror=null;" />
                 <div class="gallery-item-info">
                     <div class="gallery-item-date">📅 ${dateStr}</div>
                     ${deleteBtn}
@@ -230,6 +264,9 @@ async function initGallery() {
             </div>
         `;
     }).join('');
+    
+    gallery.innerHTML = galleryHTML;
+    console.log('Galerie aktualisiert mit', allImages.length, 'Bildern');
 }
 
 function handleFileSelect(event) {
@@ -248,19 +285,33 @@ function handleFileSelect(event) {
 
     const reader = new FileReader();
     reader.onload = async function(e) {
-        const imageData = {
-            data: e.target.result,
-            date: new Date().toISOString()
-        };
-        images.unshift(imageData);
-        localStorage.setItem('otisImages', JSON.stringify(images));
-        
-        // WICHTIG: Lade images neu aus localStorage
-        images = getImages();
-        
-        // Aktualisiere beide Bereiche sofort
-        await initGallery(); // Aktualisiert "Alle Bilder" Section
-        await initSlideshow(); // Aktualisiert Slideshow (enthält hochgeladene Bilder)
+        try {
+            const imageData = {
+                data: e.target.result,
+                date: new Date().toISOString()
+            };
+            
+            // Lade aktuelle Bilder
+            let currentImages = getImages();
+            currentImages.unshift(imageData);
+            
+            // Speichere in localStorage
+            localStorage.setItem('otisImages', JSON.stringify(currentImages));
+            
+            // WICHTIG: Lade images neu aus localStorage
+            images = getImages();
+            
+            // Debug: Prüfe ob Bilder gespeichert wurden
+            console.log('Bilder gespeichert:', images.length);
+            
+            // Aktualisiere beide Bereiche sofort
+            await initGallery(); // Aktualisiert "Alle Bilder" Section
+            await initSlideshow(); // Aktualisiert Slideshow (enthält hochgeladene Bilder)
+        } catch (error) {
+            console.error('Fehler beim Hochladen:', error);
+            alert('Fehler beim Hochladen des Bildes. Bitte versuche es erneut.');
+            return;
+        }
         
         // Erfolgs-Feedback
         const successMsg = document.createElement('div');

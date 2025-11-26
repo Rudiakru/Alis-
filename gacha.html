@@ -6,20 +6,16 @@
     <meta name="description" content="Gacha Machine - Ziehe eine Kugel und entdecke was drin ist!" />
     <title>🎰 Gacha Machine - Capybara</title>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Varela+Round&display=swap" rel="stylesheet">
     
-    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/gacha.css">
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">🦫 Capybara</a>
@@ -29,17 +25,7 @@
                 <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="gacha.html">Gacha</a></li>
                 <li><a href="ueber.html">Über Capybara</a></li>
-                <!-- Upload-Funktion auskommentiert
-                <li class="nav-upload-item">
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('fileInput').click(); return false;" class="nav-upload-link">
-                        📤 Bild hochladen
-                    </a>
-                </li>
-                -->
             </ul>
-            <!-- Upload-Funktion auskommentiert
-            <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" style="display: none;" />
-            -->
         </div>
     </nav>
 
@@ -51,16 +37,13 @@
             </div>
         </header>
 
-        <!-- Gacha Machine Section -->
         <section class="content-section" style="max-width: 600px;">
             <div class="gacha-machine-container">
-                <!-- Gacha Machine -->
                 <div class="gacha-machine">
                     <div class="gacha-top">
                         <div class="gacha-window">
                             <div class="gacha-kugeln" id="gacha-kugeln">
-                                <!-- Kugeln werden hier animiert -->
-                            </div>
+                                </div>
                         </div>
                     </div>
                     <div class="gacha-body">
@@ -68,18 +51,16 @@
                             <div class="gacha-handle">🔘</div>
                         </div>
                         <div class="gacha-button-container">
-                            <button class="gacha-button" id="gacha-button" onclick="pullGacha()">
+                            <button class="gacha-button" id="gacha-button">
                                 <span class="button-text">Ziehen!</span>
                                 <span class="button-icon">🎰</span>
                             </button>
                         </div>
                     </div>
                     <div class="gacha-chute" id="gacha-chute">
-                        <!-- Kugel fällt hier raus -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Result Display -->
                 <div class="gacha-result" id="gacha-result">
                     <div class="result-kugel" id="result-kugel">
                         <div class="kugel-shell" id="kugel-shell">
@@ -87,12 +68,10 @@
                             <div class="kugel-bottom"></div>
                         </div>
                         <div class="kugel-content" id="kugel-content">
-                            <!-- Inhalt wird hier angezeigt -->
-                        </div>
+                            </div>
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="gacha-stats">
                     <div class="stat-item">
                         <span class="stat-label">Gezogen:</span>
@@ -108,7 +87,6 @@
                     </div>
                 </div>
                 
-                <!-- Collection Button -->
                 <div style="margin-top: 30px;">
                     <button class="gacha-button" onclick="showCollection()" style="background: linear-gradient(135deg, #AED581, #8BC34A);">
                         <span class="button-text">Meine Collection</span>
@@ -116,7 +94,6 @@
                     </button>
                 </div>
                 
-                <!-- Collection Modal -->
                 <div class="collection-modal" id="collection-modal">
                     <div class="collection-content">
                         <div class="collection-header">
@@ -124,29 +101,26 @@
                             <button class="close-btn" onclick="closeCollection()">&times;</button>
                         </div>
                         <div class="collection-grid" id="collection-grid">
-                            <!-- Items werden hier eingefügt -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Footer -->
     <footer>
         Made with ❤️ in Taiwan | 🦫 Capybara Galerie
     </footer>
     
-    <!-- Reset Button -->
     <button class="reset-button" onclick="resetGachaData()" title="Gacha-Daten zurücksetzen" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #ff4757, #ff3838); color: white; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4); z-index: 1000; font-family: var(--font-heading); transition: all 0.3s ease;">🔄 Reset</button>
 
-    <!-- Scripts -->
     <script src="js/navigation.js"></script>
     <script src="js/gacha.js"></script>
     <script>
         function resetGachaData() {
             if (confirm('Möchtest du wirklich alle Gacha-Daten zurücksetzen? (Statistiken, Collection)')) {
                 localStorage.removeItem('gachaStats');
+                localStorage.removeItem('unlockedFeatures'); // Auch Unlocks resetten
                 location.reload();
             }
         }

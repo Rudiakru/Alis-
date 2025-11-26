@@ -16,14 +16,11 @@ let baseGachaItems = [
     { id: 9, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
     { id: 10, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
     
-    // Epic Items (2 Items)
-    { id: 11, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
-    { id: 12, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
-    
-    // Legendary Items (3 Items - mit Features)
-    { id: 13, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
-    { id: 14, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
-    { id: 15, name: "Fotosession", icon: "📸✨", rarity: "legendary", description: "Eine spezielle Fotosession!", probability: 3, color: "#ff6b9d", isCutePhoto: true, imageData: "https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" },
+    // Legendary Items (4 Items - mit Features)
+    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
+    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 13, name: "Fotosession", icon: "📸✨", rarity: "legendary", description: "Eine spezielle Fotosession!", probability: 3, color: "#ff6b9d", isCutePhoto: true, imageData: "https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" },
+    { id: 14, name: "Roter Chinesischer Umschlag", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C" },
 ];
 
 // Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)

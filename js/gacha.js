@@ -65,9 +65,37 @@ let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
 // Feature Unlock System
 function unlockFeature(feature) {
     if (feature === 'map') {
-        const mapSection = document.getElementById('map-section');
+        // Erstelle Map-Section dynamisch wenn sie nicht existiert
+        let mapSection = document.getElementById('map-section');
+        if (!mapSection) {
+            const container = document.querySelector('.container');
+            if (container) {
+                const gachaSection = container.querySelector('.kawaii-section');
+                if (gachaSection) {
+                    mapSection = document.createElement('section');
+                    mapSection.id = 'map-section';
+                    mapSection.className = 'content-section';
+                    mapSection.innerHTML = `
+                        <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
+                        <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
+                        <div id="map" style="min-height: 400px; width: 100%; border-radius: 20px; overflow: hidden;"></div>
+                        <div id="map-placeholder" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #AED581, #8BC34A); border-radius: 20px; color: white; text-align: center; padding: 40px;">
+                            <div>
+                                <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
+                                <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">OpenStreetMap Karte</p>
+                                <p style="font-size: 1em;">Taiwan - Wo alles begann! 💕</p>
+                            </div>
+                        </div>
+                        <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
+                            💡 Die Karte verwendet OpenStreetMap - keine API Key erforderlich!
+                        </p>
+                    `;
+                    container.insertBefore(mapSection, gachaSection);
+                }
+            }
+        }
+        
         if (mapSection) {
-            // Entferne alle versteckenden Styles
             mapSection.style.display = 'block';
             mapSection.style.visibility = 'visible';
             mapSection.style.position = 'relative';
@@ -100,9 +128,29 @@ function unlockFeature(feature) {
             }
         }
     } else if (feature === 'music') {
-        const musicSection = document.getElementById('music-section');
+        // Erstelle Music-Section dynamisch wenn sie nicht existiert
+        let musicSection = document.getElementById('music-section');
+        if (!musicSection) {
+            const container = document.querySelector('.container');
+            if (container) {
+                const gachaSection = container.querySelector('.kawaii-section');
+                if (gachaSection) {
+                    musicSection = document.createElement('section');
+                    musicSection.id = 'music-section';
+                    musicSection.className = 'content-section kawaii-section';
+                    musicSection.innerHTML = `
+                        <h2 class="section-title">🎵 Musik für Alina</h2>
+                        <p style="margin-bottom: 25px; color: #666;">Höre die perfekte Playlist! 💕</p>
+                        <div class="spotify-container">
+                            <iframe id="spotify-iframe" style="border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                    `;
+                    container.insertBefore(musicSection, gachaSection);
+                }
+            }
+        }
+        
         if (musicSection) {
-            // Entferne alle versteckenden Styles
             musicSection.style.display = 'block';
             musicSection.style.visibility = 'visible';
             musicSection.style.position = 'relative';
@@ -158,42 +206,11 @@ function checkUnlockedFeatures() {
     });
     
     if (hasMap) {
-        const mapSection = document.getElementById('map-section');
-        if (mapSection) {
-            mapSection.style.display = 'block';
-            mapSection.style.visibility = 'visible';
-            mapSection.style.position = 'relative';
-            mapSection.style.left = 'auto';
-            mapSection.style.opacity = '1';
-            mapSection.style.transform = 'translateY(0)';
-            
-            const mapDiv = document.getElementById('map');
-            const mapPlaceholder = document.getElementById('map-placeholder');
-            if (mapDiv) mapDiv.style.display = 'block';
-            if (mapPlaceholder) mapPlaceholder.style.display = 'flex';
-            
-            if (typeof initMap === 'function') {
-                setTimeout(() => initMap(), 500);
-            }
-        }
+        unlockFeature('map');
     }
     
     if (hasMusic) {
-        const musicSection = document.getElementById('music-section');
-        if (musicSection) {
-            musicSection.style.display = 'block';
-            musicSection.style.visibility = 'visible';
-            musicSection.style.position = 'relative';
-            musicSection.style.left = 'auto';
-            musicSection.style.opacity = '1';
-            musicSection.style.transform = 'translateY(0)';
-            
-            const spotifyIframe = document.getElementById('spotify-iframe');
-            if (spotifyIframe) {
-                spotifyIframe.style.display = 'block';
-                spotifyIframe.src = 'https://open.spotify.com/embed/playlist/2rK6GwLnUr7K3FqDMsxaZz?utm_source=generator&theme=0';
-            }
-        }
+        unlockFeature('music');
     }
 }
 

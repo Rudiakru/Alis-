@@ -16,11 +16,10 @@ let baseGachaItems = [
     // Epic Items (1 Item)
     { id: 9, name: "Geschenk 1", icon: "🎁", rarity: "epic", description: "Ein besonderes Geschenk!", probability: 5, color: "#ff6b9d" },
     
-    // Legendary Items (4 Items - mit Features)
-    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
-    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
-    { id: 13, name: "Fotosession", icon: "📸✨", rarity: "legendary", description: "Eine spezielle Fotosession!", probability: 3, color: "#ff6b9d", isCutePhoto: true, imageData: "https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" },
-    { id: 14, name: "Roter Chinesischer Umschlag", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C" },
+    // Legendary Items (3 Items - mit Features)
+    { id: 11, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 12, name: "Fotosession", icon: "📸✨", rarity: "legendary", description: "Eine spezielle Fotosession!", probability: 3, color: "#ff6b9d", isCutePhoto: true, imageData: "https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" },
+    { id: 13, name: "Geschenk 2", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C", unlocks: "map" },
 ];
 
 // Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)

@@ -22,16 +22,87 @@ let baseGachaItems = [
     { id: 13, name: "Geschenk 2", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C", unlocks: "map" },
 ];
 
-// Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)
-function getGachaItems() {
+// Lade Bilder aus Ordnern
+async function loadImagesFromFolder(folderPath) {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const images = [];
+    
+    // Versuche verschiedene Dateinamen-Kombinationen
+    for (let i = 1; i <= 50; i++) {
+        for (const ext of imageExtensions) {
+            const imagePath = `${folderPath}${i}${ext}`;
+            try {
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                    img.onload = () => resolve(imagePath);
+                    img.onerror = () => reject();
+                    img.src = imagePath;
+                    setTimeout(() => reject(), 100);
+                });
+                images.push(imagePath);
+            } catch (e) {
+                // Bild existiert nicht, überspringen
+            }
+        }
+    }
+    
+    return images;
+}
+
+// Dynamische Gacha Items (inkl. Bilder aus Ordnern)
+async function getGachaItems() {
     const items = [...baseGachaItems];
     
-    // Füge Monster-Gacha Items für hochgeladene Bilder hinzu
+    // Lade Bilder aus Ordnern und aktualisiere Items
     try {
+        // Katze Bilder
+        const catImages = await loadImagesFromFolder('img/cat/');
+        if (catImages.length > 0) {
+            const catItem = items.find(item => item.id === 3); // Katze Foto
+            if (catItem) {
+                catItem.imageData = catImages[0]; // Nimm erstes Bild
+            }
+        }
+        
+        // Hund Bilder
+        const dogImages = await loadImagesFromFolder('img/dogs/');
+        if (dogImages.length > 0) {
+            const dogItem = items.find(item => item.id === 2); // Hund Foto
+            if (dogItem) {
+                dogItem.imageData = dogImages[0]; // Nimm erstes Bild
+            }
+        }
+        
+        // Monster Bilder
+        const monsterImages = await loadImagesFromFolder('img/monster/');
+        monsterImages.forEach((imgPath, index) => {
+            items.push({
+                id: 1000 + index, // Eindeutige IDs ab 1000
+                name: "Monster-Gacha",
+                icon: "👹",
+                rarity: "legendary",
+                description: "Ein mysteriöses Monster-Gacha!",
+                probability: 2,
+                color: "#E91E63",
+                isMonsterGacha: true,
+                imageData: imgPath
+            });
+        });
+        
+        // Photo Bilder (für Fotosession)
+        const photoImages = await loadImagesFromFolder('img/photo/');
+        if (photoImages.length > 0) {
+            const photoItem = items.find(item => item.id === 12); // Fotosession
+            if (photoItem) {
+                photoItem.imageData = photoImages[0]; // Nimm erstes Bild
+            }
+        }
+        
+        // Alte hochgeladene Bilder (Monster-Gacha)
         const uploadedImages = JSON.parse(localStorage.getItem('otisImages')) || [];
         uploadedImages.forEach((img, index) => {
             items.push({
-                id: 1000 + index, // Eindeutige IDs ab 1000
+                id: 2000 + index, // Eindeutige IDs ab 2000
                 name: "Monster-Gacha",
                 icon: "👹",
                 rarity: "legendary",
@@ -44,7 +115,7 @@ function getGachaItems() {
             });
         });
     } catch (e) {
-        console.error('Fehler beim Laden der Bilder für Monster-Gacha:', e);
+        console.error('Fehler beim Laden der Bilder:', e);
     }
     
     return items;
@@ -182,7 +253,7 @@ function unlockFeature(feature) {
 }
 
 // Prüfe freigeschaltete Features beim Laden
-function checkUnlockedFeatures() {
+async function checkUnlockedFeatures() {
     // Prüfe localStorage für freigeschaltete Features
     const unlocks = JSON.parse(localStorage.getItem('unlockedFeatures')) || [];
     
@@ -190,8 +261,8 @@ function checkUnlockedFeatures() {
     const stats = JSON.parse(localStorage.getItem('gachaStats')) || { collection: [] };
     const collection = stats.collection || [];
     
-    // Lade aktuelle Items für Prüfung
-    const currentGachaItems = getGachaItems();
+    // Lade aktuelle Items für Prüfung (async)
+    const currentGachaItems = await getGachaItems();
     
     // Prüfe ob Karte freigeschaltet ist
     const hasMap = unlocks.includes('map') || collection.some(item => {
@@ -215,11 +286,13 @@ function checkUnlockedFeatures() {
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     initGachaMachine();
     updateStats();
     createKugelPreviews();
-    checkUnlockedFeatures();
+    // Lade Items beim Start
+    cachedGachaItems = await getGachaItems();
+    await checkUnlockedFeatures();
 });
 
 function initGachaMachine() {
@@ -329,7 +402,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Main Gacha Pull Function
-function pullGacha() {
+async function pullGacha() {
     const button = document.getElementById('gacha-button');
     const door = document.getElementById('gacha-door');
     const chute = document.getElementById('gacha-chute');
@@ -355,8 +428,11 @@ function pullGacha() {
     chute.appendChild(fallingKugel);
     chute.classList.add('active');
     
-    // Get random item
-    const item = getRandomItem();
+    // Get random item (async)
+    const item = await getRandomItem();
+    
+    // Cache neu laden beim nächsten Pull
+    cachedGachaItems = null;
     
     // After animation, show result
     setTimeout(() => {
@@ -447,9 +523,14 @@ function pullGacha() {
     }, 1000);
 }
 
-function getRandomItem() {
-    // Lade aktuelle Items (inkl. Monster-Gacha)
-    const currentItems = getGachaItems();
+let cachedGachaItems = null;
+
+async function getRandomItem() {
+    // Lade aktuelle Items (inkl. Monster-Gacha) - mit Caching
+    if (!cachedGachaItems) {
+        cachedGachaItems = await getGachaItems();
+    }
+    const currentItems = cachedGachaItems;
     
     // Calculate total probability
     const totalProb = currentItems.reduce((sum, item) => sum + item.probability, 0);

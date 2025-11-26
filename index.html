@@ -219,5 +219,15 @@
     <script src="js/navigation.js"></script>
     <!-- Main Script -->
     <script src="js/script.js"></script>
+    <!-- Gacha Script für Feature-Unlock -->
+    <script src="js/gacha.js"></script>
+    <script>
+        // Prüfe freigeschaltete Features beim Laden der Hauptseite
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof checkUnlockedFeatures === 'function') {
+                checkUnlockedFeatures();
+            }
+        });
+    </script>
 </body>
 </html>

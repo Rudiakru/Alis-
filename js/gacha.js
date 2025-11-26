@@ -1,27 +1,77 @@
 // Gacha Machine JavaScript
 
-// Gacha Items Database - BEGRENZTE ANZAHL (nur 10 Items)
-const gachaItems = [
-    // Common Items (50% chance total) - 5 Items
-    { id: 1, name: "Capybara Sticker", icon: "🦫", rarity: "common", description: "Ein süßer Capybara Sticker!", probability: 10, color: "#AED581" },
-    { id: 2, name: "Yuzu Bad", icon: "🛁", rarity: "common", description: "Entspannendes Yuzu-Bad!", probability: 10, color: "#FFF176" },
-    { id: 3, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 10, color: "#AED581" },
-    { id: 4, name: "Taiwan Flagge", icon: "🇹🇼", rarity: "common", description: "Taiwan Pride!", probability: 10, color: "#FFAB91" },
-    { id: 5, name: "Herz", icon: "💕", rarity: "common", description: "Viel Liebe!", probability: 10, color: "#ff6b9d" },
+// Basis Gacha Items Database - VIELE ITEMS
+let baseGachaItems = [
+    // Common Items (40% chance total) - 12 Items
+    { id: 1, name: "Capybara Sticker", icon: "🦫", rarity: "common", description: "Ein süßer Capybara Sticker!", probability: 5, color: "#AED581" },
+    { id: 2, name: "Yuzu Bad", icon: "🛁", rarity: "common", description: "Entspannendes Yuzu-Bad!", probability: 5, color: "#FFF176" },
+    { id: 3, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
+    { id: 4, name: "Taiwan Flagge", icon: "🇹🇼", rarity: "common", description: "Taiwan Pride!", probability: 5, color: "#FFAB91" },
+    { id: 5, name: "Herz", icon: "💕", rarity: "common", description: "Viel Liebe!", probability: 5, color: "#ff6b9d" },
+    { id: 13, name: "Blume", icon: "🌸", rarity: "common", description: "Eine schöne Blume!", probability: 5, color: "#FFB3D9" },
+    { id: 14, name: "Sternchen", icon: "⭐", rarity: "common", description: "Ein kleines Sternchen!", probability: 5, color: "#FFF176" },
+    { id: 15, name: "Kuchen", icon: "🎂", rarity: "common", description: "Leckerer Kuchen!", probability: 5, color: "#FFAB91" },
+    { id: 16, name: "Ball", icon: "⚽", rarity: "common", description: "Ein bunter Ball!", probability: 5, color: "#AED581" },
+    { id: 17, name: "Luftballon", icon: "🎈", rarity: "common", description: "Ein fröhlicher Luftballon!", probability: 5, color: "#FFB3D9" },
+    { id: 18, name: "Geschenk", icon: "🎁", rarity: "common", description: "Ein schönes Geschenk!", probability: 5, color: "#ff6b9d" },
+    { id: 19, name: "Schmetterling", icon: "🦋", rarity: "common", description: "Ein süßer Schmetterling!", probability: 5, color: "#AED581" },
     
-    // Rare Items (30% chance total) - 3 Items
-    { id: 6, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 10, color: "#f8b500" },
-    { id: 7, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 10, color: "#AED581" },
-    { id: 8, name: "Stern", icon: "⭐", rarity: "rare", description: "Ein glänzender Stern!", probability: 10, color: "#FFF176" },
+    // Rare Items (30% chance total) - 9 Items
+    { id: 6, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
+    { id: 7, name: "Regenbogen", icon: "🌈", rarity: "rare", description: "Ein wunderschöner Regenbogen!", probability: 5, color: "#AED581" },
+    { id: 8, name: "Stern", icon: "⭐", rarity: "rare", description: "Ein glänzender Stern!", probability: 5, color: "#FFF176" },
+    { id: 20, name: "Diamant", icon: "💎", rarity: "rare", description: "Ein wertvoller Diamant!", probability: 5, color: "#AED581" },
+    { id: 21, name: "Krone", icon: "👑", rarity: "rare", description: "Eine goldene Krone!", probability: 5, color: "#f8b500" },
+    { id: 22, name: "Kristall", icon: "🔮", rarity: "rare", description: "Ein magischer Kristall!", probability: 5, color: "#c44569" },
+    { id: 23, name: "Feuerwerk", icon: "🎆", rarity: "rare", description: "Ein spektakuläres Feuerwerk!", probability: 5, color: "#f8b500" },
+    { id: 24, name: "Regenbogenwolke", icon: "☁️🌈", rarity: "rare", description: "Eine magische Wolke!", probability: 5, color: "#AED581" },
+    { id: 25, name: "Glücksstern", icon: "⭐✨", rarity: "rare", description: "Ein glückbringender Stern!", probability: 5, color: "#FFF176" },
     
-    // Epic Items (15% chance total) - 1 Item
-    { id: 9, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 4, color: "#ff6b9d" },
+    // Epic Items (20% chance total) - 6 Items
+    { id: 9, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
+    { id: 26, name: "Magischer Ball", icon: "🔮✨", rarity: "epic", description: "Ein magischer Kristallball!", probability: 5, color: "#c44569" },
+    { id: 27, name: "Goldener Regenbogen", icon: "🌈✨", rarity: "epic", description: "Ein goldener Regenbogen!", probability: 5, color: "#f8b500" },
+    { id: 28, name: "Königliche Krone", icon: "👑✨", rarity: "epic", description: "Die königliche Krone!", probability: 5, color: "#f8b500" },
+    { id: 29, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
+    { id: 30, name: "Feuerwerk-Explosion", icon: "🎆✨", rarity: "epic", description: "Eine spektakuläre Explosion!", probability: 5, color: "#f8b500" },
     
-    // Legendary Items (5% chance total) - 3 Items
-    { id: 10, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 1, color: "#f8b500" },
-    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 1, color: "#4CAF50", unlocks: "map" },
-    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 1, color: "#9C27B0", unlocks: "music" },
+    // Legendary Items (10% chance total) - 4 Items
+    { id: 10, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 3, color: "#f8b500" },
+    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
+    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 31, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
 ];
+
+// Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)
+function getGachaItems() {
+    const items = [...baseGachaItems];
+    
+    // Füge Monster-Gacha Items für hochgeladene Bilder hinzu
+    try {
+        const uploadedImages = JSON.parse(localStorage.getItem('otisImages')) || [];
+        uploadedImages.forEach((img, index) => {
+            items.push({
+                id: 1000 + index, // Eindeutige IDs ab 1000
+                name: "Monster-Gacha",
+                icon: "👹",
+                rarity: "legendary",
+                description: "Ein mysteriöses Monster-Gacha!",
+                probability: 2,
+                color: "#E91E63",
+                isMonsterGacha: true,
+                imageData: img.data,
+                imageDate: img.date
+            });
+        });
+    } catch (e) {
+        console.error('Fehler beim Laden der Bilder für Monster-Gacha:', e);
+    }
+    
+    return items;
+}
+
+// Verwende dynamische Funktion
+const gachaItems = getGachaItems();
 
 // Stats & Collection
 let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
@@ -188,11 +238,15 @@ function showCollection() {
         });
         
         grid.innerHTML = sorted.map(item => {
-            const itemData = gachaItems.find(i => i.id === item.id);
+            const allItems = getGachaItems();
+            const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
+            const displayIcon = item.isMonsterGacha && item.imageData ? '👹' : (itemData ? itemData.icon : item.icon);
+            const displayName = item.isMonsterGacha ? 'Monster-Gacha' : (itemData ? itemData.name : item.name);
+            
             return `
-                <div class="collection-item ${item.rarity}">
-                    <span class="collection-item-icon">${item.icon}</span>
-                    <div class="collection-item-name">${item.name}</div>
+                <div class="collection-item ${item.rarity}" ${item.isMonsterGacha && item.imageData ? `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')" style="cursor: pointer;"` : ''}>
+                    <span class="collection-item-icon">${displayIcon}</span>
+                    <div class="collection-item-name">${displayName}</div>
                     <div class="collection-item-rarity ${item.rarity}">${item.rarity.toUpperCase()}</div>
                 </div>
             `;
@@ -266,28 +320,42 @@ function pullGacha() {
                 if (item.rarity === 'epic') stats.epicItems++;
                 if (item.rarity === 'legendary') stats.legendaryItems++;
                 
-                // Add to collection if not already there
-                const isNewItem = !stats.collection.find(i => i.id === item.id);
+                // Prüfe ob es ein Monster-Gacha ist
+                if (item.isMonsterGacha && item.imageData) {
+                    // Zeige das Bild in einem Popup
+                    showMonsterGachaImage(item.imageData);
+                }
+                
+                // Add to collection - IMMER hinzufügen (auch wenn schon vorhanden)
+                // Prüfe nur ob es wirklich neu ist für Notification
+                const existingItem = stats.collection.find(i => i.id === item.id);
+                const isNewItem = !existingItem;
+                
                 if (isNewItem) {
                     stats.collection.push({
                         id: item.id,
                         name: item.name,
                         icon: item.icon,
                         rarity: item.rarity,
-                        obtainedAt: new Date().toISOString()
+                        obtainedAt: new Date().toISOString(),
+                        isMonsterGacha: item.isMonsterGacha || false,
+                        imageData: item.imageData || null
                     });
                     
                     // Prüfe ob Feature freigeschaltet werden soll
                     if (item.unlocks) {
                         unlockFeature(item.unlocks);
                     }
+                } else {
+                    // Item schon vorhanden - aktualisiere obtainedAt
+                    existingItem.obtainedAt = new Date().toISOString();
                 }
                 
                 localStorage.setItem('gachaStats', JSON.stringify(stats));
                 updateStats();
                 
-                // Show collection notification if new item
-                if (stats.collection.length > 0) {
+                // Show collection notification - nur wenn wirklich neu
+                if (isNewItem) {
                     showCollectionNotification(item);
                 }
                 
@@ -306,14 +374,17 @@ function pullGacha() {
 }
 
 function getRandomItem() {
+    // Lade aktuelle Items (inkl. Monster-Gacha)
+    const currentItems = getGachaItems();
+    
     // Calculate total probability
-    const totalProb = gachaItems.reduce((sum, item) => sum + item.probability, 0);
+    const totalProb = currentItems.reduce((sum, item) => sum + item.probability, 0);
     
     // Random number
     let random = Math.random() * totalProb;
     
     // Find item
-    for (const item of gachaItems) {
+    for (const item of currentItems) {
         random -= item.probability;
         if (random <= 0) {
             return item;
@@ -321,7 +392,7 @@ function getRandomItem() {
     }
     
     // Fallback
-    return gachaItems[0];
+    return currentItems[0];
 }
 
 function displayItem(item) {
@@ -373,24 +444,24 @@ function showCollectionNotification(item) {
         position: fixed;
         top: 100px;
         right: 20px;
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, #ffffff, #fff5f8);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         z-index: 2000;
         animation: slideIn 0.5s ease;
-        max-width: 300px;
+        max-width: 320px;
+        border: 3px solid rgba(255, 107, 157, 0.3);
     `;
     
-    const isNew = !stats.collection.find(i => i.id === item.id && i.obtainedAt !== item.obtainedAt);
-    
     notification.innerHTML = `
-        <div style="font-size: 2em; text-align: center; margin-bottom: 10px;">${item.icon}</div>
-        <div style="font-weight: bold; text-align: center; margin-bottom: 5px;">${item.name}</div>
-        <div style="text-align: center; font-size: 0.9em; color: #666;">${isNew ? '✨ Neues Item!' : 'Du hattest das schon!'}</div>
-        <div style="text-align: center; margin-top: 10px;">
-            <span class="kugel-content-rarity ${item.rarity}" style="display: inline-block;">${item.rarity.toUpperCase()}</span>
+        <div style="font-size: 2.5em; text-align: center; margin-bottom: 15px;">${item.icon}</div>
+        <div style="font-weight: bold; text-align: center; margin-bottom: 8px; font-size: 1.2em; color: #333;">${item.name}</div>
+        <div style="text-align: center; font-size: 0.95em; color: #666; margin-bottom: 10px;">${item.description || ''}</div>
+        <div style="text-align: center; margin-top: 15px;">
+            <span class="kugel-content-rarity ${item.rarity}" style="display: inline-block; padding: 8px 20px; font-size: 0.9em;">${item.rarity.toUpperCase()}</span>
         </div>
+        <div style="text-align: center; margin-top: 15px; font-size: 0.9em; color: #4CAF50; font-weight: bold;">✨ Neues Item erhalten!</div>
     `;
     
     document.body.appendChild(notification);
@@ -398,7 +469,53 @@ function showCollectionNotification(item) {
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.5s ease';
         setTimeout(() => notification.remove(), 500);
-    }, 3000);
+    }, 4000);
+}
+
+// Monster-Gacha Bild Popup
+function showMonsterGachaImage(imageData) {
+    // Erstelle großes Popup-Modal
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    modal.innerHTML = `
+        <div style="position: relative; max-width: 90%; max-height: 90%; text-align: center;">
+            <div style="font-size: 4em; margin-bottom: 20px; animation: bounce 1s ease infinite;">👹</div>
+            <h2 style="color: white; font-size: 2em; margin-bottom: 20px; font-family: var(--font-heading);">MONSTER-GACHA!</h2>
+            <img src="${imageData}" alt="Monster-Gacha Bild" style="max-width: 80vw; max-height: 70vh; border-radius: 20px; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: 5px solid #E91E63;" />
+            <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 30px; padding: 15px 40px; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: 25px; font-size: 1.2em; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4);">Schließen ✨</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Schließe nach 10 Sekunden automatisch
+    setTimeout(() => {
+        if (modal.parentElement) {
+            modal.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => modal.remove(), 300);
+        }
+    }, 10000);
+    
+    // Schließe bei Klick außerhalb
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => modal.remove(), 300);
+        }
+    });
 }
 
 // Add CSS animations

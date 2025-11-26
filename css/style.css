@@ -30,11 +30,59 @@ body {
     background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
     min-height: 100vh;
     padding: 20px;
-    padding-top: 100px;
+    padding-top: 140px;
     color: var(--primary);
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Birthday Banner */
+.birthday-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow), var(--kawaii-pink));
+    padding: 15px 20px;
+    text-align: center;
+    z-index: 10000;
+    box-shadow: 0 4px 20px rgba(255, 107, 157, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.birthday-gif {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 15px;
+    animation: bounce-kawaii 2s ease-in-out infinite;
+}
+
+.birthday-text {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2em, 3vw, 2em);
+    color: white;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: sparkle 2s ease-in-out infinite;
+    font-weight: 900;
 }
 
 /* Kawaii Background Decorations */
@@ -474,6 +522,12 @@ h2, h3 {
     overflow: hidden;
     min-height: 400px;
     position: relative;
+    z-index: 1;
+}
+
+.custom-marker {
+    background: transparent;
+    border: none;
 }
 
 .map-placeholder {
@@ -903,10 +957,24 @@ button:hover::after, .upload-btn:hover::after {
 
 /* Responsive */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
-        padding-top: 80px;
-    }
+body {
+    padding: 10px;
+    padding-top: 140px;
+}
+
+.birthday-banner {
+    padding: 10px 15px;
+    gap: 10px;
+}
+
+.birthday-gif {
+    width: 60px;
+    height: 60px;
+}
+
+.birthday-text {
+    font-size: 1.1em;
+}
 
     .container {
         padding: 0 10px;

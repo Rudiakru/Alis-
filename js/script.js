@@ -94,19 +94,18 @@ async function initSlideshow() {
     // Kombiniere Ordner-Bilder und hochgeladene Bilder
     slideshowImages = [...folderImages, ...uploadedImages];
     
+    // Falls keine Bilder vorhanden, verwende Platzhalter-Bilder
+    if (slideshowImages.length === 0) {
+        slideshowImages = [
+            'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=800&h=600&fit=crop'
+        ];
+    }
+    
     const slideshowWrapper = document.getElementById('slideshow-wrapper');
     if (!slideshowWrapper) return;
-    
-    if (slideshowImages.length === 0) {
-        slideshowWrapper.innerHTML = `
-            <div style="padding: 60px 20px; text-align: center; color: #999;">
-                <div style="font-size: 4em; margin-bottom: 20px;">🦫</div>
-                <p>Noch keine Bilder in der Slideshow</p>
-                <p style="font-size: 0.9em; margin-top: 10px;">Lade Bilder hoch oder füge sie in den img/ Ordner ein!</p>
-            </div>
-        `;
-        return;
-    }
     
     // Erstelle Slides
     slideshowWrapper.innerHTML = '';
@@ -417,7 +416,7 @@ function initMap() {
         
         // Füge OpenStreetMap Tile Layer hinzu
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19
         }).addTo(map);
         
@@ -438,7 +437,15 @@ function initMap() {
         ];
         
         spots.forEach((spot, index) => {
-            const marker = L.marker(spot.coords).addTo(map);
+            // Erstelle Custom Icon
+            const customIcon = L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="font-size: 2em; text-align: center;">${spot.icon}</div>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40]
+            });
+            
+            const marker = L.marker(spot.coords, { icon: customIcon }).addTo(map);
             marker.bindPopup(`
                 <div style="text-align:center; font-family: 'Varela Round', sans-serif; padding: 10px;">
                     <h3 style="color:#8D6E63; margin:0 0 10px 0; font-size:1.3em;">${spot.icon} ${spot.title}</h3>
@@ -452,6 +459,52 @@ function initMap() {
                     marker.openPopup();
                 }, 1000);
             }
+        });
+    }
+}
+
+// Kommentar-Funktionen wurden entfernt
+
+function renderComments() {
+    if (!commentsEl) return;
+    
+    commentsEl.innerHTML = "";
+    if (comments.length === 0) {
+        commentsEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Noch keine Kommentare. Sei der Erste!</p>';
+        return;
+    }
+    comments.forEach((c, i) => {
+        commentsEl.innerHTML += `
+            <div class="comment" style="animation-delay: ${i * 0.08}s">
+                <div class="avatar" aria-hidden="true">🦫</div>
+                <div class="content">
+                    <strong>${c.name}</strong>
+                    <p>${c.text}</p>
+                </div>
+                <div class="like" onclick="toggleLike(this)" role="button" tabindex="0" aria-label="Gefällt mir" onkeypress="if(event.key==='Enter') toggleLike(this)">❤</div>
+            </div>
+        `;
+    });
+}
+
+function addComment() {
+    const input = document.getElementById("commentInput");
+    if (!input || input.value.trim() === "") return;
+
+    comments.unshift({ name: "Du", text: input.value });
+    localStorage.setItem('otisComments', JSON.stringify(comments));
+    input.value = "";
+    renderComments();
+    input.focus();
+    
+    // Kleines Konfetti für neuen Kommentar
+    if (typeof confetti !== 'undefined') {
+        confetti({
+            particleCount: 20,
+            spread: 50,
+            origin: { y: 0.8 },
+            colors: ['#ff6b9d', '#f8b500']
+>>>>>>> 98a912e0f8aeef1a33f3c9b26052d198da19ff47
         });
     }
 }

@@ -2,15 +2,15 @@
 
 // Basis Gacha Items Database - REDUZIERT für schnelles Sammeln
 let baseGachaItems = [
-    // Common Items (6 Items - mit süßen Fotos)
+    // Common Items (5 Items - mit süßen Fotos)
     { id: 1, name: "Capybara Foto", icon: "🦫", rarity: "common", description: "Ein süßes Capybara Foto!", probability: 5, color: "#AED581", isCapybaraPhoto: true, imageData: "https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" },
     { id: 2, name: "Hund Foto", icon: "🐶", rarity: "common", description: "Ein süßer Hund!", probability: 5, color: "#FFAB91", isCutePhoto: true, imageData: "https://media.giphy.com/media/3o7aD2sa0qC3XtS0Q0/giphy.gif" },
     { id: 3, name: "Katze Foto", icon: "🐱", rarity: "common", description: "Eine süße Katze!", probability: 5, color: "#FFB3D9", isCutePhoto: true, imageData: "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif" },
     { id: 4, name: "Capybara Bad", icon: "🦫", rarity: "common", description: "Capybara im Bad!", probability: 5, color: "#AED581", isCutePhoto: true, imageData: "https://media.giphy.com/media/k3c92Q7XmGj1xG7P5q/giphy.gif" },
-    { id: 5, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
-    { id: 6, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
+    { id: 5, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
     
-    // Rare Items (1 Item)
+    // Rare Items (2 Items)
+    { id: 6, name: "Matcha Tee mit Eis", icon: "🍵🧊", rarity: "rare", description: "Leckerer Matcha Tee mit Eis!", probability: 5, color: "#AED581" },
     { id: 7, name: "Kaffee und Kuchen", icon: "☕🎂", rarity: "rare", description: "Leckerer Kaffee und Kuchen!", probability: 5, color: "#FFF176" },
     
     // Epic Items (1 Item)
@@ -465,24 +465,47 @@ function triggerConfetti(rarity) {
         legendary: ['#f8b500', '#ff9800', '#ffc107', '#ffeb3b']
     };
     
-    const config = {
-        particleCount: rarity === 'legendary' ? 200 : rarity === 'epic' ? 100 : 50,
-        spread: 70,
+    // Unterschiedliche Effektgrößen basierend auf Rarity
+    let particleCount, spread, burstCount, delay;
+    
+    if (rarity === 'legendary') {
+        particleCount = 300;
+        spread = 100;
+        burstCount = 5;
+        delay = 150;
+    } else if (rarity === 'epic') {
+        particleCount = 150;
+        spread = 80;
+        burstCount = 3;
+        delay = 200;
+    } else if (rarity === 'rare') {
+        particleCount = 75;
+        spread = 60;
+        burstCount = 2;
+        delay = 250;
+    } else { // common
+        particleCount = 30;
+        spread = 50;
+        burstCount = 1;
+        delay = 0;
+    }
+    
+    const baseConfig = {
+        particleCount: particleCount,
+        spread: spread,
         origin: { y: 0.6 },
         colors: colors[rarity] || colors.common
     };
     
-    // Multiple bursts for legendary
-    if (rarity === 'legendary') {
-        confetti(config);
-        setTimeout(() => confetti({ ...config, angle: 60 }), 200);
-        setTimeout(() => confetti({ ...config, angle: 120 }), 400);
-        setTimeout(() => confetti({ ...config, angle: 180 }), 600);
-    } else if (rarity === 'epic') {
-        confetti(config);
-        setTimeout(() => confetti({ ...config, angle: 60 }), 200);
-    } else {
-        confetti(config);
+    // Multiple bursts basierend auf Rarity
+    for (let i = 0; i < burstCount; i++) {
+        setTimeout(() => {
+            const angle = i === 0 ? undefined : (i * (360 / burstCount));
+            confetti({
+                ...baseConfig,
+                angle: angle
+            });
+        }, i * delay);
     }
 }
 

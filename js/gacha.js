@@ -1,4 +1,4 @@
-// Gacha Machine JavaScript - "Strict Collection" (Mit Sicherheits-Sperre)
+// Gacha Machine JavaScript - "Strict Collection" (Mit Zeit-Sperre)
 
 // 1. DEFINITIONEN DER ITEM-TYPEN
 const itemTemplates = [
@@ -113,7 +113,6 @@ function getAllPossibleItems() {
 let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
     totalPulls: 0, rarity: {rare:0, epic:0, legendary:0}, collection: []
 };
-// Fix für alte Stats Struktur falls nötig
 if(!stats.rareItems) {
     stats.rareItems = stats.rarity?.rare || 0;
     stats.epicItems = stats.rarity?.epic || 0;
@@ -156,10 +155,9 @@ function checkUnlockedFeatures() {
 
 
 // ---------------------------------------------------------
-// INITIALISIERUNG
+// INITIALISIERUNG (Mit radikaler Säuberung)
 // ---------------------------------------------------------
-// SICHERHEITS-SCHALTER
-let isAnimating = false;
+let lastClickTime = 0; // Globale Zeit-Sperre
 
 document.addEventListener('DOMContentLoaded', () => {
     initGachaMachine();
@@ -173,18 +171,17 @@ function initGachaMachine() {
     const door = document.getElementById('gacha-door');
     
     if (button) {
-        // Entferne alte Event Listener durch Klonen (Trick um sicherzugehen)
-        const newButton = button.cloneNode(true);
-        button.parentNode.replaceChild(newButton, button);
+        // RADIKALE LÖSUNG: Wir nutzen .onclick statt addEventListener
+        // Das überschreibt alle vorherigen Klicks sicher.
+        button.onclick = pullGacha;
         
-        // Neuen Listener hinzufügen
-        newButton.addEventListener('click', pullGacha);
-        newButton.addEventListener('mouseenter', () => {
-            if (!newButton.disabled && !isAnimating) {
+        // Hover Effekt bleibt separat
+        button.onmouseenter = () => {
+            if (!button.disabled && (Date.now() - lastClickTime > 2000)) {
                 door.classList.add('shake');
                 setTimeout(() => door.classList.remove('shake'), 500);
             }
-        });
+        };
         
         checkIfEmpty();
     }
@@ -206,6 +203,7 @@ function setButtonToEmpty(button) {
     button.style.background = "#ccc";
     button.style.cursor = "default";
     button.disabled = true;
+    button.onclick = null; // Klick komplett entfernen
 }
 
 function createKugelPreviews() {
@@ -229,12 +227,18 @@ function updateStats() {
 
 
 // ---------------------------------------------------------
-// HAUPTFUNKTION ZUM ZIEHEN
+// HAUPTFUNKTION (Mit Zeit-Sperre)
 // ---------------------------------------------------------
-function pullGacha() {
-    // 1. SICHERHEITS-CHECK: Läuft schon eine Animation?
-    if (isAnimating) return;
-    isAnimating = true;
+function pullGacha(e) {
+    if(e) e.preventDefault(); // Verhindert Standard-Browser Verhalten
+
+    // 1. HARTE ZEIT-SPERRE (Cooldown 2 Sekunden)
+    const now = Date.now();
+    if (now - lastClickTime < 2000) {
+        console.log("Klick blockiert: Zu schnell!");
+        return; 
+    }
+    lastClickTime = now;
 
     const button = document.getElementById('gacha-button');
     
@@ -246,7 +250,6 @@ function pullGacha() {
     if (availableItems.length === 0) {
         setButtonToEmpty(button);
         showCompletedModal();
-        isAnimating = false;
         return;
     }
 
@@ -264,7 +267,7 @@ function pullGacha() {
     // Reset Display
     kugelShell.classList.remove('opened');
     kugelContent.classList.remove('show');
-    kugelContent.innerHTML = ''; // Inhalt sicher löschen
+    kugelContent.innerHTML = ''; 
     
     const fallingKugel = document.createElement('div');
     fallingKugel.className = 'falling-kugel';
@@ -328,8 +331,6 @@ function pullGacha() {
                         button.classList.remove('pulling');
                         door.classList.remove('shake');
                     }
-                    // SPERRE AUFHEBEN
-                    isAnimating = false;
                 }, 1000);
             }, 300);
         }, 500);
@@ -350,7 +351,6 @@ function displayItem(item) {
 // MODALS
 // ---------------------------------------------------------
 function showCompletedModal() {
-    // Check if already open
     if(document.getElementById('completed-modal')) return;
 
     const modal = document.createElement('div');
@@ -371,7 +371,6 @@ function showCompletedModal() {
 }
 
 function showPopup(item) {
-    // Eindeutige ID vergeben, um Dopplungen zu verhindern
     const popupId = 'popup-' + item.id;
     if(document.getElementById(popupId)) return;
 

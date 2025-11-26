@@ -3,10 +3,10 @@
 // Basis Gacha Items Database - REDUZIERT für schnelles Sammeln
 let baseGachaItems = [
     // Common Items (4 Items)
-    { id: 1, name: "Capybara Sticker", icon: "🦫", rarity: "common", description: "Ein süßer Capybara Sticker!", probability: 5, color: "#AED581" },
-    { id: 2, name: "Yuzu Bad", icon: "🛁", rarity: "common", description: "Entspannendes Yuzu-Bad!", probability: 5, color: "#FFF176" },
+    { id: 1, name: "Capybara Foto", icon: "🦫", rarity: "common", description: "Ein süßes Capybara Foto!", probability: 5, color: "#AED581", isCapybaraPhoto: true, imageData: "https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" },
+    { id: 2, name: "Kaffee", icon: "☕", rarity: "common", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
     { id: 3, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
-    { id: 4, name: "Herz", icon: "💕", rarity: "common", description: "Viel Liebe!", probability: 5, color: "#ff6b9d" },
+    { id: 4, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
     
     // Rare Items (3 Items)
     { id: 6, name: "Goldene Capybara", icon: "🦫✨", rarity: "rare", description: "Eine seltene goldene Capybara!", probability: 5, color: "#f8b500" },
@@ -259,11 +259,28 @@ function showCollection() {
         grid.innerHTML = sorted.map(item => {
             const allItems = getGachaItems();
             const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
-            const displayIcon = item.isMonsterGacha && item.imageData ? '👹' : (itemData ? itemData.icon : item.icon);
-            const displayName = item.isMonsterGacha ? 'Monster-Gacha' : (itemData ? itemData.name : item.name);
+            let displayIcon = itemData ? itemData.icon : item.icon;
+            let displayName = itemData ? itemData.name : item.name;
+            let onClick = '';
+            let cursorStyle = '';
+            
+            if (item.isMonsterGacha && item.imageData) {
+                displayIcon = '👹';
+                displayName = 'Monster-Gacha';
+                onClick = `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')"`;
+                cursorStyle = 'cursor: pointer;';
+            } else if (item.isCapybaraPhoto && item.imageData) {
+                displayIcon = '🦫';
+                displayName = 'Capybara Foto';
+                onClick = `onclick="showCapybaraPhoto('${item.imageData.replace(/'/g, "&#39;")}')"`;
+                cursorStyle = 'cursor: pointer;';
+            } else if (itemData && itemData.isCapybaraPhoto && itemData.imageData) {
+                onClick = `onclick="showCapybaraPhoto('${itemData.imageData.replace(/'/g, "&#39;")}')"`;
+                cursorStyle = 'cursor: pointer;';
+            }
             
             return `
-                <div class="collection-item ${item.rarity}" ${item.isMonsterGacha && item.imageData ? `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')" style="cursor: pointer;"` : ''}>
+                <div class="collection-item ${item.rarity}" ${onClick} style="${cursorStyle}">
                     <span class="collection-item-icon">${displayIcon}</span>
                     <div class="collection-item-name">${displayName}</div>
                     <div class="collection-item-rarity ${item.rarity}">${item.rarity.toUpperCase()}</div>
@@ -352,6 +369,7 @@ function pullGacha() {
                         rarity: item.rarity,
                         obtainedAt: new Date().toISOString(),
                         isMonsterGacha: item.isMonsterGacha || false,
+                        isCapybaraPhoto: item.isCapybaraPhoto || false,
                         imageData: item.imageData || null
                     });
                     
@@ -375,11 +393,16 @@ function pullGacha() {
                 // Confetti based on rarity
                 triggerConfetti(item.rarity);
                 
-                // Prüfe ob es ein Monster-Gacha ist - zeige Popup NACH Button-Reaktivierung
+                // Prüfe ob es ein Monster-Gacha oder Capybara Foto ist - zeige Popup NACH Button-Reaktivierung
                 if (item.isMonsterGacha && item.imageData) {
                     // Zeige das Bild in einem Popup nach kurzer Verzögerung
                     setTimeout(() => {
                         showMonsterGachaImage(item.imageData);
+                    }, 500);
+                } else if (item.isCapybaraPhoto && item.imageData) {
+                    // Zeige Capybara Foto in einem Popup nach kurzer Verzögerung
+                    setTimeout(() => {
+                        showCapybaraPhoto(item.imageData);
                     }, 500);
                 }
                 
@@ -550,6 +573,92 @@ function showMonsterGachaImage(imageData) {
     
     // Event Listener für Schließen-Button
     const closeBtn = modal.querySelector('#close-monster-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('touchstart', closeModal);
+    }
+    
+    // Schließe nach 8 Sekunden automatisch
+    setTimeout(() => {
+        if (modal.parentElement) {
+            closeModal();
+        }
+    }, 8000);
+    
+    // Schließe bei Klick außerhalb
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Schließe bei ESC-Taste
+    const escHandler = (e) => {
+        if (e.key === 'Escape' && modal.parentElement) {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
+// Capybara Foto Popup
+function showCapybaraPhoto(imageData) {
+    // Erstelle großes Popup-Modal
+    const modal = document.createElement('div');
+    modal.id = 'capybara-photo-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+        pointer-events: auto;
+    `;
+    
+    const closeModal = () => {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (modal.parentElement) {
+                modal.remove();
+            }
+            // Stelle sicher, dass Button wieder aktiv ist
+            const button = document.getElementById('gacha-button');
+            if (button) {
+                button.disabled = false;
+                button.classList.remove('pulling');
+            }
+        }, 300);
+    };
+    
+    // Mobile-optimiertes Popup
+    const isMobile = window.innerWidth <= 768;
+    const capybaraSize = isMobile ? '2.5em' : '4em';
+    const titleSize = isMobile ? '1.5em' : '2em';
+    const imgMaxWidth = isMobile ? '95vw' : '80vw';
+    const imgMaxHeight = isMobile ? '60vh' : '70vh';
+    const buttonPadding = isMobile ? '12px 30px' : '15px 40px';
+    const buttonFontSize = isMobile ? '1em' : '1.2em';
+    
+    modal.innerHTML = `
+        <div style="position: relative; max-width: 95%; max-height: 95%; text-align: center; pointer-events: auto; padding: ${isMobile ? '15px' : '20px'};">
+            <div style="font-size: ${capybaraSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; animation: bounce 1s ease infinite;">🦫</div>
+            <h2 style="color: white; font-size: ${titleSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; font-family: var(--font-heading); line-height: 1.2;">KAWAII CAPYBARA!</h2>
+            <img src="${imageData}" alt="Capybara Foto" style="max-width: ${imgMaxWidth}; max-height: ${imgMaxHeight}; border-radius: ${isMobile ? '15px' : '20px'}; box-shadow: 0 20px 60px rgba(174, 213, 129, 0.5); border: ${isMobile ? '3px' : '5px'} solid #AED581; display: block; margin: 0 auto;" />
+            <button id="close-capybara-modal" style="margin-top: ${isMobile ? '20px' : '30px'}; padding: ${buttonPadding}; background: linear-gradient(135deg, #AED581, #8BC34A); color: white; border: none; border-radius: ${isMobile ? '20px' : '25px'}; font-size: ${buttonFontSize}; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(174, 213, 129, 0.4); transition: transform 0.2s ease; -webkit-tap-highlight-color: rgba(174, 213, 129, 0.3);">Schließen ✨</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event Listener für Schließen-Button
+    const closeBtn = modal.querySelector('#close-capybara-modal');
     if (closeBtn) {
         closeBtn.addEventListener('click', closeModal);
         closeBtn.addEventListener('touchstart', closeModal);

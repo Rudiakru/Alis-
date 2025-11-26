@@ -465,52 +465,6 @@ function initMap() {
 
 // Kommentar-Funktionen wurden entfernt
 
-function renderComments() {
-    if (!commentsEl) return;
-    
-    commentsEl.innerHTML = "";
-    if (comments.length === 0) {
-        commentsEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Noch keine Kommentare. Sei der Erste!</p>';
-        return;
-    }
-    comments.forEach((c, i) => {
-        commentsEl.innerHTML += `
-            <div class="comment" style="animation-delay: ${i * 0.08}s">
-                <div class="avatar" aria-hidden="true">🦫</div>
-                <div class="content">
-                    <strong>${c.name}</strong>
-                    <p>${c.text}</p>
-                </div>
-                <div class="like" onclick="toggleLike(this)" role="button" tabindex="0" aria-label="Gefällt mir" onkeypress="if(event.key==='Enter') toggleLike(this)">❤</div>
-            </div>
-        `;
-    });
-}
-
-function addComment() {
-    const input = document.getElementById("commentInput");
-    if (!input || input.value.trim() === "") return;
-
-    comments.unshift({ name: "Du", text: input.value });
-    localStorage.setItem('otisComments', JSON.stringify(comments));
-    input.value = "";
-    renderComments();
-    input.focus();
-    
-    // Kleines Konfetti für neuen Kommentar
-    if (typeof confetti !== 'undefined') {
-        confetti({
-            particleCount: 20,
-            spread: 50,
-            origin: { y: 0.8 },
-            colors: ['#ff6b9d', '#f8b500']
->>>>>>> 98a912e0f8aeef1a33f3c9b26052d198da19ff47
-        });
-    }
-}
-
-// Kommentar-Funktionen wurden entfernt
-
 // ============================================
 // INITIALISIERUNG
 // ============================================

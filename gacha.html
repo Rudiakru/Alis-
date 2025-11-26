@@ -132,9 +132,20 @@
     <footer>
         Made with ❤️ in Taiwan | 🦫 Otis Galerie
     </footer>
+    
+    <!-- Reset Button -->
+    <button class="reset-button" onclick="resetGachaData()" title="Gacha-Daten zurücksetzen" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #ff4757, #ff3838); color: white; border: none; padding: 15px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4); z-index: 1000; font-family: var(--font-heading); transition: all 0.3s ease;">🔄 Reset</button>
 
     <!-- Scripts -->
     <script src="js/navigation.js"></script>
     <script src="js/gacha.js"></script>
+    <script>
+        function resetGachaData() {
+            if (confirm('Möchtest du wirklich alle Gacha-Daten zurücksetzen? (Statistiken, Collection)')) {
+                localStorage.removeItem('gachaStats');
+                location.reload();
+            }
+        }
+    </script>
 </body>
 </html>

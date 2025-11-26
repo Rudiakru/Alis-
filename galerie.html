@@ -31,6 +31,89 @@
             opacity: 0.3;
             animation: float-kawaii 4s ease-in-out infinite;
         }
+        
+        /* Dark Gallery Theme */
+        .dark-gallery-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+            color: #ffffff;
+        }
+        
+        .dark-gallery-section .section-title {
+            color: #ffffff;
+            text-shadow: 2px 2px 0px rgba(255, 107, 157, 0.5);
+        }
+        
+        .dark-gallery-section .section-title::after {
+            background: linear-gradient(90deg, #ff6b9d, #f8b500, #ff6b9d);
+        }
+        
+        .dark-gallery {
+            background: transparent;
+        }
+        
+        .dark-gallery .gallery-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dark-gallery .gallery-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 107, 157, 0.6);
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.3);
+        }
+        
+        .dark-gallery .gallery-item-info {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark-gallery .gallery-item-date {
+            color: #b0b0b0;
+        }
+        
+        .dark-slideshow {
+            background: rgba(0, 0, 0, 0.3) !important;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+        }
+        
+        .dark-slideshow .mySlides img {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .dark-gallery-section .gallery-controls button {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+        }
+        
+        .dark-gallery-section .slide-counter {
+            color: #b0b0b0;
+        }
+        
+        .dark-gallery-section p {
+            color: #b0b0b0;
+        }
+        
+        .reset-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4);
+            z-index: 1000;
+            font-family: var(--font-heading);
+            transition: all 0.3s ease;
+        }
+        
+        .reset-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -66,21 +149,21 @@
         <!-- Upload Section -->
         <div class="upload-section">
             <h2>📤 Neues Bild hochladen</h2>
-            <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('fileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('fileInput').click()">
+            <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('uploadFileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('uploadFileInput').click()">
                 <div class="upload-icon" aria-hidden="true">📸</div>
                 <div class="upload-text">Klicke hier oder ziehe ein Bild hierher</div>
                 <div class="upload-hint">PNG, JPG oder GIF bis 10MB</div>
             </div>
-            <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" />
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()" aria-label="Bild hochladen">
+            <input type="file" id="uploadFileInput" accept="image/*" aria-label="Bild auswählen" />
+            <button class="upload-btn" onclick="document.getElementById('uploadFileInput').click()" aria-label="Bild hochladen">
                 📤 Bild auswählen
             </button>
         </div>
 
         <!-- Slideshow Section -->
-        <section id="slideshow-section" class="content-section">
+        <section id="slideshow-section" class="content-section dark-gallery-section">
             <h2 class="section-title">📸 Slideshow</h2>
-            <div class="slideshow-container" id="slideshow-wrapper">
+            <div class="slideshow-container dark-slideshow" id="slideshow-wrapper">
                 <!-- Slides werden automatisch von script.js eingefügt -->
             </div>
             <div class="gallery-controls">
@@ -92,9 +175,9 @@
         </section>
 
         <!-- Gallery Grid -->
-        <section class="content-section">
+        <section class="content-section dark-gallery-section">
             <h2 class="section-title">🖼️ Alle Bilder</h2>
-            <div class="gallery" id="uploaded-gallery" role="region" aria-label="Bildergalerie">
+            <div class="gallery dark-gallery" id="all-images-gallery" role="region" aria-label="Bildergalerie">
                 <!-- Bilder werden automatisch von script.js eingefügt -->
             </div>
         </section>
@@ -112,9 +195,55 @@
     <footer>
         Made with ❤️ in Taiwan | 🦫 Otis Galerie
     </footer>
+    
+    <!-- Reset Button -->
+    <button class="reset-button" onclick="resetAllData()" title="Alle Daten zurücksetzen">🔄 Reset</button>
 
     <!-- Scripts -->
     <script src="js/navigation.js"></script>
     <script src="js/script.js"></script>
+    <script>
+        function resetAllData() {
+            if (confirm('Möchtest du wirklich ALLE Daten zurücksetzen? (Bilder, Kommentare, Gacha-Statistiken)')) {
+                localStorage.removeItem('otisImages');
+                localStorage.removeItem('otisComments');
+                localStorage.removeItem('gachaStats');
+                location.reload();
+            }
+        }
+        
+        // Upload File Input Handler für galerie.html
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadFileInput = document.getElementById('uploadFileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            
+            if (uploadFileInput) {
+                uploadFileInput.addEventListener('change', handleFileSelect);
+            }
+            
+            // Drag & Drop für Upload Area
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+                
+                uploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0 && files[0].type.startsWith('image/')) {
+                        uploadFileInput.files = files;
+                        handleFileSelect({ target: { files: files } });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

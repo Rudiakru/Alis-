@@ -14,6 +14,9 @@ let baseGachaItems = [
     { id: 7, name: "Kaffee", icon: "☕", rarity: "rare", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
     { id: 8, name: "Kuchen", icon: "🎂", rarity: "rare", description: "Leckerer Kuchen!", probability: 5, color: "#FFAB91" },
     
+    // Epic Items (1 Item)
+    { id: 9, name: "Geschenk 1", icon: "🎁", rarity: "epic", description: "Ein besonderes Geschenk!", probability: 5, color: "#ff6b9d" },
+    
     // Legendary Items (4 Items - mit Features)
     { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
     { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },

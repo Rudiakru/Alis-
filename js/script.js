@@ -32,7 +32,18 @@ window.addEventListener('load', () => {
 // ============================================
 // BILDER-MANAGEMENT
 // ============================================
-let images = JSON.parse(localStorage.getItem('otisImages')) || [];
+// WICHTIG: Lade images immer frisch aus localStorage
+function getImages() {
+    try {
+        const stored = localStorage.getItem('otisImages');
+        return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+        console.error('Fehler beim Laden der Bilder:', e);
+        return [];
+    }
+}
+
+let images = getImages();
 let slideshowImages = [];
 
 // Automatisches Scannen von Bildern im img/ Ordner
@@ -74,6 +85,9 @@ async function scanImageFolder() {
 
 // Initialisiere Slideshow mit Bildern aus img/ Ordner
 async function initSlideshow() {
+    // WICHTIG: Lade images frisch aus localStorage
+    images = getImages();
+    
     const folderImages = await scanImageFolder();
     const uploadedImages = images.map(img => img.data);
     
@@ -162,13 +176,16 @@ async function initGallery() {
     const gallery = document.getElementById('all-images-gallery');
     if (!gallery) return;
     
+    // WICHTIG: Lade images frisch aus localStorage
+    images = getImages();
+    
     // Hole alle Bilder: aus img/ Ordner + hochgeladene
     const folderImages = await scanImageFolder();
-    const uploadedImages = images.map(img => ({
+    const uploadedImages = images.map((img, idx) => ({
         src: img.data,
         date: img.date,
         isUploaded: true,
-        index: images.indexOf(img)
+        index: idx
     }));
     
     const folderImageObjects = folderImages.map((src, idx) => ({
@@ -231,7 +248,7 @@ function handleFileSelect(event) {
     }
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         const imageData = {
             data: e.target.result,
             date: new Date().toISOString()
@@ -239,9 +256,12 @@ function handleFileSelect(event) {
         images.unshift(imageData);
         localStorage.setItem('otisImages', JSON.stringify(images));
         
-        // Aktualisiere beide Bereiche
-        initGallery(); // Aktualisiert "Alle Bilder" Section
-        initSlideshow(); // Aktualisiert Slideshow (enthält hochgeladene Bilder)
+        // WICHTIG: Lade images neu aus localStorage
+        images = getImages();
+        
+        // Aktualisiere beide Bereiche sofort
+        await initGallery(); // Aktualisiert "Alle Bilder" Section
+        await initSlideshow(); // Aktualisiert Slideshow (enthält hochgeladene Bilder)
         
         // Erfolgs-Feedback
         const successMsg = document.createElement('div');
@@ -358,196 +378,85 @@ if (lightbox) {
 }
 
 // ============================================
-// GOOGLE MAPS
+// OPENSTREETMAP - Leaflet
 // ============================================
 function initMap() {
     const mapElement = document.getElementById('map');
+    const placeholder = document.getElementById('map-placeholder');
     if (!mapElement) return;
     
-    // Prüfe ob Google Maps API verfügbar ist
-    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-        mapElement.innerHTML = `
-            <div class="map-placeholder">
-                <div>
-                    <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
-                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">Google Maps API Key benötigt</p>
-                    <p style="font-size: 1em; margin-bottom: 10px;">Um die Karte zu aktivieren:</p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">1. Gehe zu <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" style="color: white; text-decoration: underline;">Google Cloud Console</a></p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">2. Erstelle einen API Key</p>
-                    <p style="font-size: 0.9em; opacity: 0.9;">3. Füge ihn in index.html ein (Zeile 116)</p>
-                </div>
-            </div>
-        `;
-        return;
+    // Verstecke Placeholder wenn Karte geladen wird
+    if (placeholder) {
+        placeholder.style.display = 'none';
     }
     
-    // Custom Map Style - Taiwan Capybara Stil
-    const mapStyles = [
-        {
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#C5E1A5" }] // Pastellgrünes Wasser
-        },
-        {
-            "featureType": "landscape",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#FFF8E1" }] // Yuzu Creme
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#ffffff" }, { "visibility": "simplified" }]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry",
-            "stylers": [{ "visibility": "off" }] // Autobahnen verstecken
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels",
-            "stylers": [{ "visibility": "off" }]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#AED581" }] // Matcha Grün für Parks
-        },
-        {
-            "featureType": "administrative",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#8D6E63" }]
-        }
-    ];
-
-    // Startpunkt (Kaohsiung, Taiwan)
-    const center = { lat: 22.6273, lng: 120.3014 };
-
-    const map = new google.maps.Map(mapElement, {
-        zoom: 13,
-        center: center,
-        styles: mapStyles,
-        disableDefaultUI: true,
-        zoomControl: true,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true
-    });
-
-    // Deine Orte - Hier kannst du deine persönlichen Orte eintragen
-    const spots = [
-        {
-            coords: { lat: 22.6273, lng: 120.3014 },
-            title: "Kaohsiung",
-            text: "Wo alles begann! ❤️",
-            icon: '🦫'
-        },
-        {
-            coords: { lat: 22.6200, lng: 120.3100 },
-            title: "Lieblingsplatz",
-            text: "Unser besonderer Ort 💕",
-            icon: '💖'
-        }
-        // Füge hier mehr Orte hinzu!
-    ];
-
-    spots.forEach(spot => {
-        const marker = new google.maps.Marker({
-            position: spot.coords,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            title: spot.title
-        });
-
-        const infoWindow = new google.maps.InfoWindow({
-            content: `
-                <div style="padding:15px; text-align:center; font-family: 'Varela Round', sans-serif;">
+    // Prüfe ob Leaflet verfügbar ist
+    if (typeof L === 'undefined') {
+        // Lade Leaflet CSS und JS
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+        
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.onload = () => {
+            createMap();
+        };
+        document.head.appendChild(script);
+    } else {
+        createMap();
+    }
+    
+    function createMap() {
+        // Startpunkt (Kaohsiung, Taiwan)
+        const center = [22.6273, 120.3014];
+        
+        // Erstelle Karte
+        const map = L.map(mapElement).setView(center, 13);
+        
+        // Füge OpenStreetMap Tile Layer hinzu
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Orte
+        const spots = [
+            {
+                coords: [22.6273, 120.3014],
+                title: "Kaohsiung",
+                text: "Wo alles begann! ❤️",
+                icon: '🦫'
+            },
+            {
+                coords: [22.6200, 120.3100],
+                title: "Lieblingsplatz",
+                text: "Unser besonderer Ort 💕",
+                icon: '💖'
+            }
+        ];
+        
+        spots.forEach((spot, index) => {
+            const marker = L.marker(spot.coords).addTo(map);
+            marker.bindPopup(`
+                <div style="text-align:center; font-family: 'Varela Round', sans-serif; padding: 10px;">
                     <h3 style="color:#8D6E63; margin:0 0 10px 0; font-size:1.3em;">${spot.icon} ${spot.title}</h3>
                     <p style="color:#666; margin:0;">${spot.text}</p>
                 </div>
-            `
-        });
-
-        marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-        });
-        
-        // Auto-open first marker
-        if (spots.indexOf(spot) === 0) {
-            setTimeout(() => {
-                infoWindow.open(map, marker);
-            }, 1000);
-        }
-    });
-}
-
-// ============================================
-// KOMMENTAR FUNKTIONEN
-// ============================================
-const commentsEl = document.getElementById("comments");
-let comments = JSON.parse(localStorage.getItem('otisComments')) || [
-    { name: "Anna", text: "Otis ist so süß! 🦫" },
-    { name: "Markus", text: "Die beste Capybara-Galerie!" },
-    { name: "Lena", text: "Ich liebe diese niedlichen Bilder 💕" }
-];
-
-function renderComments() {
-    if (!commentsEl) return;
-    
-    commentsEl.innerHTML = "";
-    if (comments.length === 0) {
-        commentsEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Noch keine Kommentare. Sei der Erste!</p>';
-        return;
-    }
-    comments.forEach((c, i) => {
-        commentsEl.innerHTML += `
-            <div class="comment" style="animation-delay: ${i * 0.08}s">
-                <div class="avatar" aria-hidden="true">🦫</div>
-                <div class="content">
-                    <strong>${c.name}</strong>
-                    <p>${c.text}</p>
-                </div>
-                <div class="like" onclick="toggleLike(this)" role="button" tabindex="0" aria-label="Gefällt mir" onkeypress="if(event.key==='Enter') toggleLike(this)">❤</div>
-            </div>
-        `;
-    });
-}
-
-function addComment() {
-    const input = document.getElementById("commentInput");
-    if (!input || input.value.trim() === "") return;
-
-    comments.unshift({ name: "Du", text: input.value });
-    localStorage.setItem('otisComments', JSON.stringify(comments));
-    input.value = "";
-    renderComments();
-    input.focus();
-    
-    // Kleines Konfetti für neuen Kommentar
-    if (typeof confetti !== 'undefined') {
-        confetti({
-            particleCount: 20,
-            spread: 50,
-            origin: { y: 0.8 },
-            colors: ['#ff6b9d', '#f8b500']
+            `);
+            
+            // Auto-open first marker
+            if (index === 0) {
+                setTimeout(() => {
+                    marker.openPopup();
+                }, 1000);
+            }
         });
     }
 }
 
-function toggleLike(el) {
-    el.classList.toggle("liked");
-    if (el.classList.contains('liked')) {
-        el.setAttribute('aria-label', 'Gefällt mir aktiviert');
-    } else {
-        el.setAttribute('aria-label', 'Gefällt mir');
-    }
-}
-
-function handleKeyPress(event) {
-    if (event.key === "Enter") {
-        addComment();
-    }
-}
+// Kommentar-Funktionen wurden entfernt
 
 // ============================================
 // INITIALISIERUNG
@@ -555,13 +464,7 @@ function handleKeyPress(event) {
 document.addEventListener('DOMContentLoaded', () => {
     initGallery();
     initSlideshow();
-    renderComments();
     
-    // Google Maps wird asynchron geladen
-    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-        initMap();
-    } else {
-        // Warte auf Google Maps API
-        window.initMap = initMap;
-    }
+    // OpenStreetMap wird geladen
+    initMap();
 });

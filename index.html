@@ -145,10 +145,14 @@
         <section id="map-section" class="content-section">
             <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
             <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
-            <div id="map" style="min-height: 400px;"></div>
-            <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
-                💡 Um die Karte zu aktivieren, füge deinen Google Maps API Key in index.html ein (Zeile 116)
-            </p>
+            <div id="map" style="min-height: 400px; width: 100%; border-radius: 20px; overflow: hidden;"></div>
+            <div id="map-placeholder" style="min-height: 400px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #AED581, #8BC34A); border-radius: 20px; color: white; text-align: center; padding: 40px;">
+                <div>
+                    <p style="font-size: 3em; margin-bottom: 20px;">🗺️</p>
+                    <p style="font-size: 1.3em; font-weight: bold; margin-bottom: 15px;">OpenStreetMap Karte</p>
+                    <p style="font-size: 1em;">Taiwan - Wo alles begann! 💕</p>
+                </div>
+            </div>
         </section>
 
         <!-- Music Section -->
@@ -174,17 +178,6 @@
             </div>
         </section>
 
-        <!-- Comments Section -->
-        <div class="comments-container">
-            <h3>💬 Kommentare</h3>
-            <div id="comments" role="region" aria-label="Kommentare">
-                <!-- Kommentare werden automatisch von script.js eingefügt -->
-            </div>
-            <div class="new-comment">
-                <input id="commentInput" placeholder="Schreibe einen Kommentar..." onkeypress="handleKeyPress(event)" aria-label="Kommentar eingeben" />
-                <button onclick="addComment()" aria-label="Kommentar posten">Posten</button>
-            </div>
-        </div>
     </div>
 
     <!-- Lightbox -->
@@ -200,12 +193,7 @@
         Made with ❤️ in Taiwan | 🦫 Otis Galerie
     </footer>
 
-    <!-- Google Maps API -->
-    <!-- 
-    WICHTIG: Ersetze DEIN_API_KEY_HIER mit deinem Google Maps API Key
-    Hol dir einen kostenlosen Key hier: https://console.cloud.google.com/google/maps-apis
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=DEIN_API_KEY_HIER&callback=initMap" async defer></script>
+    <!-- OpenStreetMap wird automatisch geladen -->
     
     <!-- Navigation Script -->
     <script src="js/navigation.js"></script>

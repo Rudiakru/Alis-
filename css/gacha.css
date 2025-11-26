@@ -315,9 +315,11 @@
     box-shadow: 
         inset 0 0 30px rgba(255, 107, 157, 0.2),
         0 0 40px rgba(255, 107, 157, 0.3);
-    padding: 25px;
+    padding: 20px 15px;
     text-align: center;
     border: 3px solid rgba(255, 107, 157, 0.2);
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .kugel-content.show {
@@ -325,22 +327,33 @@
 }
 
 .kugel-content-icon {
-    font-size: 4em;
-    margin-bottom: 15px;
+    font-size: 3.5em;
+    margin-bottom: 10px;
     animation: bounce-in 0.6s ease;
+    flex-shrink: 0;
 }
 
 .kugel-content-name {
     font-family: var(--font-heading);
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: var(--primary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    word-wrap: break-word;
+    max-width: 100%;
+    padding: 0 10px;
+    text-align: center;
 }
 
 .kugel-content-description {
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: #666;
-    line-height: 1.4;
+    line-height: 1.5;
+    word-wrap: break-word;
+    max-width: 100%;
+    padding: 0 10px;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 .kugel-content-rarity {

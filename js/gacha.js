@@ -10,9 +10,8 @@ let baseGachaItems = [
     { id: 5, name: "Matcha Tee", icon: "🍵", rarity: "common", description: "Leckerer Matcha Tee!", probability: 5, color: "#AED581" },
     { id: 6, name: "Kuss", icon: "💋", rarity: "common", description: "Ein süßer Kuss!", probability: 5, color: "#ff6b9d" },
     
-    // Rare Items (2 Items)
-    { id: 7, name: "Kaffee", icon: "☕", rarity: "rare", description: "Leckerer Kaffee!", probability: 5, color: "#FFF176" },
-    { id: 8, name: "Kuchen", icon: "🎂", rarity: "rare", description: "Leckerer Kuchen!", probability: 5, color: "#FFAB91" },
+    // Rare Items (1 Item)
+    { id: 7, name: "Kaffee und Kuchen", icon: "☕🎂", rarity: "rare", description: "Leckerer Kaffee und Kuchen!", probability: 5, color: "#FFF176" },
     
     // Epic Items (1 Item)
     { id: 9, name: "Geschenk 1", icon: "🎁", rarity: "epic", description: "Ein besonderes Geschenk!", probability: 5, color: "#ff6b9d" },

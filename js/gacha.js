@@ -11,7 +11,7 @@ const itemTemplates = [
         rarity: "common", 
         description: "Ein süßer Hund!", 
         color: "#FFAB91", 
-        isCutePhoto: true,
+        isCutePhoto: true, 
         baseId: 20000 
     },
     { 
@@ -22,7 +22,7 @@ const itemTemplates = [
         rarity: "common", 
         description: "Eine süße Katze!", 
         color: "#FFB3D9", 
-        isCutePhoto: true,
+        isCutePhoto: true, 
         baseId: 30000 
     },
     { 
@@ -33,7 +33,7 @@ const itemTemplates = [
         rarity: "legendary", 
         description: "Eine spezielle Fotosession!", 
         color: "#ff6b9d", 
-        isCutePhoto: true,
+        isCutePhoto: true, 
         baseId: 40000 
     },
     { 
@@ -44,7 +44,7 @@ const itemTemplates = [
         rarity: "legendary", 
         description: "Ein mysteriöses Monster-Gacha!", 
         color: "#E91E63", 
-        isMonsterGacha: true,
+        isMonsterGacha: true, 
         baseId: 50000 
     },
 
@@ -172,7 +172,6 @@ function initGachaMachine() {
     
     if (button) {
         // RADIKALE LÖSUNG: Wir nutzen .onclick statt addEventListener
-        // Das überschreibt alle vorherigen Klicks sicher.
         button.onclick = pullGacha;
         
         // Hover Effekt bleibt separat
@@ -272,7 +271,7 @@ function pullGacha(e) {
     const fallingKugel = document.createElement('div');
     fallingKugel.className = 'falling-kugel';
     chute.appendChild(fallingKugel);
-    chute.classList.add('active');
+    chute.classList.add('active'); // Löst CSS Animation aus
     
     // Item ziehen
     const randomIndex = Math.floor(Math.random() * availableItems.length);
@@ -284,7 +283,7 @@ function pullGacha(e) {
         resultKugel.style.display = 'block';
         
         setTimeout(() => {
-            kugelShell.classList.add('opened');
+            kugelShell.classList.add('opened'); // Öffnet Kugel per CSS
             
             setTimeout(() => {
                 kugelContent.classList.add('show');
@@ -348,9 +347,11 @@ function displayItem(item) {
 }
 
 // ---------------------------------------------------------
-// MODALS
+// MODALS & GLOBALE FUNKTIONEN (Hier repariert!)
 // ---------------------------------------------------------
-function showCompletedModal() {
+
+// WICHTIG: Diese müssen am window hängen, damit das HTML sie findet!
+window.showCompletedModal = function() {
     if(document.getElementById('completed-modal')) return;
 
     const modal = document.createElement('div');
@@ -370,7 +371,7 @@ function showCompletedModal() {
     triggerConfetti('legendary');
 }
 
-function showPopup(item) {
+window.showPopup = function(item) {
     const popupId = 'popup-' + item.id;
     if(document.getElementById(popupId)) return;
 
@@ -379,6 +380,7 @@ function showPopup(item) {
     modal.style.cssText = `position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; justify-content: center; align-items: center; animation: fadeIn 0.3s ease;`;
     modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
     
+    // Einfache Sicherheit für den Pfad
     const safeSrc = item.imageData.replace(/'/g, "\\'");
     
     modal.innerHTML = `
@@ -393,7 +395,7 @@ function showPopup(item) {
     document.body.appendChild(modal);
 }
 
-function showCollection() {
+window.showCollection = function() {
     const modal = document.getElementById('collection-modal');
     const grid = document.getElementById('collection-grid');
     if (stats.collection.length === 0) {
@@ -404,8 +406,9 @@ function showCollection() {
             let onClick = '';
             let cursorStyle = '';
             if (item.imageData) {
-                const safeItem = JSON.stringify(item).replace(/"/g, """);
-                onClick = `onclick='showPopup(JSON.parse("${safeItem}"))'`;
+                // REPARATUR: Anführungszeichen sauber escapen für HTML
+                const safeJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+                onClick = `onclick="showPopup(${safeJSON})"`;
                 cursorStyle = 'cursor: pointer;';
             }
             return `
@@ -418,8 +421,17 @@ function showCollection() {
     }
     modal.classList.add('show');
 }
-function closeCollection() { document.getElementById('collection-modal').classList.remove('show'); }
-document.addEventListener('click', (e) => { if (e.target === document.getElementById('collection-modal')) closeCollection(); });
+
+window.closeCollection = function() { 
+    document.getElementById('collection-modal').classList.remove('show'); 
+}
+
+// Klick außerhalb schließt Modal
+document.addEventListener('click', (e) => { 
+    if (e.target === document.getElementById('collection-modal')) {
+        window.closeCollection();
+    }
+});
 
 function triggerConfetti(rarity) {
     if (typeof confetti === 'undefined') return;

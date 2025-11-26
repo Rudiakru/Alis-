@@ -389,7 +389,7 @@ function updateStats() {
         stats.rareItems + stats.epicItems + stats.legendaryItems;
 }
 
-function showCollection() {
+async function showCollection() {
     const modal = document.getElementById('collection-modal');
     const grid = document.getElementById('collection-grid');
     
@@ -401,6 +401,7 @@ function showCollection() {
                 <p style="font-size: 0.9em; margin-top: 10px;">Ziehe eine Kugel um zu beginnen!</p>
             </div>
         `;
+        modal.classList.add('show');
     } else {
         // Sort by rarity
         const sorted = [...stats.collection].sort((a, b) => {
@@ -409,7 +410,8 @@ function showCollection() {
         });
         
         // Lade aktuelle Items async
-        getGachaItems().then(allItems => {
+        try {
+            const allItems = await getGachaItems();
             grid.innerHTML = sorted.map(item => {
                 const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
                 let displayIcon = itemData ? itemData.icon : item.icon;
@@ -461,10 +463,18 @@ function showCollection() {
                     </div>
                 `;
             }).join('');
-        });
+            modal.classList.add('show');
+        } catch (error) {
+            console.error('Fehler beim Laden der Collection:', error);
+            grid.innerHTML = `
+                <div class="empty-collection" style="grid-column: 1 / -1;">
+                    <div class="empty-collection-icon">❌</div>
+                    <p>Fehler beim Laden der Collection!</p>
+                </div>
+            `;
+            modal.classList.add('show');
+        }
     }
-    
-    modal.classList.add('show');
 }
 
 function closeCollection() {

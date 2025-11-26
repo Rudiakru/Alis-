@@ -20,11 +20,10 @@ let baseGachaItems = [
     { id: 11, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 5, color: "#ff6b9d" },
     { id: 12, name: "Magisches Portal", icon: "🌀", rarity: "epic", description: "Ein magisches Portal!", probability: 5, color: "#9C27B0" },
     
-    // Legendary Items (4 Items - mit Features)
-    { id: 13, name: "Legendäre Capybara", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Capybara selbst!", probability: 3, color: "#f8b500" },
-    { id: 14, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
-    { id: 15, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
-    { id: 16, name: "Göttliche Kugel", icon: "✨🌟✨", rarity: "legendary", description: "Eine göttliche Kugel voller Magie!", probability: 1, color: "#ff9800" },
+    // Legendary Items (3 Items - mit Features)
+    { id: 13, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 3, color: "#4CAF50", unlocks: "map" },
+    { id: 14, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 3, color: "#9C27B0", unlocks: "music" },
+    { id: 15, name: "Fotosession", icon: "📸✨", rarity: "legendary", description: "Eine spezielle Fotosession!", probability: 3, color: "#ff6b9d", isCutePhoto: true, imageData: "https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif" },
 ];
 
 // Dynamische Gacha Items (inkl. Monster-Gacha für hochgeladene Bilder)
@@ -624,7 +623,12 @@ function showCutePhoto(item) {
     let buttonColor = "linear-gradient(135deg, #AED581, #8BC34A)";
     let shadowColor = "rgba(174, 213, 129, 0.5)";
     
-    if (itemName.includes("Hund") || itemIcon === "🐶") {
+    if (itemName.includes("Fotosession") || itemIcon === "📸✨") {
+        title = "FOTOSESSION!";
+        borderColor = "#ff6b9d";
+        buttonColor = "linear-gradient(135deg, #ff6b9d, #c44569)";
+        shadowColor = "rgba(255, 107, 157, 0.5)";
+    } else if (itemName.includes("Hund") || itemIcon === "🐶") {
         title = "SÜßER HUND!";
         borderColor = "#FFAB91";
         buttonColor = "linear-gradient(135deg, #FFAB91, #FF8A65)";

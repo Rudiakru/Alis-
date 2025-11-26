@@ -509,12 +509,21 @@ function showMonsterGachaImage(imageData) {
         }, 300);
     };
     
+    // Mobile-optimiertes Popup
+    const isMobile = window.innerWidth <= 768;
+    const monsterSize = isMobile ? '2.5em' : '4em';
+    const titleSize = isMobile ? '1.5em' : '2em';
+    const imgMaxWidth = isMobile ? '95vw' : '80vw';
+    const imgMaxHeight = isMobile ? '60vh' : '70vh';
+    const buttonPadding = isMobile ? '12px 30px' : '15px 40px';
+    const buttonFontSize = isMobile ? '1em' : '1.2em';
+    
     modal.innerHTML = `
-        <div style="position: relative; max-width: 90%; max-height: 90%; text-align: center; pointer-events: auto;">
-            <div style="font-size: 4em; margin-bottom: 20px; animation: bounce 1s ease infinite;">👹</div>
-            <h2 style="color: white; font-size: 2em; margin-bottom: 20px; font-family: var(--font-heading);">MONSTER-GACHA!</h2>
-            <img src="${imageData}" alt="Monster-Gacha Bild" style="max-width: 80vw; max-height: 70vh; border-radius: 20px; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: 5px solid #E91E63;" />
-            <button id="close-monster-modal" style="margin-top: 30px; padding: 15px 40px; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: 25px; font-size: 1.2em; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); transition: transform 0.2s ease;">Schließen ✨</button>
+        <div style="position: relative; max-width: 95%; max-height: 95%; text-align: center; pointer-events: auto; padding: ${isMobile ? '15px' : '20px'};">
+            <div style="font-size: ${monsterSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; animation: bounce 1s ease infinite;">👹</div>
+            <h2 style="color: white; font-size: ${titleSize}; margin-bottom: ${isMobile ? '15px' : '20px'}; font-family: var(--font-heading); line-height: 1.2;">MONSTER-GACHA!</h2>
+            <img src="${imageData}" alt="Monster-Gacha Bild" style="max-width: ${imgMaxWidth}; max-height: ${imgMaxHeight}; border-radius: ${isMobile ? '15px' : '20px'}; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: ${isMobile ? '3px' : '5px'} solid #E91E63; display: block; margin: 0 auto;" />
+            <button id="close-monster-modal" style="margin-top: ${isMobile ? '20px' : '30px'}; padding: ${buttonPadding}; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: ${isMobile ? '20px' : '25px'}; font-size: ${buttonFontSize}; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); transition: transform 0.2s ease; -webkit-tap-highlight-color: rgba(233, 30, 99, 0.3);">Schließen ✨</button>
         </div>
     `;
     

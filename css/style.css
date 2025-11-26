@@ -1058,27 +1058,29 @@ button:hover::after, .upload-btn:hover::after {
 
 /* Responsive */
 @media (max-width: 768px) {
-body {
-    padding: 10px;
-    padding-top: 140px;
-}
+    body {
+        padding: 10px;
+        padding-top: 120px;
+    }
 
-.birthday-banner {
-    padding: 10px 15px;
-    gap: 10px;
-}
+    .birthday-banner {
+        padding: 10px 15px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
 
-.birthday-gif {
-    width: 60px;
-    height: 60px;
-}
+    .birthday-gif {
+        width: 50px;
+        height: 50px;
+    }
 
-.birthday-text {
-    font-size: 1.1em;
-}
+    .birthday-text {
+        font-size: 1em;
+    }
 
     .container {
         padding: 0 10px;
+        max-width: 100%;
     }
 
     header.hero {
@@ -1088,20 +1090,24 @@ body {
     }
 
     .glass-card {
-        padding: 30px 20px;
+        padding: 25px 18px;
+        border-radius: 25px;
     }
 
     h1 {
-        font-size: 2em;
+        font-size: 1.8em;
         margin-bottom: 15px;
+        line-height: 1.3;
     }
 
     .subtitle {
-        font-size: 1em;
+        font-size: 0.95em;
+        line-height: 1.6;
     }
 
     .capybara-sticker img {
-        width: 150px;
+        width: 120px;
+        max-width: 100%;
     }
 
     .upload-section {
@@ -1248,15 +1254,32 @@ body {
 
 @media (max-width: 480px) {
     body {
-        padding: 5px;
-        padding-top: 70px;
+        padding: 8px;
+        padding-top: 100px;
+    }
+
+    .birthday-banner {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .birthday-gif {
+        width: 40px;
+        height: 40px;
+    }
+
+    .birthday-text {
+        font-size: 0.9em;
     }
 
     header.hero {
-        padding: 15px 5px;
+        padding: 15px 8px;
+        min-height: auto;
     }
 
     .glass-card {
+        padding: 20px 15px;
+        border-radius: 20px;
         padding: 20px 15px;
     }
 

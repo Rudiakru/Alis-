@@ -1,18 +1,23 @@
 /* Gacha Machine Styles - Ultra Modern & Beautiful */
 .gacha-machine-container {
     text-align: center;
-    padding: 50px 30px;
+    padding: 60px 40px;
     background: linear-gradient(135deg, 
-        rgba(255, 107, 157, 0.15) 0%, 
-        rgba(248, 181, 0, 0.15) 50%,
-        rgba(174, 213, 129, 0.15) 100%);
-    border-radius: 40px;
+        rgba(255, 107, 157, 0.2) 0%, 
+        rgba(248, 181, 0, 0.2) 30%,
+        rgba(174, 213, 129, 0.2) 60%,
+        rgba(156, 39, 176, 0.15) 100%);
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+    border-radius: 50px;
     margin: 30px 0;
     box-shadow: 
-        0 20px 60px rgba(255, 107, 157, 0.2),
-        inset 0 2px 20px rgba(255, 255, 255, 0.3);
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(20px);
+        0 30px 80px rgba(255, 107, 157, 0.3),
+        0 0 60px rgba(248, 181, 0, 0.2),
+        inset 0 2px 30px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 20px rgba(255, 107, 157, 0.1);
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(25px);
     position: relative;
     overflow: hidden;
 }
@@ -22,9 +27,10 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 2em;
-    opacity: 0.3;
+    font-size: 2.5em;
+    opacity: 0.4;
     animation: sparkle 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
 .gacha-machine-container::after {
@@ -32,9 +38,16 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
-    font-size: 2em;
-    opacity: 0.3;
+    font-size: 2.5em;
+    opacity: 0.4;
     animation: sparkle 3s ease-in-out infinite 1.5s;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+.gacha-machine-container::before,
+.gacha-machine-container::after {
+    pointer-events: none;
+    z-index: 1;
 }
 
 @keyframes sparkle {
@@ -44,31 +57,36 @@
 
 .gacha-machine {
     position: relative;
-    width: 400px;
+    width: 420px;
     margin: 0 auto 60px;
     perspective: 1200px;
-    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 107, 157, 0.3));
     transform-style: preserve-3d;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 2;
 }
 
 .gacha-machine:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-8px) scale(1.03) rotateX(2deg);
+    filter: drop-shadow(0 35px 70px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 50px rgba(255, 107, 157, 0.4));
 }
 
 /* Gacha Top - Window - Enhanced */
 .gacha-top {
-    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #ff6b9d 100%);
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
-    border-radius: 25px 25px 0 0;
-    padding: 35px 25px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 30%, #ff6b9d 60%, #e91e63 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 4s ease infinite;
+    border-radius: 30px 30px 0 0;
+    padding: 40px 30px;
     box-shadow: 
-        0 15px 35px rgba(255, 107, 157, 0.4),
-        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+        0 20px 50px rgba(255, 107, 157, 0.5),
+        0 0 30px rgba(233, 30, 99, 0.3),
+        inset 0 3px 15px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 10px rgba(196, 69, 105, 0.2);
     position: relative;
     overflow: hidden;
-    border: 3px solid rgba(255, 255, 255, 0.2);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
 }
 
 @keyframes gradient-shift {
@@ -95,19 +113,23 @@
 .gacha-window {
     background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.98) 0%, 
-        rgba(255, 240, 245, 0.98) 50%,
+        rgba(255, 240, 245, 0.98) 30%,
+        rgba(255, 250, 255, 0.98) 60%,
         rgba(255, 255, 255, 0.98) 100%);
-    border-radius: 25px;
-    padding: 30px;
-    height: 240px;
+    background-size: 200% 200%;
+    animation: gradient-shift 6s ease infinite;
+    border-radius: 30px;
+    padding: 35px;
+    height: 260px;
     position: relative;
     overflow: hidden;
     box-shadow: 
-        inset 0 8px 25px rgba(0, 0, 0, 0.1),
-        0 0 40px rgba(255, 107, 157, 0.3),
-        inset 0 -5px 20px rgba(255, 107, 157, 0.1);
-    border: 3px solid rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
+        inset 0 10px 30px rgba(0, 0, 0, 0.12),
+        0 0 50px rgba(255, 107, 157, 0.4),
+        inset 0 -8px 25px rgba(255, 107, 157, 0.15),
+        0 5px 20px rgba(255, 107, 157, 0.2);
+    border: 4px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
     position: relative;
 }
 
@@ -132,53 +154,109 @@
 }
 
 .gacha-kugel-preview {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-yellow));
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: float-kugel 3s ease-in-out infinite;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-yellow) 50%, var(--primary-pink) 100%);
+    background-size: 200% 200%;
+    animation: float-kugel 3s ease-in-out infinite, gradient-shift 3s ease infinite, kugel-glow 2s ease-in-out infinite;
     position: relative;
+    box-shadow: 
+        0 6px 15px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 107, 157, 0.5),
+        inset 0 2px 8px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    transform-style: preserve-3d;
+}
+
+.gacha-kugel-preview::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    width: 30%;
+    height: 30%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: shine 2s ease-in-out infinite;
+}
+
+.gacha-kugel-preview::after {
+    content: '✨';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.8em;
+    animation: sparkle 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
 }
 
 .gacha-kugel-preview:nth-child(1) { animation-delay: 0s; }
 .gacha-kugel-preview:nth-child(2) { animation-delay: 0.5s; }
 .gacha-kugel-preview:nth-child(3) { animation-delay: 1s; }
 .gacha-kugel-preview:nth-child(4) { animation-delay: 1.5s; }
+.gacha-kugel-preview:nth-child(5) { animation-delay: 2s; }
 
 @keyframes float-kugel {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(180deg); }
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    25% { transform: translateY(-12px) rotate(90deg) scale(1.1); }
+    50% { transform: translateY(-15px) rotate(180deg) scale(1.15); }
+    75% { transform: translateY(-12px) rotate(270deg) scale(1.1); }
+}
+
+@keyframes kugel-glow {
+    0%, 100% { box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 107, 157, 0.5), inset 0 2px 8px rgba(255, 255, 255, 0.5); }
+    50% { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 107, 157, 0.7), inset 0 2px 10px rgba(255, 255, 255, 0.6); }
+}
+
+@keyframes shine {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* Gacha Body - Enhanced */
 .gacha-body {
-    background: linear-gradient(135deg, #8D6E63 0%, #6D4C41 50%, #8D6E63 100%);
-    background-size: 200% 200%;
-    animation: gradient-shift 4s ease infinite;
-    padding: 35px 25px;
-    border-radius: 0 0 25px 25px;
+    background: linear-gradient(135deg, #8D6E63 0%, #6D4C41 30%, #5D4037 60%, #8D6E63 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 5s ease infinite;
+    padding: 40px 30px;
+    border-radius: 0 0 30px 30px;
     box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.4),
-        inset 0 2px 10px rgba(255, 255, 255, 0.1);
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 3px 15px rgba(255, 255, 255, 0.15),
+        inset 0 -3px 10px rgba(0, 0, 0, 0.3);
     position: relative;
-    border: 3px solid rgba(0, 0, 0, 0.2);
+    border: 4px solid rgba(0, 0, 0, 0.25);
     border-top: none;
 }
 
 .gacha-door {
-    background: linear-gradient(135deg, #AED581 0%, #8BC34A 50%, #AED581 100%);
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 25px;
+    background: linear-gradient(135deg, #AED581 0%, #8BC34A 30%, #7CB342 60%, #AED581 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 4s ease infinite;
+    border-radius: 25px;
+    padding: 30px;
+    margin-bottom: 30px;
     box-shadow: 
-        inset 0 5px 15px rgba(0, 0, 0, 0.2),
-        0 5px 15px rgba(174, 213, 129, 0.3);
+        inset 0 8px 20px rgba(0, 0, 0, 0.25),
+        0 8px 20px rgba(174, 213, 129, 0.4),
+        0 0 15px rgba(139, 195, 74, 0.3);
     position: relative;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    overflow: hidden;
+}
+
+.gacha-door::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    animation: rotate 8s linear infinite;
 }
 
 .gacha-door.shake {
@@ -192,8 +270,16 @@
 }
 
 .gacha-handle {
-    font-size: 2em;
+    font-size: 2.5em;
     animation: rotate-handle 2s ease-in-out infinite;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease;
+}
+
+.gacha-door:hover .gacha-handle {
+    transform: scale(1.1);
 }
 
 @keyframes rotate-handle {
@@ -206,31 +292,44 @@
 }
 
 .gacha-button {
-    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-yellow) 50%, var(--primary-pink) 100%);
-    background-size: 200% 200%;
-    animation: gradient-shift 2s ease infinite;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-yellow) 30%, #ff6b9d 60%, var(--primary-pink) 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 3s ease infinite;
     border: none;
-    padding: 22px 50px;
-    border-radius: 50px;
-    font-size: 1.4em;
+    padding: 25px 60px;
+    border-radius: 60px;
+    font-size: 1.5em;
     font-weight: 900;
     color: white;
     cursor: pointer;
     font-family: var(--font-heading);
     box-shadow: 
-        0 10px 30px rgba(255, 107, 157, 0.5),
-        0 0 20px rgba(248, 181, 0, 0.3),
-        inset 0 2px 10px rgba(255, 255, 255, 0.3);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        0 15px 40px rgba(255, 107, 157, 0.6),
+        0 0 30px rgba(248, 181, 0, 0.4),
+        inset 0 3px 15px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 10px rgba(196, 69, 105, 0.2);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     margin: 0 auto;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.gacha-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    animation: rotate 5s linear infinite;
 }
 
 .gacha-button:hover:not(:disabled) {
@@ -300,10 +399,16 @@
 
 .result-kugel {
     position: relative;
-    width: 220px;
-    height: 220px;
+    width: 240px;
+    height: 240px;
     margin: 0 auto;
-    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 30px rgba(255, 107, 157, 0.4));
+    animation: float-result 3s ease-in-out infinite;
+}
+
+@keyframes float-result {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
 }
 
 .kugel-shell {
@@ -323,19 +428,40 @@
     position: absolute;
     width: 100%;
     height: 50%;
-    border-radius: 110px 110px 0 0;
-    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-yellow) 50%, var(--primary-pink) 100%);
-    background-size: 200% 200%;
-    animation: gradient-shift 2s ease infinite;
+    border-radius: 120px 120px 0 0;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-yellow) 30%, #ff6b9d 60%, var(--primary-pink) 100%);
+    background-size: 300% 300%;
+    animation: gradient-shift 3s ease infinite, kugel-shine 2s ease-in-out infinite;
     box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.3),
-        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(255, 107, 157, 0.5),
+        inset 0 3px 15px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 10px rgba(196, 69, 105, 0.2);
     backface-visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5em;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 3.8em;
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    position: relative;
+}
+
+.kugel-top::before,
+.kugel-bottom::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    width: 25%;
+    height: 25%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes kugel-shine {
+    0%, 100% { box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 107, 157, 0.5); }
+    50% { box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 107, 157, 0.7); }
 }
 
 .kugel-bottom {

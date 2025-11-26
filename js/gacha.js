@@ -320,12 +320,6 @@ function pullGacha() {
                 if (item.rarity === 'epic') stats.epicItems++;
                 if (item.rarity === 'legendary') stats.legendaryItems++;
                 
-                // Prüfe ob es ein Monster-Gacha ist
-                if (item.isMonsterGacha && item.imageData) {
-                    // Zeige das Bild in einem Popup
-                    showMonsterGachaImage(item.imageData);
-                }
-                
                 // Add to collection - IMMER hinzufügen (auch wenn schon vorhanden)
                 // Prüfe nur ob es wirklich neu ist für Notification
                 const existingItem = stats.collection.find(i => i.id === item.id);
@@ -362,7 +356,15 @@ function pullGacha() {
                 // Confetti based on rarity
                 triggerConfetti(item.rarity);
                 
-                // Re-enable button
+                // Prüfe ob es ein Monster-Gacha ist - zeige Popup NACH Button-Reaktivierung
+                if (item.isMonsterGacha && item.imageData) {
+                    // Zeige das Bild in einem Popup nach kurzer Verzögerung
+                    setTimeout(() => {
+                        showMonsterGachaImage(item.imageData);
+                    }, 500);
+                }
+                
+                // Re-enable button - IMMER aktivieren, auch bei Monster-Gacha
                 setTimeout(() => {
                     button.disabled = false;
                     button.classList.remove('pulling');
@@ -476,6 +478,7 @@ function showCollectionNotification(item) {
 function showMonsterGachaImage(imageData) {
     // Erstelle großes Popup-Modal
     const modal = document.createElement('div');
+    modal.id = 'monster-gacha-modal';
     modal.style.cssText = `
         position: fixed;
         top: 0;
@@ -488,34 +491,64 @@ function showMonsterGachaImage(imageData) {
         justify-content: center;
         align-items: center;
         animation: fadeIn 0.3s ease;
+        pointer-events: auto;
     `;
     
+    const closeModal = () => {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (modal.parentElement) {
+                modal.remove();
+            }
+            // Stelle sicher, dass Button wieder aktiv ist
+            const button = document.getElementById('gacha-button');
+            if (button) {
+                button.disabled = false;
+                button.classList.remove('pulling');
+            }
+        }, 300);
+    };
+    
     modal.innerHTML = `
-        <div style="position: relative; max-width: 90%; max-height: 90%; text-align: center;">
+        <div style="position: relative; max-width: 90%; max-height: 90%; text-align: center; pointer-events: auto;">
             <div style="font-size: 4em; margin-bottom: 20px; animation: bounce 1s ease infinite;">👹</div>
             <h2 style="color: white; font-size: 2em; margin-bottom: 20px; font-family: var(--font-heading);">MONSTER-GACHA!</h2>
             <img src="${imageData}" alt="Monster-Gacha Bild" style="max-width: 80vw; max-height: 70vh; border-radius: 20px; box-shadow: 0 20px 60px rgba(255, 107, 157, 0.5); border: 5px solid #E91E63;" />
-            <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 30px; padding: 15px 40px; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: 25px; font-size: 1.2em; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4);">Schließen ✨</button>
+            <button id="close-monster-modal" style="margin-top: 30px; padding: 15px 40px; background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; border-radius: 25px; font-size: 1.2em; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4); transition: transform 0.2s ease;">Schließen ✨</button>
         </div>
     `;
     
     document.body.appendChild(modal);
     
-    // Schließe nach 10 Sekunden automatisch
+    // Event Listener für Schließen-Button
+    const closeBtn = modal.querySelector('#close-monster-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('touchstart', closeModal);
+    }
+    
+    // Schließe nach 8 Sekunden automatisch
     setTimeout(() => {
         if (modal.parentElement) {
-            modal.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => modal.remove(), 300);
+            closeModal();
         }
-    }, 10000);
+    }, 8000);
     
     // Schließe bei Klick außerhalb
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-            modal.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => modal.remove(), 300);
+            closeModal();
         }
     });
+    
+    // Schließe bei ESC-Taste
+    const escHandler = (e) => {
+        if (e.key === 'Escape' && modal.parentElement) {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
 
 // Add CSS animations
@@ -540,6 +573,26 @@ style.textContent = `
             transform: translateX(400px);
             opacity: 0;
         }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-20px) scale(1.1); }
     }
 `;
 document.head.appendChild(style);

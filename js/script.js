@@ -520,9 +520,10 @@ function initMap() {
 // INITIALISIERUNG
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    initGallery();
-    initSlideshow();
+    // Bildergalerie-Funktionen auskommentiert
+    // initGallery();
+    // initSlideshow();
     
-    // OpenStreetMap wird geladen
-    initMap();
+    // OpenStreetMap wird nur geladen wenn Karte freigeschaltet ist
+    // initMap(); - wird von Gacha-System gesteuert
 });

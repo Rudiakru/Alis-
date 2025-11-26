@@ -17,8 +17,10 @@ const gachaItems = [
     // Epic Items (15% chance total) - 1 Item
     { id: 9, name: "Königliche Capybara", icon: "👑🦫", rarity: "epic", description: "Die königliche Capybara!", probability: 4, color: "#ff6b9d" },
     
-    // Legendary Items (5% chance total) - 1 Item
+    // Legendary Items (5% chance total) - 3 Items
     { id: 10, name: "Legendäre Otis", icon: "🦫🌟", rarity: "legendary", description: "DIE legendäre Otis selbst!", probability: 1, color: "#f8b500" },
+    { id: 11, name: "Legendäre Karte", icon: "🗺️✨", rarity: "legendary", description: "Eine magische Karte mit allen Orten!", probability: 1, color: "#4CAF50", unlocks: "map" },
+    { id: 12, name: "Legendäre Musikbox", icon: "🎵✨", rarity: "legendary", description: "Eine wundervolle Musikbox voller Melodien!", probability: 1, color: "#9C27B0", unlocks: "music" },
 ];
 
 // Stats & Collection
@@ -30,11 +32,107 @@ let stats = JSON.parse(localStorage.getItem('gachaStats')) || {
     collection: []
 };
 
+// Feature Unlock System
+function unlockFeature(feature) {
+    if (feature === 'map') {
+        const mapSection = document.getElementById('map-section');
+        if (mapSection) {
+            mapSection.style.display = 'block';
+            mapSection.style.opacity = '0';
+            mapSection.style.transform = 'translateY(30px)';
+            mapSection.style.transition = 'all 0.8s ease';
+            
+            // Animation starten
+            setTimeout(() => {
+                mapSection.style.opacity = '1';
+                mapSection.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Lade Karte wenn sie freigeschaltet wird
+            if (typeof initMap === 'function') {
+                setTimeout(() => initMap(), 800);
+            }
+            
+            // Speichere Unlock in localStorage
+            const unlocks = JSON.parse(localStorage.getItem('unlockedFeatures')) || [];
+            if (!unlocks.includes('map')) {
+                unlocks.push('map');
+                localStorage.setItem('unlockedFeatures', JSON.stringify(unlocks));
+            }
+        }
+    } else if (feature === 'music') {
+        const musicSection = document.getElementById('music-section');
+        if (musicSection) {
+            musicSection.style.display = 'block';
+            musicSection.style.opacity = '0';
+            musicSection.style.transform = 'translateY(30px)';
+            musicSection.style.transition = 'all 0.8s ease';
+            
+            // Animation starten
+            setTimeout(() => {
+                musicSection.style.opacity = '1';
+                musicSection.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Speichere Unlock in localStorage
+            const unlocks = JSON.parse(localStorage.getItem('unlockedFeatures')) || [];
+            if (!unlocks.includes('music')) {
+                unlocks.push('music');
+                localStorage.setItem('unlockedFeatures', JSON.stringify(unlocks));
+            }
+        }
+    }
+}
+
+// Prüfe freigeschaltete Features beim Laden
+function checkUnlockedFeatures() {
+    // Prüfe localStorage für freigeschaltete Features
+    const unlocks = JSON.parse(localStorage.getItem('unlockedFeatures')) || [];
+    
+    // Oder prüfe Collection
+    const stats = JSON.parse(localStorage.getItem('gachaStats')) || { collection: [] };
+    const collection = stats.collection || [];
+    
+    // Prüfe ob Karte freigeschaltet ist
+    const hasMap = unlocks.includes('map') || collection.some(item => {
+        const itemData = gachaItems.find(i => i.id === item.id);
+        return itemData && itemData.unlocks === 'map';
+    });
+    
+    // Prüfe ob Musik freigeschaltet ist
+    const hasMusic = unlocks.includes('music') || collection.some(item => {
+        const itemData = gachaItems.find(i => i.id === item.id);
+        return itemData && itemData.unlocks === 'music';
+    });
+    
+    if (hasMap) {
+        const mapSection = document.getElementById('map-section');
+        if (mapSection) {
+            mapSection.style.display = 'block';
+            mapSection.style.opacity = '1';
+            mapSection.style.transform = 'translateY(0)';
+            if (typeof initMap === 'function') {
+                setTimeout(() => initMap(), 500);
+            }
+        }
+    }
+    
+    if (hasMusic) {
+        const musicSection = document.getElementById('music-section');
+        if (musicSection) {
+            musicSection.style.display = 'block';
+            musicSection.style.opacity = '1';
+            musicSection.style.transform = 'translateY(0)';
+        }
+    }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initGachaMachine();
     updateStats();
     createKugelPreviews();
+    checkUnlockedFeatures();
 });
 
 function initGachaMachine() {
@@ -169,7 +267,8 @@ function pullGacha() {
                 if (item.rarity === 'legendary') stats.legendaryItems++;
                 
                 // Add to collection if not already there
-                if (!stats.collection.find(i => i.id === item.id)) {
+                const isNewItem = !stats.collection.find(i => i.id === item.id);
+                if (isNewItem) {
                     stats.collection.push({
                         id: item.id,
                         name: item.name,
@@ -177,6 +276,11 @@ function pullGacha() {
                         rarity: item.rarity,
                         obtainedAt: new Date().toISOString()
                     });
+                    
+                    // Prüfe ob Feature freigeschaltet werden soll
+                    if (item.unlocks) {
+                        unlockFeature(item.unlocks);
+                    }
                 }
                 
                 localStorage.setItem('gachaStats', JSON.stringify(stats));

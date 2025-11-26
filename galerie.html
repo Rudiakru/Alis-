@@ -128,13 +128,17 @@
                 <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="gacha.html">Gacha</a></li>
                 <li><a href="ueber.html">Über Otis</a></li>
+                <!-- Upload-Funktion auskommentiert
                 <li class="nav-upload-item">
                     <a href="#" onclick="event.preventDefault(); document.getElementById('fileInput').click(); return false;" class="nav-upload-link">
                         📤 Bild hochladen
                     </a>
                 </li>
+                -->
             </ul>
+            <!-- Upload-Funktion auskommentiert
             <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" style="display: none;" />
+            -->
         </div>
     </nav>
 
@@ -146,7 +150,7 @@
             </div>
         </header>
 
-        <!-- Upload Section -->
+        <!-- Upload Section auskommentiert
         <div class="upload-section">
             <h2>📤 Neues Bild hochladen</h2>
             <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Bild hochladen Bereich" onclick="document.getElementById('uploadFileInput').click()" onkeypress="if(event.key==='Enter') document.getElementById('uploadFileInput').click()">
@@ -159,6 +163,7 @@
                 📤 Bild auswählen
             </button>
         </div>
+        -->
 
         <!-- Slideshow Section -->
         <section id="slideshow-section" class="content-section dark-gallery-section">
@@ -212,7 +217,8 @@
             }
         }
         
-        // Upload File Input Handler für galerie.html
+        // Upload-Funktionen auskommentiert
+        /*
         document.addEventListener('DOMContentLoaded', () => {
             const uploadFileInput = document.getElementById('uploadFileInput');
             const uploadArea = document.getElementById('uploadArea');
@@ -221,7 +227,6 @@
                 uploadFileInput.addEventListener('change', handleFileSelect);
             }
             
-            // Drag & Drop für Upload Area
             if (uploadArea) {
                 uploadArea.addEventListener('dragover', (e) => {
                     e.preventDefault();
@@ -244,6 +249,7 @@
                 });
             }
         });
+        */
     </script>
 </body>
 </html>

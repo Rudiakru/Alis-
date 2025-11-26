@@ -527,6 +527,18 @@ h2, h3 {
     }
 }
 
+/* Feature Unlock Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .gallery-item:hover {
     transform: translateY(-20px) scale(1.05) rotate(1deg);
     box-shadow: 

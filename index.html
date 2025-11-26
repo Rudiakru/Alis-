@@ -102,33 +102,44 @@
                 <li><a href="galerie.html">Galerie</a></li>
                 <li><a href="gacha.html">Gacha</a></li>
                 <li><a href="ueber.html">Über Otis</a></li>
+                <!-- Upload-Funktion auskommentiert
                 <li class="nav-upload-item">
                     <a href="#" onclick="event.preventDefault(); document.getElementById('fileInput').click(); return false;" class="nav-upload-link">
                         📤 Bild hochladen
                     </a>
                 </li>
+                -->
             </ul>
+            <!-- Upload-Funktion auskommentiert
             <input type="file" id="fileInput" accept="image/*" aria-label="Bild auswählen" style="display: none;" />
+            -->
         </div>
     </nav>
 
     <header class="hero" style="min-height: 60vh; padding-top: 20px;">
         <div class="glass-card floating">
-            <h1>🦫 Otis</h1>
-            <p class="subtitle">Meine süße Capybara Galerie im Taiwan Stil</p>
+            <h1>🦫 Alles Gute zum Geburtstag, Alina! 🎂</h1>
+            <div style="background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(248, 181, 0, 0.1)); padding: 30px; border-radius: 25px; margin: 25px 0; border: 3px solid rgba(255, 107, 157, 0.3);">
+                <p class="subtitle" style="font-size: 1.2em; line-height: 1.8; color: #555;">
+                    Rudi hat die Capybaras gefragt nach einem Geschenk für dich, Alina! 🎁<br>
+                    Und das ist es: Eine Website von allen Taiwanesischen Capybaras! 🦫💕<br>
+                    <span style="font-size: 0.9em; color: #888; margin-top: 15px; display: block;">
+                        Ziehe in der Gacha Machine, um besondere Features freizuschalten! ✨
+                    </span>
+                </p>
+            </div>
             <div class="capybara-sticker">
                 <img src="https://media.giphy.com/media/HiTqXhX3h3uUg/giphy.gif" alt="Capybara in Yuzu Bath" />
             </div>
-            <p style="margin-top: 20px; color: #666;">Willkommen! Scroll runter für alle Features ⬇️</p>
+            <p style="margin-top: 20px; color: #666;">Scroll runter und entdecke die Gacha Machine! ⬇️</p>
         </div>
     </header>
 
     <div class="container">
-        <!-- Slideshow Section -->
+        <!-- Bildergalerie auskommentiert
         <section id="slideshow-section" class="content-section dark-gallery-section">
             <h2 class="section-title">📸 Unsere Momente</h2>
             <div class="slideshow-container dark-slideshow" id="slideshow-wrapper">
-                <!-- Slides werden automatisch von script.js eingefügt -->
             </div>
             <div class="gallery-controls">
                 <button onclick="plusSlides(-1)" aria-label="Vorheriges Bild">❮ Zurück</button>
@@ -138,16 +149,15 @@
             <p style="margin-top: 15px; color: #999; font-size: 0.9em;">💡 Tipp: Nutze die Pfeiltasten für Navigation</p>
         </section>
 
-        <!-- All Images Gallery -->
         <section class="content-section dark-gallery-section">
             <h2 class="section-title">🖼️ Alle Bilder</h2>
             <div class="gallery dark-gallery" id="all-images-gallery" role="region" aria-label="Bildergalerie">
-                <!-- Alle Bilder werden automatisch von script.js eingefügt -->
             </div>
         </section>
+        -->
 
-        <!-- Google Maps Section -->
-        <section id="map-section" class="content-section">
+        <!-- Google Maps Section - Nur sichtbar wenn gewonnen -->
+        <section id="map-section" class="content-section" style="display: none;">
             <h2 class="section-title">🗺️ Unsere Capybara Map</h2>
             <p style="margin-bottom: 25px; color: #666;">Orte, die uns verbinden 💕</p>
             <div id="map" style="min-height: 400px; width: 100%; border-radius: 20px; overflow: hidden;"></div>
@@ -163,10 +173,10 @@
             </p>
         </section>
 
-        <!-- Music Section -->
-        <section class="content-section kawaii-section">
-            <h2 class="section-title">🎵 Musik für Otis</h2>
-            <p style="margin-bottom: 25px; color: #666;">Höre die perfekte Playlist während du die Galerie anschaust! 💕</p>
+        <!-- Music Section - Nur sichtbar wenn gewonnen -->
+        <section id="music-section" class="content-section kawaii-section" style="display: none;">
+            <h2 class="section-title">🎵 Musik für Alina</h2>
+            <p style="margin-bottom: 25px; color: #666;">Höre die perfekte Playlist! 💕</p>
             <div class="spotify-container">
                 <iframe style="border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);" src="https://open.spotify.com/embed/playlist/2rK6GwLnUr7K3FqDMsxaZz?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>

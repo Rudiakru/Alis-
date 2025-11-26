@@ -22,26 +22,55 @@ let baseGachaItems = [
     { id: 13, name: "Geschenk 2", icon: "🧧", rarity: "legendary", description: "Ein roter chinesischer Glücksumschlag!", probability: 3, color: "#DC143C", unlocks: "map" },
 ];
 
-// Lade Bilder aus Ordnern
+// Lade Bilder aus Ordnern - findet alle Bilder im Ordner
 async function loadImagesFromFolder(folderPath) {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
     const images = [];
     
-    // Versuche verschiedene Dateinamen-Kombinationen
-    for (let i = 1; i <= 50; i++) {
-        for (const ext of imageExtensions) {
-            const imagePath = `${folderPath}${i}${ext}`;
+    // Bekannte Dateinamen in den Ordnern
+    // HINWEIS: IMG_3374.jpeg und IMG_3375.jpeg im img/ Ordner werden nicht verwendet (nur Unterordner werden gescannt)
+    const knownFiles = {
+        'img/cat/': ['IMG_3374.jpeg', 'IMG_3375.jpeg', 'IMG_3376.jpeg'],
+        'img/dogs/': ['IMG_3377.jpeg', 'IMG_3378.jpeg', 'IMG_3379.jpeg', 'IMG_3380.jpeg', 'IMG_3381.jpeg'],
+        'img/photo/': ['dfb37733-44e3-4e9f-bd06-1aa5adcf566d_Original.jpeg'],
+        'img/monster/': ['15e245b6-5314-40af-a89e-d3b49783902c.jpeg']
+    };
+    
+    // Wenn bekannte Dateien für diesen Ordner existieren, verwende diese
+    if (knownFiles[folderPath]) {
+        for (const filename of knownFiles[folderPath]) {
+            const imagePath = `${folderPath}${filename}`;
             try {
                 const img = new Image();
                 await new Promise((resolve, reject) => {
                     img.onload = () => resolve(imagePath);
                     img.onerror = () => reject();
                     img.src = imagePath;
-                    setTimeout(() => reject(), 100);
+                    setTimeout(() => reject(), 200);
                 });
                 images.push(imagePath);
             } catch (e) {
-                // Bild existiert nicht, überspringen
+                // Bild existiert nicht oder kann nicht geladen werden, überspringen
+                console.log(`Bild konnte nicht geladen werden: ${imagePath}`);
+            }
+        }
+    } else {
+        // Fallback: Versuche verschiedene Dateinamen-Kombinationen
+        for (let i = 1; i <= 50; i++) {
+            for (const ext of imageExtensions) {
+                const imagePath = `${folderPath}${i}${ext}`;
+                try {
+                    const img = new Image();
+                    await new Promise((resolve, reject) => {
+                        img.onload = () => resolve(imagePath);
+                        img.onerror = () => reject();
+                        img.src = imagePath;
+                        setTimeout(() => reject(), 100);
+                    });
+                    images.push(imagePath);
+                } catch (e) {
+                    // Bild existiert nicht, überspringen
+                }
             }
         }
     }
@@ -55,23 +84,55 @@ async function getGachaItems() {
     
     // Lade Bilder aus Ordnern und aktualisiere Items
     try {
-        // Katze Bilder
+        // Katze Bilder - verwende alle Bilder aus dem Ordner
         const catImages = await loadImagesFromFolder('img/cat/');
-        if (catImages.length > 0) {
-            const catItem = items.find(item => item.id === 3); // Katze Foto
-            if (catItem) {
-                catItem.imageData = catImages[0]; // Nimm erstes Bild
+        catImages.forEach((imgPath, index) => {
+            if (index === 0) {
+                // Erstes Bild für das Standard-Katze Item
+                const catItem = items.find(item => item.id === 3);
+                if (catItem) {
+                    catItem.imageData = imgPath;
+                }
+            } else {
+                // Weitere Katzen-Bilder als separate Items
+                items.push({
+                    id: 3000 + index,
+                    name: "Katze Foto",
+                    icon: "🐱",
+                    rarity: "common",
+                    description: "Eine süße Katze!",
+                    probability: 5,
+                    color: "#FFB3D9",
+                    isCutePhoto: true,
+                    imageData: imgPath
+                });
             }
-        }
+        });
         
-        // Hund Bilder
+        // Hund Bilder - verwende alle Bilder aus dem Ordner
         const dogImages = await loadImagesFromFolder('img/dogs/');
-        if (dogImages.length > 0) {
-            const dogItem = items.find(item => item.id === 2); // Hund Foto
-            if (dogItem) {
-                dogItem.imageData = dogImages[0]; // Nimm erstes Bild
+        dogImages.forEach((imgPath, index) => {
+            if (index === 0) {
+                // Erstes Bild für das Standard-Hund Item
+                const dogItem = items.find(item => item.id === 2);
+                if (dogItem) {
+                    dogItem.imageData = imgPath;
+                }
+            } else {
+                // Weitere Hunde-Bilder als separate Items
+                items.push({
+                    id: 4000 + index,
+                    name: "Hund Foto",
+                    icon: "🐶",
+                    rarity: "common",
+                    description: "Ein süßer Hund!",
+                    probability: 5,
+                    color: "#FFAB91",
+                    isCutePhoto: true,
+                    imageData: imgPath
+                });
             }
-        }
+        });
         
         // Monster Bilder
         const monsterImages = await loadImagesFromFolder('img/monster/');
@@ -328,7 +389,7 @@ function updateStats() {
         stats.rareItems + stats.epicItems + stats.legendaryItems;
 }
 
-function showCollection() {
+async function showCollection() {
     const modal = document.getElementById('collection-modal');
     const grid = document.getElementById('collection-grid');
     
@@ -340,6 +401,7 @@ function showCollection() {
                 <p style="font-size: 0.9em; margin-top: 10px;">Ziehe eine Kugel um zu beginnen!</p>
             </div>
         `;
+        modal.classList.add('show');
     } else {
         // Sort by rarity
         const sorted = [...stats.collection].sort((a, b) => {
@@ -347,46 +409,72 @@ function showCollection() {
             return rarityOrder[b.rarity] - rarityOrder[a.rarity];
         });
         
-        grid.innerHTML = sorted.map(item => {
-            const allItems = getGachaItems();
-            const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
-            let displayIcon = itemData ? itemData.icon : item.icon;
-            let displayName = itemData ? itemData.name : item.name;
-            let onClick = '';
-            let cursorStyle = '';
-            
-            if (item.isMonsterGacha && item.imageData) {
-                displayIcon = '👹';
-                displayName = 'Monster-Gacha';
-                onClick = `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')"`;
-                cursorStyle = 'cursor: pointer;';
-            } else if ((item.isCapybaraPhoto || item.isCutePhoto) && item.imageData) {
-                // Verwende Item-Daten für Popup - speichere in data attribute
-                const photoItem = itemData || item;
-                const safeImageData = item.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
-                const safeName = (photoItem.name || item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
-                const safeIcon = photoItem.icon || item.icon || '🦫';
-                onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
-                cursorStyle = 'cursor: pointer;';
-            } else if (itemData && (itemData.isCapybaraPhoto || itemData.isCutePhoto) && itemData.imageData) {
-                const safeImageData = itemData.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
-                const safeName = (itemData.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
-                const safeIcon = itemData.icon || '🦫';
-                onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
-                cursorStyle = 'cursor: pointer;';
-            }
-            
-            return `
-                <div class="collection-item ${item.rarity}" ${onClick} style="${cursorStyle}">
-                    <span class="collection-item-icon">${displayIcon}</span>
-                    <div class="collection-item-name">${displayName}</div>
-                    <div class="collection-item-rarity ${item.rarity}">${item.rarity.toUpperCase()}</div>
+        // Lade aktuelle Items async
+        try {
+            const allItems = await getGachaItems();
+            grid.innerHTML = sorted.map(item => {
+                const itemData = allItems.find(i => i.id === item.id) || baseGachaItems.find(i => i.id === item.id);
+                let displayIcon = itemData ? itemData.icon : item.icon;
+                let displayName = itemData ? itemData.name : item.name;
+                let onClick = '';
+                let cursorStyle = '';
+                
+                // Prüfe ob Item ein Bild hat (aus item oder itemData)
+                const hasImage = (item.imageData || (itemData && itemData.imageData));
+                
+                if (item.isMonsterGacha && item.imageData) {
+                    displayIcon = '👹';
+                    displayName = 'Monster-Gacha';
+                    onClick = `onclick="showMonsterGachaImage('${item.imageData.replace(/'/g, "&#39;")}')"`;
+                    cursorStyle = 'cursor: pointer;';
+                } else if ((item.isCapybaraPhoto || item.isCutePhoto) && item.imageData) {
+                    // Verwende Item-Daten für Popup - speichere in data attribute
+                    const photoItem = itemData || item;
+                    const safeImageData = item.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeName = (photoItem.name || item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeIcon = photoItem.icon || item.icon || '🦫';
+                    onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
+                    cursorStyle = 'cursor: pointer;';
+                } else if (itemData && (itemData.isCapybaraPhoto || itemData.isCutePhoto) && itemData.imageData) {
+                    const safeImageData = itemData.imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeName = (itemData.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeIcon = itemData.icon || '🦫';
+                    onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
+                    cursorStyle = 'cursor: pointer;';
+                } else if (hasImage) {
+                    // Item hat ein Bild, aber ist nicht als Photo markiert - zeige es trotzdem
+                    const imageData = item.imageData || itemData.imageData;
+                    const safeImageData = imageData.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeName = (itemData ? itemData.name : item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+                    const safeIcon = (itemData ? itemData.icon : item.icon) || '🦫';
+                    onClick = `onclick="showCutePhotoFromCollection('${safeImageData}', '${safeName}', '${safeIcon}')"`;
+                    cursorStyle = 'cursor: pointer;';
+                } else {
+                    // Item hat kein Bild - zeige Text beim Klick
+                    onClick = `onclick="showCollectionItemText('${(itemData ? itemData.name : item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;")}', '${(itemData ? itemData.description : item.description || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;")}', '${(itemData ? itemData.icon : item.icon) || '🦫'}')"`;
+                    cursorStyle = 'cursor: pointer;';
+                }
+                
+                return `
+                    <div class="collection-item ${item.rarity}" ${onClick} style="${cursorStyle}">
+                        <span class="collection-item-icon">${displayIcon}</span>
+                        <div class="collection-item-name">${displayName}</div>
+                        <div class="collection-item-rarity ${item.rarity}">${item.rarity.toUpperCase()}</div>
+                    </div>
+                `;
+            }).join('');
+            modal.classList.add('show');
+        } catch (error) {
+            console.error('Fehler beim Laden der Collection:', error);
+            grid.innerHTML = `
+                <div class="empty-collection" style="grid-column: 1 / -1;">
+                    <div class="empty-collection-icon">❌</div>
+                    <p>Fehler beim Laden der Collection!</p>
                 </div>
             `;
-        }).join('');
+            modal.classList.add('show');
+        }
     }
-    
-    modal.classList.add('show');
 }
 
 function closeCollection() {
@@ -864,6 +952,95 @@ function showCutePhotoFromCollection(imageData, itemName, itemIcon) {
         name: itemName,
         icon: itemIcon
     });
+}
+
+// Zeige Text für Collection-Items ohne Bild
+function showCollectionItemText(itemName, itemDescription, itemIcon) {
+    // Erstelle Popup-Modal für Text
+    const modal = document.createElement('div');
+    modal.id = 'collection-text-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+        pointer-events: auto;
+    `;
+    
+    const closeModal = () => {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (modal.parentElement) {
+                modal.remove();
+            }
+        }, 300);
+    };
+    
+    // Mobile-optimiertes Popup
+    const isMobile = window.innerWidth <= 768;
+    const iconSize = isMobile ? '3em' : '5em';
+    const titleSize = isMobile ? '1.5em' : '2em';
+    const textSize = isMobile ? '1em' : '1.2em';
+    const buttonPadding = isMobile ? '12px 30px' : '15px 40px';
+    const buttonFontSize = isMobile ? '1em' : '1.2em';
+    
+    // Escape HTML
+    const safeName = (itemName || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+    const safeDescription = (itemDescription || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+    const safeIcon = itemIcon || '🦫';
+    
+    modal.innerHTML = `
+        <div style="position: relative; max-width: 90%; text-align: center; pointer-events: auto; padding: ${isMobile ? '20px' : '40px'}; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)); border-radius: ${isMobile ? '20px' : '30px'}; border: 3px solid rgba(255, 107, 157, 0.3);">
+            <div style="font-size: ${iconSize}; margin-bottom: ${isMobile ? '20px' : '30px'}; animation: bounce 1s ease infinite;">${safeIcon}</div>
+            <h2 style="color: white; font-size: ${titleSize}; margin-bottom: ${isMobile ? '20px' : '30px'}; font-family: var(--font-heading); line-height: 1.2;">${safeName}</h2>
+            <div style="color: #e0e0e0; font-size: ${textSize}; line-height: 1.6; margin-bottom: ${isMobile ? '15px' : '20px'};">
+                ${safeDescription || 'Dieses Item wurde beim Gacha gezogen!'}
+            </div>
+            <div style="color: #b0b0b0; font-size: ${isMobile ? '0.9em' : '1em'}; line-height: 1.6; margin-bottom: ${isMobile ? '20px' : '30px'};">
+                Leider hat dieses Item kein Foto, aber es ist trotzdem ein besonderes Item in deiner Collection!
+            </div>
+            <button id="close-text-modal" style="padding: ${buttonPadding}; background: linear-gradient(135deg, #ff6b9d, #c44569); color: white; border: none; border-radius: ${isMobile ? '20px' : '25px'}; font-size: ${buttonFontSize}; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4); transition: transform 0.2s ease; -webkit-tap-highlight-color: rgba(255, 107, 157, 0.3);">Schließen ✨</button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event Listener für Schließen-Button
+    const closeBtn = modal.querySelector('#close-text-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('touchstart', closeModal);
+    }
+    
+    // Schließe nach 8 Sekunden automatisch
+    setTimeout(() => {
+        if (modal.parentElement) {
+            closeModal();
+        }
+    }, 8000);
+    
+    // Schließe bei Klick außerhalb
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Schließe bei ESC-Taste
+    const escHandler = (e) => {
+        if (e.key === 'Escape' && modal.parentElement) {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
 
 // Capybara Foto Popup (Legacy - wird jetzt von showCutePhoto verwendet)
